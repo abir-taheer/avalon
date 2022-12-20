@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { userAtom } from "@/atoms";
 
@@ -18,7 +18,7 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 export const useAuthListener = () => {
-  const [, setUser] = useAtom(userAtom);
+  const setUser = useSetAtom(userAtom);
 
   useEffect(() => {
     return auth.onAuthStateChanged((user) => {

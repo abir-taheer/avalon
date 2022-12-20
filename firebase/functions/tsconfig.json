@@ -7,8 +7,12 @@
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "target": "es2017",
+    "noEmit": false,
+    "paths": {
+      "@/*": ["../../../*"]
+    }
   },
   "compileOnSave": true,
-  "include": ["src"]
+  "include": ["src", "index.ts"]
 }
