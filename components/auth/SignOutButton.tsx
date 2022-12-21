@@ -1,6 +1,6 @@
 import { auth } from "@/config";
 import { useCallback } from "react";
-import { Button } from "@/components";
+import { Button } from "@mui/material";
 import { signOut } from "firebase/auth";
 
 export const SignOutButton = () => {

@@ -24,18 +24,19 @@ export const createRoom = functions.https.onCall(
 
     // validate the game options from data
     const options: GameOptions = {
-      percival: data.percival || false,
-      mordred: data.mordred || false,
-      oberon: data.oberon || false,
-      morgana: data.morgana || false,
-      assassin: data.assassin || false,
+      merlin: data.merlin ?? true,
+      assassin: data.assassin ?? true,
+      percival: data.percival ?? false,
+      mordred: data.mordred ?? false,
+      oberon: data.oberon ?? false,
+      morgana: data.morgana ?? false,
     };
 
     const games = db.collection("games");
 
     const shortIdLength = Math.floor(Math.random() * 3) + 4;
 
-    const shortId = randomString(shortIdLength);
+    const shortId = randomString(shortIdLength).toUpperCase();
 
     const gameRef = await games.add({
       ownerId: context.auth.uid,

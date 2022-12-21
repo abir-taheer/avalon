@@ -6,11 +6,12 @@ export type Player = {
 };
 
 export type GameOptions = {
+  merlin: boolean; // knows bad guys, is good
+  assassin: boolean; // tries to guess merlin at the end of game, is bad
   percival: boolean; // knows merlin, is good
   mordred: boolean; // merlin doesn't know mordred, is bad
   oberon: boolean; // doesn't know merlin, is bad
   morgana: boolean; // looks like merlin, is bad. only if mordred is true
-  assassin: boolean; // tries to guess merlin at the end of game, is bad
 };
 
 export type Vote = {

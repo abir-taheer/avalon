@@ -1,10 +1,10 @@
-import { Typography } from "@/components";
+import { Typography } from "@mui/material";
 import { NewGameForm } from "@/forms/NewGameForm/NewGameForm";
 
 const NewGame = () => {
   return (
     <div>
-      <Typography use={"headline1"}>New Game</Typography>
+      <Typography variant={"h1"}>New Game</Typography>
 
       <NewGameForm />
     </div>

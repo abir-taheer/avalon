@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/config";
-import { Button } from "@/components";
+import { Button } from "@mui/material";
 
 export const AnonymousLoginButton = () => {
   const login = useCallback(() => {

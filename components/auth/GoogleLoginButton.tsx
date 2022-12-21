@@ -1,4 +1,4 @@
-import { Button } from "@/components";
+import { Button } from "@mui/material";
 import { useCallback } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config";

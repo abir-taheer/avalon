@@ -1,4 +1,7 @@
 {
   "extends": "next/core-web-vitals",
-  "ignorePatterns": ["firebase"]
+  "ignorePatterns": ["firebase"],
+  "rules": {
+    "react/no-unescaped-entities": "off"
+  }
 }
