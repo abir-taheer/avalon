@@ -30,6 +30,7 @@ export type Round = {
 
 export type Game = {
   id: string;
+  active: boolean;
   shortId?: string;
   ownerId: string;
   players: Player[];

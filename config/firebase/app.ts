@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import { Analytics, initializeAnalytics } from "firebase/analytics";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
@@ -24,6 +25,7 @@ export const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 export const RecaptchaProvider = new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY);
 

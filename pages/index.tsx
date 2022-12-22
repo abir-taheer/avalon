@@ -5,17 +5,23 @@ import {
   SignOutButton,
 } from "@/components/auth";
 import { useAtomValue } from "jotai";
-import { userAtom } from "@/atoms";
+import { userAtom, currentGameIdAtom, currentGameAtom } from "@/atoms";
 
 const Home: NextPage = () => {
   const user = useAtomValue(userAtom);
+  const current = useAtomValue(currentGameIdAtom);
+  const currentGame = useAtomValue(currentGameAtom);
 
   return (
     <div>
       <GoogleLoginButton />
       <AnonymousLoginButton />
       <SignOutButton />
-      {JSON.stringify(user)}
+      <pre>
+        {JSON.stringify(user, null, 2)}
+        {JSON.stringify(current, null, 2)}
+        {JSON.stringify(currentGame, null, 2)}
+      </pre>
     </div>
   );
 };
