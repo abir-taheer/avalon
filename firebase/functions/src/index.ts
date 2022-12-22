@@ -27,7 +27,7 @@ export const createRoom = functions.https.onCall(
 
     const existingGame = await games
       .where("playerIds", "array-contains", context.auth.uid)
-      .where("completed", "==", false)
+      .where("active", "==", true)
       .get();
 
     if (existingGame.size > 0) {
@@ -52,6 +52,7 @@ export const createRoom = functions.https.onCall(
     const shortId = randomString(shortIdLength).toUpperCase();
 
     const newGame: Partial<Game> = {
+      active: true,
       ownerId: context.auth.uid,
       createdAt:
         admin.firestore.FieldValue.serverTimestamp() as Game["createdAt"],
