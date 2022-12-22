@@ -40,7 +40,8 @@ const getActiveGame = async (userId: string) => {
   );
 
   if (games.size > 0) {
-    return games.docs[0].data() as Game;
+    const game = games.docs[0];
+    return { id: game.id, ...game.data() } as Game;
   }
 
   return null;
@@ -84,9 +85,16 @@ export const useCurrentGameListener = () => {
     if (!gameIdRef) {
       return;
     }
-    const unsubscribe = onSnapshot(gameIdRef, async (doc) => {
-      setCurrentGame(doc.data() as Game);
-    });
+
+    const unsubscribe = onSnapshot(
+      gameIdRef,
+      async (doc) => {
+        const newGame = { id: doc.id, ...doc.data() } as Game;
+
+        setCurrentGame(newGame);
+      },
+      console.error
+    );
 
     return unsubscribe;
   }, [gameIdRef, setCurrentGame]);
