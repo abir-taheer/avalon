@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { GameOptions } from "@/schema";
+import { Game, GameOptions } from "@/schema";
 import * as admin from "firebase-admin";
 import { randomString } from "./utils/randomString";
 
@@ -22,6 +22,21 @@ export const createRoom = functions.https.onCall(
       );
     }
 
+    // Make sure they're not already in a game
+    const games = db.collection("games");
+
+    const existingGame = await games
+      .where("playerIds", "array-contains", context.auth.uid)
+      .where("completed", "==", false)
+      .get();
+
+    if (existingGame.size > 0) {
+      throw new functions.https.HttpsError(
+        "permission-denied",
+        "You are already in a game"
+      );
+    }
+
     // validate the game options from data
     const options: GameOptions = {
       merlin: data.merlin ?? true,
@@ -32,17 +47,17 @@ export const createRoom = functions.https.onCall(
       morgana: data.morgana ?? false,
     };
 
-    const games = db.collection("games");
-
     const shortIdLength = Math.floor(Math.random() * 3) + 4;
 
     const shortId = randomString(shortIdLength).toUpperCase();
 
-    const gameRef = await games.add({
+    const newGame: Partial<Game> = {
       ownerId: context.auth.uid,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      createdAt:
+        admin.firestore.FieldValue.serverTimestamp() as Game["createdAt"],
       options,
       shortId,
+      playerIds: [context.auth.uid],
       players: [
         {
           id: context.auth.uid,
@@ -50,7 +65,9 @@ export const createRoom = functions.https.onCall(
           profilePicture: context.auth.token.picture || null,
         },
       ],
-    });
+    };
+
+    const gameRef = await games.add(newGame);
 
     return gameRef.id;
   }

@@ -33,6 +33,7 @@ export type Game = {
   shortId?: string;
   ownerId: string;
   players: Player[];
+  playerIds: string[];
   createdAt: Timestamp;
   options: GameOptions;
 };
