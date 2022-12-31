@@ -80,17 +80,21 @@ export const listenToUserActivity = async (id: string) => {
 
   let updated = false;
 
-  const unsubscribe = onValue(userStatusDatabaseRef, async (snapshot) => {
-    if (snapshot.val() === false || updated) {
-      return;
-    }
+  const unsubscribe = onValue(
+    userStatusDatabaseRef,
+    async (snapshot) => {
+      if (snapshot.val() === false || updated) {
+        return;
+      }
 
-    await onDisconnect(userStatusDatabaseRef).set(isOfflineForDatabase);
+      await onDisconnect(userStatusDatabaseRef).set(isOfflineForDatabase);
 
-    await set(userStatusDatabaseRef, isOnlineForDatabase);
+      await set(userStatusDatabaseRef, isOnlineForDatabase);
 
-    updated = true;
-  });
+      updated = true;
+    },
+    console.error
+  );
 
   return unsubscribe;
 };
@@ -142,9 +146,7 @@ export const useAuthListener = () => {
         setUser(doc.data() as User);
       });
 
-      const unsubscribeToActivityStatus = await listenToUserActivity(
-        authUser.uid
-      );
+      const unsubscribeToActivityStatus = await listenToUserActivity(user.id);
 
       const unsubscribe = () => {
         unsubscribeToUserSnapshot();
