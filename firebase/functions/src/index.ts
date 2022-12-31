@@ -68,34 +68,3 @@ export const createRoom = functions.https.onCall(
     return gameRef.id;
   }
 );
-
-exports.onUserStatusChanged = functions.database
-  .ref("/status/{uid}")
-  .onUpdate(async (change, context) => {
-    // Get the data written to Realtime Database
-    const eventStatus = change.after.val();
-
-    const userRef = db.doc("/users/" + context.params.uid);
-
-    const statusSnapshot = await change.after.ref.once("value");
-
-    const status = statusSnapshot.val();
-
-    // If the current timestamp for this data is newer than
-    // the data that triggered this event, we exit this function.
-    if (status.last_changed > eventStatus.last_changed) {
-      return null;
-    }
-
-    // Otherwise, we convert the last_changed field to a Date
-    eventStatus.last_changed = new Date(eventStatus.last_changed);
-
-    // ... and write it to Firestore.
-    // update the user activity status in firebase
-    return userRef.set(
-      {
-        active: eventStatus.state === "online",
-      },
-      { merge: true }
-    );
-  });

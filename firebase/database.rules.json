@@ -1,6 +1,26 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "user": {
+      // This is used to keep track of each user's name, pfp, and active status
+      "$uid": {
+        // This will get updated most often
+        "active": { ".validate": "newData.isBoolean()" },
+
+        // The public fields
+        "uid": { ".validate": "newData.val() == $uid" },
+        "displayName": {
+          ".validate": "newData.isString() && newData.val().length < 48"
+        },
+        "photoURL": {
+          ".validate": "newData.isString() && newData.val().length < 512"
+        },
+
+        // Allow users to read their own data, but not write to it
+        ".read": "auth != null",
+        // Only allow users to write to their own data
+        ".write": "auth.uid == $uid"
+        // Make sure any new days as an 'active' field and
+      }
+    }
   }
 }
