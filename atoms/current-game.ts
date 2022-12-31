@@ -63,7 +63,7 @@ export const useCurrentGameListener = () => {
   // when the user changes, check for an active game
   useEffect(() => {
     if (user) {
-      getActiveGame(user.uid).then((activeGame) => {
+      getActiveGame(user.id).then((activeGame) => {
         if (activeGame) {
           setCurrentGame(activeGame);
           setCurrentGameId(activeGame.id);
@@ -71,6 +71,7 @@ export const useCurrentGameListener = () => {
       });
     } else {
       setCurrentGameId(null);
+      setCurrentGame(null);
     }
   }, [user, setCurrentGameId, setCurrentGame]);
 

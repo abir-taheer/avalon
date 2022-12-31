@@ -1,4 +1,13 @@
 import { Timestamp } from "@firebase/firestore";
+
+export type User = {
+  id: string;
+  displayName: string;
+  photoUrl: string | null;
+  active: boolean;
+  anonymous: boolean;
+};
+
 export type Player = {
   id: string;
   name: string;

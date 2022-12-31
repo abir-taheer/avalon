@@ -6,11 +6,19 @@ import {
 } from "@/components/auth";
 import { useAtomValue } from "jotai";
 import { userAtom, currentGameIdAtom, currentGameAtom } from "@/atoms";
+import { useEffect } from "react";
+import { firstName } from "faker-en";
 
 const Home: NextPage = () => {
   const user = useAtomValue(userAtom);
   const current = useAtomValue(currentGameIdAtom);
   const currentGame = useAtomValue(currentGameAtom);
+
+  useEffect(() => {
+    const name = firstName();
+
+    console.log(name);
+  }, []);
 
   return (
     <div>

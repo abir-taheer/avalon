@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { Game, GameOptions } from "@/schema";
 import * as admin from "firebase-admin";
-import { randomString } from "./utils/randomString";
+import { randomString } from "@/utils";
 
 // // Start writing functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -59,13 +59,6 @@ export const createRoom = functions.https.onCall(
       options,
       shortId,
       playerIds: [context.auth.uid],
-      players: [
-        {
-          id: context.auth.uid,
-          name: context.auth.token.name || "Anonymous",
-          profilePicture: context.auth.token.picture || null,
-        },
-      ],
     };
 
     const gameRef = await games.add(newGame);
