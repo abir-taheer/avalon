@@ -1,9 +1,7 @@
 import * as functions from "firebase-functions";
 import { Game, GameOptions } from "@/schema";
 import * as admin from "firebase-admin";
-
-// We can't use our shorthand for this because this is a function and not a type
-import { randomString } from "../../../utils";
+import { randomString } from "@/utils";
 
 // // Start writing functions
 // // https://firebase.google.com/docs/functions/typescript
