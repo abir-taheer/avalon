@@ -9,7 +9,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "@/config";
+import { firestore } from "@/config";
 import { userAtom } from "./user";
 import { Game } from "@/schema";
 
@@ -18,7 +18,7 @@ export const currentGameIdAtom = atom<string | null>(null);
 export const currentGameAtom = atom<Game | null>(null);
 
 export const getGame = async (gameId: string) => {
-  const docRef = doc(db, "games", gameId);
+  const docRef = doc(firestore, "games", gameId);
   const game = await getDoc(docRef);
 
   if (game.exists()) {
@@ -29,7 +29,7 @@ export const getGame = async (gameId: string) => {
 };
 
 const getActiveGame = async (userId: string) => {
-  const gamesRef = collection(db, "games");
+  const gamesRef = collection(firestore, "games");
 
   const games = await getDocs(
     query(
@@ -57,13 +57,13 @@ export const useCurrentGameListener = () => {
       return null;
     }
 
-    return doc(db, "games", currentGameId);
+    return doc(firestore, "games", currentGameId);
   }, [currentGameId]);
 
   // when the user changes, check for an active game
   useEffect(() => {
     if (user) {
-      getActiveGame(user.id).then((activeGame) => {
+      getActiveGame(user.uid).then((activeGame) => {
         if (activeGame) {
           setCurrentGame(activeGame);
           setCurrentGameId(activeGame.id);

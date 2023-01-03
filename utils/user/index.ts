@@ -1,1 +1,1 @@
-export * from "./getDefaultUserProfilePic";
+export * from "./getDefaultPhotoURL";
