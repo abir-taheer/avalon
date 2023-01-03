@@ -5,14 +5,12 @@ import {
   SignOutButton,
 } from "@/components/auth";
 import { useAtomValue } from "jotai";
-import { userAtom, currentGameIdAtom, currentGameAtom } from "@/atoms";
+import { authUserAtom } from "@/atoms";
 import { useEffect } from "react";
 import { firstName } from "faker-en";
 
 const Home: NextPage = () => {
-  const user = useAtomValue(userAtom);
-  const current = useAtomValue(currentGameIdAtom);
-  const currentGame = useAtomValue(currentGameAtom);
+  const user = useAtomValue(authUserAtom);
 
   useEffect(() => {
     const name = firstName();
@@ -25,11 +23,7 @@ const Home: NextPage = () => {
       <GoogleLoginButton />
       <AnonymousLoginButton />
       <SignOutButton />
-      <pre>
-        {JSON.stringify(user, null, 2)}
-        {JSON.stringify(current, null, 2)}
-        {JSON.stringify(currentGame, null, 2)}
-      </pre>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
     </div>
   );
 };
