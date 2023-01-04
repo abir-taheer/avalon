@@ -1,6 +1,6 @@
 import { RealTimeUser } from "@/schema";
 import { useEffect, useMemo, useState } from "react";
-import { onValue, query, ref } from "firebase/database";
+import { onValue, ref } from "firebase/database";
 import { realtime } from "@/config";
 
 export type UseRealTimeUserProps = {

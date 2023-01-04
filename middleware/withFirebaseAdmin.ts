@@ -1,7 +1,7 @@
 import { UserRecord } from "firebase-admin/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import * as firebaseAdmin from "firebase-admin";
-import { cert, App } from "firebase-admin/app";
+import { App } from "firebase-admin/app";
 import { FIREBASE_CONFIG } from "@/constants";
 import { ApiHandlerError, withErrorHandler } from "./withErrorHandler";
 
