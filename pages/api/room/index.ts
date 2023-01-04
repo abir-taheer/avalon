@@ -1,11 +1,5 @@
-import { app } from "@/firebase/admin";
-import { withAppCheck } from "@/middleware";
-import { withContext } from "@/middleware/withContext";
+import { withAuth } from "@/middleware";
 
-export default withContext((context) => {
-  const { user, authRequired } = context;
-
-  const auth = app.auth();
-
-  return context.user!;
+export default withAuth((context) => {
+  return context.user.displayName;
 });
