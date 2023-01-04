@@ -11,7 +11,7 @@ import {
   isOptionAvailable,
   useNewGameForm,
 } from "./useNewGameForm";
-import { ReactNode, useCallback, useEffect } from "react";
+import { ReactNode, useCallback } from "react";
 import { GameOptions } from "@/schema";
 
 type OptionalPlayer = keyof GameOptions;

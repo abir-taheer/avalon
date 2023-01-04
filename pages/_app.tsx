@@ -2,10 +2,12 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { DialogProvider } from "@/components/dialog/DialogProvider";
 import { useAtomValue } from "jotai";
-import { userAtom } from "@/atoms";
+import { authUserAtom } from "@/atoms";
+import { useAuthListener } from "@/hooks/auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const user = useAtomValue(userAtom);
+  useAuthListener();
+  const user = useAtomValue(authUserAtom);
 
   return (
     <DialogProvider>
