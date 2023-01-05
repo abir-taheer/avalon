@@ -14,6 +14,10 @@
         "photoURL": {
           ".validate": "newData.isString() && newData.val().length < 512"
         },
+        "$other": { ".validate": false },
+
+        // Require all of the fields to be non-empty
+        ".validate": "newData.hasChildren(['photoURL', 'displayName', 'uid', 'active'])",
 
         // Allow users to read their own data, but not write to it
         ".read": "auth != null",
