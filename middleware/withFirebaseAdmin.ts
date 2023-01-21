@@ -2,6 +2,9 @@ import { UserRecord } from "firebase-admin/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import * as firebaseAdmin from "firebase-admin";
 import { App } from "firebase-admin/app";
+import { Firestore } from "firebase-admin/firestore";
+import { Database } from "firebase-admin/database";
+import { Auth } from "firebase-admin/auth";
 import { FIREBASE_CONFIG } from "@/constants";
 import { ApiHandlerError, withErrorHandler } from "./withErrorHandler";
 
@@ -30,7 +33,12 @@ export type WithFirebaseAdminContext = {
   req: NextApiRequest;
   res: NextApiResponse;
   user: UserRecord | null;
+
   app: App;
+
+  auth: Auth;
+  firestore: Firestore;
+  realtime: Database;
 };
 
 export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
@@ -41,6 +49,8 @@ export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
 
     const app = getApp();
     const auth = app.auth();
+    const firestore = app.firestore();
+    const realtime = app.database();
 
     try {
       if (!appCheckToken || typeof appCheckToken !== "string") {
@@ -67,6 +77,10 @@ export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
       req,
       res,
       user,
+
+      auth,
+      firestore,
+      realtime,
     };
 
     const response = await next(context);

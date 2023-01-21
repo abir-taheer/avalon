@@ -10,7 +10,7 @@ type ContextWithUser = Omit<WithFirebaseAdminContext, "user"> & {
   user: UserRecord;
 };
 
-type FirebaseAdminHandlerWithUser = (context: ContextWithUser) => any;
+export type FirebaseAdminHandlerWithUser = (context: ContextWithUser) => any;
 
 export const withAuth = (next: FirebaseAdminHandlerWithUser) => {
   const handler: WithFirebaseAdminHandler = async (context) => {

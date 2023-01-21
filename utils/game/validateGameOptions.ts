@@ -1,24 +1,26 @@
-import { GameOptions } from "@/schema";
+import { GameOptions, Character, CharacterOptions } from "@/schema";
 import { FormikErrors } from "formik";
+import { characters } from "@/forms/NewGameForm/useNewGameForm";
+import { validateCharacterOptions } from "@/utils/game/validateCharacterOptions";
 
-export const validateGameOptions = (options: GameOptions) => {
+export const optionDependencies: Record<Character, Character[]> = {
+  // Merlin and oberon are always available
+  merlin: [],
+  oberon: [],
+
+  // Assassin is only available if merlin is enabled
+  assassin: ["merlin"],
+  mordred: ["merlin"],
+  percival: ["merlin"],
+
+  // Morgana is only available if percival is enabled
+  morgana: ["percival"],
+};
+
+export const validateGameOptions = (values: GameOptions) => {
   const errors: FormikErrors<GameOptions> = {};
 
-  if (options.assassin && !options.merlin) {
-    errors.merlin = "Assassin cannot be enabled without Merlin";
-  }
-
-  if (options.mordred && !options.merlin) {
-    errors.mordred = "Mordred cannot be enabled without Merlin";
-  }
-
-  if (options.percival && !options.merlin) {
-    errors.percival = "Percival cannot be enabled without Merlin";
-  }
-
-  if (options.morgana && !options.percival) {
-    errors.morgana = "Morgana cannot be enabled without Percival";
-  }
+  errors.characters = validateCharacterOptions(values.characters);
 
   return errors;
 };

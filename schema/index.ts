@@ -13,13 +13,18 @@ export type Player = {
   profilePicture?: string | null;
 };
 
+export type Character =
+  | "merlin"
+  | "assassin"
+  | "percival"
+  | "morgana"
+  | "mordred"
+  | "oberon";
+
+export type CharacterOptions = Record<Character, boolean>;
+
 export type GameOptions = {
-  merlin: boolean; // knows bad guys, is good
-  assassin: boolean; // tries to guess merlin at the end of game, is bad
-  percival: boolean; // knows merlin, is good
-  mordred: boolean; // merlin doesn't know mordred, is bad
-  oberon: boolean; // doesn't know merlin, is bad
-  morgana: boolean; // looks like merlin, is bad. only if mordred is true
+  characters: CharacterOptions;
 };
 
 export type Vote = {
@@ -39,9 +44,7 @@ export type Round = {
 export type Game = {
   id: string;
   active: boolean;
-  shortId?: string;
   ownerId: string;
-  players: Player[];
   playerIds: string[];
   createdAt: Timestamp;
   options: GameOptions;
