@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 
 export type DialogProviderProps = {
   children: ReactNode;

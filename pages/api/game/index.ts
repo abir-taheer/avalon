@@ -3,14 +3,19 @@ import {
   FirebaseAdminHandlerWithUser,
   withAuth,
 } from "@/middleware";
-import { Game } from "@/schema";
-import { Timestamp } from "@firebase/firestore";
+import { Game, GameStatus } from "@/schema";
 import { word } from "faker-en/word";
-import { randomNumber } from "faker-en/utils/randomNumber";
 import { isGameOptions } from "@/utils/type-checker/isGameOptions";
+import { validateGameOptions } from "@/utils/game/validateGameOptions";
+import { flatObjectValues } from "@/utils/object/flatObjectValues";
+import { Timestamp } from "@firebase/firestore";
+
+const getGameId = (length: number) => {
+  return Array.from(Array(length), () => word()).join("-");
+};
 
 const createGame: FirebaseAdminHandlerWithUser = async (context) => {
-  const { user, req, res, firestore, app } = context;
+  const { user, req, admin, firestore } = context;
 
   if (!isGameOptions(req.body)) {
     throw new ApiHandlerError({
@@ -20,37 +25,78 @@ const createGame: FirebaseAdminHandlerWithUser = async (context) => {
     });
   }
 
-  const numWords = randomNumber({ min: 3, max: 5 });
-  const id = Array.from(Array(numWords), () => word()).join("-");
+  const gameOptionsErrors = validateGameOptions(req.body);
 
-  const docWithId = await firestore.collection("games").doc(id).get();
+  // We might have nested errors in the case of characters
+  // So we flatten the errors object into an array of error messages for simple error checking
+  const errorMessages = flatObjectValues(gameOptionsErrors);
 
-  if (docWithId.exists && docWithId.data()?.active) {
+  if (errorMessages.length > 0) {
+    throw new ApiHandlerError({
+      code: "invalid-argument",
+      message: "Invalid game options.",
+      status: 400,
+    });
+  }
+
+  // Check to make sure they're not already in a game
+  const userCurrentGame = await firestore
+    .collection("games")
+    .where("playerIds", "array-contains", user.uid)
+    .where("status", "in", [GameStatus.waiting, GameStatus.started])
+    .get();
+
+  if (userCurrentGame.docs.length > 0) {
+    throw new ApiHandlerError({
+      code: "permission-denied",
+      message: "You are already in a game. Leave it before creating another.",
+      status: 400,
+    });
+  }
+
+  let idLength = 3;
+
+  // Generate an id for the game
+  let id = getGameId(idLength);
+
+  // Make sure the id is unique
+  let idExistsAlready = false;
+
+  // Most likely will never need more than a single try but just for safety
+  do {
+    const doc = await firestore.collection("games").doc(id).get();
+    idExistsAlready = doc.exists;
+
+    if (idExistsAlready) {
+      idLength++;
+      id = getGameId(idLength);
+    }
+  } while (idExistsAlready && idLength < 10);
+
+  // Absolutely no idea how this would happen but just in case
+  if (idExistsAlready) {
     throw new ApiHandlerError({
       code: "internal",
-      message:
-        "The id generated for this game is already in use. This is an incredibly rare error, please try again.",
+      message: "Unable to generate a unique game id. Contact game developers.",
       status: 500,
     });
   }
 
   const game: Game = {
     id,
-    active: true,
+    status: GameStatus.waiting,
     ownerId: user.uid,
     playerIds: [user.uid],
-    createdAt: Timestamp.now(),
-    options: {
-      ...req.body,
-    },
+    createdAt: admin.firestore.FieldValue.serverTimestamp() as Timestamp,
+    options: req.body,
   };
 
   await firestore.collection("games").doc(id).set(game);
 
-  res.status(200).json({ id });
+  return { id };
 };
 
-export default withAuth((context) => {
+export default withAuth(async (context) => {
   if (context.req.method === "POST") {
     return createGame(context);
   }

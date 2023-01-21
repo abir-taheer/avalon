@@ -1,14 +1,16 @@
 import { UserRecord } from "firebase-admin/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import * as firebaseAdmin from "firebase-admin";
-import { App } from "firebase-admin/app";
 import { Firestore } from "firebase-admin/firestore";
 import { Database } from "firebase-admin/database";
 import { Auth } from "firebase-admin/auth";
 import { FIREBASE_CONFIG } from "@/constants";
 import { ApiHandlerError, withErrorHandler } from "./withErrorHandler";
+import { app } from "firebase-admin";
 
-const getApp = () => {
+type App = app.App;
+
+const getApp = (): App => {
   try {
     return firebaseAdmin.app("[DEFAULT]");
   } catch (e) {}
@@ -20,6 +22,7 @@ const getApp = () => {
     {
       credential,
       projectId: FIREBASE_CONFIG.project_id,
+      databaseURL: `https://${FIREBASE_CONFIG.project_id}-default-rtdb.firebaseio.com`,
     },
     "[DEFAULT]"
   );
@@ -34,7 +37,8 @@ export type WithFirebaseAdminContext = {
   res: NextApiResponse;
   user: UserRecord | null;
 
-  app: App;
+  admin: typeof firebaseAdmin;
+  app: app.App;
 
   auth: Auth;
   firestore: Firestore;
@@ -48,9 +52,9 @@ export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
     const idToken = req.headers.authorization?.replace(/^Bearer /i, "") || "";
 
     const app = getApp();
-    const auth = app.auth();
-    const firestore = app.firestore();
-    const realtime = app.database();
+    const auth = firebaseAdmin.auth();
+    const firestore = firebaseAdmin.firestore();
+    const realtime = firebaseAdmin.database();
 
     try {
       if (!appCheckToken || typeof appCheckToken !== "string") {
@@ -78,12 +82,22 @@ export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
       res,
       user,
 
+      admin: firebaseAdmin,
       auth,
       firestore,
       realtime,
     };
 
-    const response = await next(context);
+    let response = await next(context);
+
+    let levels = 1;
+
+    // Await any promises that get returned up to 5 levels deep
+    while (response instanceof Promise && levels < 5) {
+      response = await response;
+      levels++;
+    }
+
     res.status(200).json({ data: response });
   };
 

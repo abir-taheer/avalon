@@ -41,9 +41,15 @@ export type Round = {
   completed?: boolean;
 };
 
+export enum GameStatus {
+  "waiting" = "waiting",
+  "started" = "started",
+  "completed" = "completed",
+}
+
 export type Game = {
   id: string;
-  active: boolean;
+  status: GameStatus;
   ownerId: string;
   playerIds: string[];
   createdAt: Timestamp;
