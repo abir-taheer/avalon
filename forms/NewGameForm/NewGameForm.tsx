@@ -27,7 +27,10 @@ export const NewGameForm = (props: NewGameFormProps) => {
               <Checkbox
                 checked={values.characters[character]}
                 onChange={(ev) =>
-                  setFieldValue(character, ev.currentTarget.checked)
+                  setFieldValue(
+                    `characters.${character}`,
+                    ev.currentTarget.checked
+                  )
                 }
               />
             }

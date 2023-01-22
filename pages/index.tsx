@@ -10,19 +10,12 @@ import { useEffect } from "react";
 import { firstName } from "faker-en";
 import { useAPI } from "@/hooks/api/useAPI";
 import { LockTwoTone } from "@mui/icons-material";
+import { useCurrentUserGameId } from "@/queries/useCurrentUserGame";
 
 const Home: NextPage = () => {
   const user = useAtomValue(authUserAtom);
 
-  const api = useAPI();
-
-  useEffect(() => {
-    const name = firstName();
-
-    api.get("/room").then(console.log);
-
-    console.log(name);
-  }, [api]);
+  const { data } = useCurrentUserGameId();
 
   return (
     <div>
@@ -30,6 +23,8 @@ const Home: NextPage = () => {
       <AnonymousLoginButton />
       <SignOutButton />
       <pre>{JSON.stringify(user, null, 2)}</pre>
+
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 };

@@ -3,18 +3,18 @@ import {
   FirebaseAdminHandlerWithUser,
   withAuth,
 } from "@/middleware";
-import { Game, GameStatus } from "@/schema";
 import { word } from "faker-en/word";
-import { isGameOptions } from "@/utils/type-checker/isGameOptions";
-import { validateGameOptions } from "@/utils/game/validateGameOptions";
+import { Game, GameStatus } from "@/schema";
+import { isGameOptions, validateGameOptions, flattenObject } from "@/utils";
 import { Timestamp } from "@firebase/firestore";
-import { flattenObject } from "@/utils/object/flattenObject";
 
 const getGameId = (length: number) => {
   return Array.from(Array(length), () => word()).join("-");
 };
 
-const createGame: FirebaseAdminHandlerWithUser = async (context) => {
+const createGame: FirebaseAdminHandlerWithUser = async (
+  context
+): Promise<POSTGameAPIResponse> => {
   const { user, req, admin, firestore } = context;
 
   if (!isGameOptions(req.body)) {
@@ -64,9 +64,9 @@ const createGame: FirebaseAdminHandlerWithUser = async (context) => {
   // Generate an id for the game
   let id = getGameId(idLength);
 
-  // Make sure the id is unique
   let idExistsAlready = false;
 
+  // Make sure the id is unique
   // Most likely will never need more than a single try but just for safety
   do {
     const doc = await firestore.collection("games").doc(id).get();
@@ -105,4 +105,14 @@ export default withAuth(async (context) => {
   if (context.req.method === "POST") {
     return createGame(context);
   }
+
+  throw new ApiHandlerError({
+    code: "unimplemented",
+    message: "This method is not implemented",
+    status: 405,
+  });
 });
+
+export type POSTGameAPIResponse = {
+  id: string;
+};

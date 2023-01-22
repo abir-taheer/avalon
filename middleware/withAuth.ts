@@ -10,6 +10,10 @@ type ContextWithUser = Omit<WithFirebaseAdminContext, "user"> & {
   user: UserRecord;
 };
 
+export type WrappedApiResponse<Data> = {
+  data: Data;
+};
+
 export type FirebaseAdminHandlerWithUser = (context: ContextWithUser) => any;
 
 export const withAuth = (next: FirebaseAdminHandlerWithUser) => {

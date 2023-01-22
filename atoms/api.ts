@@ -20,11 +20,15 @@ export const apiAtom = atom(async (get) => {
     }
   } catch (er) {}
 
-  return axios.create({
+  const instance = axios.create({
     baseURL,
     headers: {
       Authorization: authorization,
       "X-Firebase-AppCheck": appCheckToken,
     },
   });
+
+  instance.interceptors.response.use((response) => response.data);
+
+  return instance;
 });

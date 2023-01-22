@@ -3,14 +3,7 @@ import { auth } from "@/config";
 import { useAtom, useSetAtom } from "jotai";
 import { useEffect, useMemo } from "react";
 import { realtime } from "@/config";
-import {
-  get,
-  onDisconnect,
-  onValue,
-  ref,
-  set,
-  update,
-} from "firebase/database";
+import { onDisconnect, onValue, ref, set, update } from "firebase/database";
 import { RealTimeUser } from "@/schema";
 import { fullName } from "faker-en";
 import { updateProfile } from "firebase/auth";
