@@ -14,7 +14,7 @@ export const validateCharacterOptions = (options: CharacterOptions) => {
     );
 
     if (failingDependency) {
-      errors[opt] = `Requires ${failingDependency} to be enabled`;
+      errors[opt] = `requires ${failingDependency} to be enabled`;
     }
   });
 

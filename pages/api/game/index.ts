@@ -7,8 +7,8 @@ import { Game, GameStatus } from "@/schema";
 import { word } from "faker-en/word";
 import { isGameOptions } from "@/utils/type-checker/isGameOptions";
 import { validateGameOptions } from "@/utils/game/validateGameOptions";
-import { flatObjectValues } from "@/utils/object/flatObjectValues";
 import { Timestamp } from "@firebase/firestore";
+import { flattenObject } from "@/utils/object/flattenObject";
 
 const getGameId = (length: number) => {
   return Array.from(Array(length), () => word()).join("-");
@@ -29,12 +29,17 @@ const createGame: FirebaseAdminHandlerWithUser = async (context) => {
 
   // We might have nested errors in the case of characters
   // So we flatten the errors object into an array of error messages for simple error checking
-  const errorMessages = flatObjectValues(gameOptionsErrors);
+  const flatErrorMap = flattenObject<string>(gameOptionsErrors);
 
-  if (errorMessages.length > 0) {
+  const fieldsWithErrors = Object.keys(flatErrorMap);
+
+  if (fieldsWithErrors.length > 0) {
+    const firstErrorKey = fieldsWithErrors[0];
+    const firstErrorValue = flatErrorMap[firstErrorKey];
+
     throw new ApiHandlerError({
       code: "invalid-argument",
-      message: "Invalid game options.",
+      message: `Invalid game options. ${firstErrorKey} - ${firstErrorValue}`,
       status: 400,
     });
   }
