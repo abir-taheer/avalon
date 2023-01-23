@@ -10,21 +10,27 @@ import { useEffect } from "react";
 import { firstName } from "faker-en";
 import { useAPI } from "@/hooks/api/useAPI";
 import { LockTwoTone } from "@mui/icons-material";
-import { useCurrentUserGameId } from "@/queries/useCurrentUserGame";
+import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
+import { GamePreviewCard } from "@/components/game/GamePreviewCard";
+import { Stack, Typography } from "@mui/material";
 
 const Home: NextPage = () => {
   const user = useAtomValue(authUserAtom);
 
-  const { data } = useCurrentUserGameId();
+  const { data } = useCurrentUserGameIdQuery();
 
   return (
     <div>
       <GoogleLoginButton />
       <AnonymousLoginButton />
       <SignOutButton />
-      <pre>{JSON.stringify(user, null, 2)}</pre>
 
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {data?.id && (
+        <Stack>
+          <Typography variant={"h3"}>You're currently in this game</Typography>
+          <GamePreviewCard id={data.id} />
+        </Stack>
+      )}
     </div>
   );
 };

@@ -2,12 +2,12 @@ import { Typography } from "@mui/material";
 import { NewGameForm } from "@/forms/NewGameForm/NewGameForm";
 import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
 import { useCreateGameMutation } from "@/mutations/useCreateGameMutation";
-import { useCurrentUserGameId } from "@/queries/useCurrentUserGame";
+import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
 
 const NewGame = () => {
   const { mutate } = useCreateGameMutation();
 
-  const { data } = useCurrentUserGameId();
+  const { data } = useCurrentUserGameIdQuery();
 
   const form = useNewGameForm({
     onSubmit: (values) => {

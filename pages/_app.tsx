@@ -3,9 +3,10 @@ import type { AppProps } from "next/app";
 import { DialogProvider } from "@/components/dialog/DialogProvider";
 import { useAuthListener } from "@/hooks/auth";
 import { Navbar } from "@/components/navigation/Navbar";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { queryClient } from "@/queries/queryClient";
-import { useCurrentUserGameId } from "@/queries/useCurrentUserGame";
+import { Container } from "@mui/material";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useAuthListener();
@@ -14,7 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <DialogProvider>
         <Navbar />
-        <Component {...pageProps} />
+        <Container maxWidth={"md"}>
+          <Component {...pageProps} />
+        </Container>
       </DialogProvider>
     </QueryClientProvider>
   );

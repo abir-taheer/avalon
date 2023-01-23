@@ -14,7 +14,9 @@ export type UseCurrentUserGameIdProps = {
   query?: UseQueryWrapperProps<CurrentUserGameIdQueryDataType>;
 };
 
-export const useCurrentUserGameId = (props?: UseCurrentUserGameIdProps) => {
+export const useCurrentUserGameIdQuery = (
+  props?: UseCurrentUserGameIdProps
+) => {
   const user = useAtomValue(userAtom);
 
   return useQuery<CurrentUserGameIdQueryDataType>({

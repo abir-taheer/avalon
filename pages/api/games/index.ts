@@ -12,10 +12,10 @@ const getGameId = (length: number) => {
   return Array.from(Array(length), () => word()).join("-");
 };
 
-const createGame: FirebaseAdminHandlerWithUser = async (
+const POST_Games: FirebaseAdminHandlerWithUser = async (
   context
-): Promise<POSTGameAPIResponse> => {
-  const { user, req, admin, firestore } = context;
+): Promise<POST_GamesAPIResponse> => {
+  const { user, req, admin, firestore, getCurrentGame } = context;
 
   if (!isGameOptions(req.body)) {
     throw new ApiHandlerError({
@@ -45,13 +45,9 @@ const createGame: FirebaseAdminHandlerWithUser = async (
   }
 
   // Check to make sure they're not already in a game
-  const userCurrentGame = await firestore
-    .collection("games")
-    .where("playerIds", "array-contains", user.uid)
-    .where("status", "in", [GameStatus.waiting, GameStatus.started])
-    .get();
+  const usersCurrentGame = await getCurrentGame(user.uid);
 
-  if (userCurrentGame.docs.length > 0) {
+  if (usersCurrentGame !== null) {
     throw new ApiHandlerError({
       code: "permission-denied",
       message: "You are already in a game. Leave it before creating another.",
@@ -103,7 +99,7 @@ const createGame: FirebaseAdminHandlerWithUser = async (
 
 export default withAuth(async (context) => {
   if (context.req.method === "POST") {
-    return createGame(context);
+    return POST_Games(context);
   }
 
   throw new ApiHandlerError({
@@ -113,6 +109,6 @@ export default withAuth(async (context) => {
   });
 });
 
-export type POSTGameAPIResponse = {
+export type POST_GamesAPIResponse = {
   id: string;
 };

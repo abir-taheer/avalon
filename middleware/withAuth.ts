@@ -18,7 +18,7 @@ export type FirebaseAdminHandlerWithUser = (context: ContextWithUser) => any;
 
 export const withAuth = (next: FirebaseAdminHandlerWithUser) => {
   const handler: WithFirebaseAdminHandler = async (context) => {
-    const { user } = context;
+    const { user, firestore } = context;
 
     if (!user) {
       throw new ApiHandlerError({

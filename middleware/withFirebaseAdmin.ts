@@ -7,6 +7,7 @@ import { Auth } from "firebase-admin/auth";
 import { FIREBASE_CONFIG } from "@/constants";
 import { ApiHandlerError, withErrorHandler } from "./withErrorHandler";
 import { app } from "firebase-admin";
+import { Game, GameStatus } from "@/schema";
 
 type App = app.App;
 
@@ -36,6 +37,7 @@ export type WithFirebaseAdminContext = {
   req: NextApiRequest;
   res: NextApiResponse;
   user: UserRecord | null;
+  getCurrentGame: (userId: string) => Promise<Game | null>;
 
   admin: typeof firebaseAdmin;
   app: app.App;
@@ -76,11 +78,26 @@ export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
       user = await auth.getUser(decodedToken.uid);
     } catch (e) {}
 
+    const getCurrentGame = async (userId: string) => {
+      const games = await firestore
+        .collection("games")
+        .where("playerIds", "array-contains", userId)
+        .where("status", "in", [GameStatus.waiting, GameStatus.started])
+        .get();
+
+      if (games.empty) {
+        return null;
+      }
+
+      return games.docs?.[0]?.data() as Game;
+    };
+
     const context: WithFirebaseAdminContext = {
       app,
       req,
       res,
       user,
+      getCurrentGame,
 
       admin: firebaseAdmin,
       auth,

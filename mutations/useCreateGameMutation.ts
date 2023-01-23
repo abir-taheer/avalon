@@ -4,7 +4,7 @@ import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
 import { useCallback } from "react";
 import { useAPI } from "@/hooks";
 import { QUERY_KEY } from "@/queries/queryKey";
-import { POSTGameAPIResponse } from "@/pages/api/games";
+import { POST_GamesAPIResponse } from "@/pages/api/games";
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/atoms";
 
@@ -31,7 +31,7 @@ export const useCreateGameMutation = (props?: UseCreateGameMutationProps) => {
     UseCreateGameMutationVariables
   > = useCallback(
     async (options) => {
-      const { data } = await api.post<POSTGameAPIResponse>("/games", options);
+      const { data } = await api.post<POST_GamesAPIResponse>("/games", options);
 
       queryClient.setQueryData(
         [QUERY_KEY.USER_CURRENT_GAME_ID, user?.uid],
