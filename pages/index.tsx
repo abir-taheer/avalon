@@ -8,8 +8,9 @@ import { useAtomValue } from "jotai";
 import { authUserAtom } from "@/atoms";
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
 import { GamePreviewCard } from "@/components/game/GamePreviewCard";
-import { Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import { AuthBanner } from "@/components/auth/AuthBanner";
+import { ActiveGameBanner } from "@/components/game/ActiveGameBanner";
 
 const Home: NextPage = () => {
   const user = useAtomValue(authUserAtom);
@@ -17,22 +18,13 @@ const Home: NextPage = () => {
   const { data } = useCurrentUserGameIdQuery();
 
   return (
-    <div>
+    <Stack spacing={4} justifyContent={"center"} alignItems={"center"}>
       <AuthBanner />
 
-      {user && (
-        <Typography variant={"h1"}>
-          You're currently signed in as {user.displayName}
-        </Typography>
-      )}
+      <Divider sx={{ height: 1, width: "80%" }} />
 
-      {data?.id && (
-        <Stack>
-          <Typography variant={"h3"}>You're currently in this game</Typography>
-          <GamePreviewCard id={data.id} />
-        </Stack>
-      )}
-    </div>
+      <ActiveGameBanner />
+    </Stack>
   );
 };
 

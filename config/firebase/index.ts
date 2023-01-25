@@ -4,3 +4,4 @@ export * from "./appCheck";
 export * from "./auth";
 export * from "./realtime";
 export * from "./firestore";
+export * from "./storage";

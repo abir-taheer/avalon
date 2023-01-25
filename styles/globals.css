@@ -15,3 +15,9 @@ a {
   box-sizing: border-box;
 }
 
+code {
+  background-color: rgba(27, 31, 35, 0.05);
+  padding: 0.25rem;
+  border-radius: 10px
+}
+

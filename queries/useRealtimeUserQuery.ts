@@ -9,7 +9,7 @@ import { onValue, ref } from "firebase/database";
 
 export type UseRealtimeUserQueryProps = {
   id: string;
-  query: UseQueryWrapperProps<RealTimeUser>;
+  query?: UseQueryWrapperProps<RealTimeUser>;
 };
 
 export const useRealtimeUserQuery = ({
