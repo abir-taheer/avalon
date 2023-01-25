@@ -16,18 +16,14 @@ import { ref as realtimeRef, update } from "firebase/database";
 import { updateProfile } from "firebase/auth";
 import { EditPhotoButton } from "@/components/auth/EditPhotoButton";
 import { EditNameButton } from "@/components/auth/EditNameButton";
+import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
 
 export const AuthenticatedBanner = () => {
   const user = useAtomValue(userAtom);
 
   return (
     <Stack justifyContent={"center"} alignItems={"center"} spacing={2}>
-      <img
-        referrerPolicy={"no-referrer"}
-        src={user!.photoURL}
-        alt={"User Avatar"}
-        style={{ height: 64, width: 64, borderRadius: "50%" }}
-      />
+      <OptimizedAvatar src={user!.photoURL} height={128} width={128} />
 
       <Typography>You're signed in as </Typography>
       <Typography color={"primary"}>{user!.displayName}</Typography>

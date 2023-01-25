@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { CircleRounded } from "@mui/icons-material";
+import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
 
 export type PlayerListItemProps = {
   id: string;
@@ -24,7 +25,7 @@ export const PlayerListItem = ({ id }: PlayerListItemProps) => {
   return (
     <ListItem>
       <ListItemAvatar>
-        <Avatar src={data.photoURL} />
+        <OptimizedAvatar src={data.photoURL} width={48} height={48} />
       </ListItemAvatar>
 
       <ListItemText
