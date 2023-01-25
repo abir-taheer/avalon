@@ -44,7 +44,7 @@ export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
           >
             <List>
               {data.playerIds.map((id) => (
-                <PlayerListItem id={id} />
+                <PlayerListItem id={id} key={id} />
               ))}
             </List>
           </SimpleAccordion>
