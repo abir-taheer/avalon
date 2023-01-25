@@ -1,12 +1,24 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/config";
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 
-export const AnonymousLoginButton = () => {
+export const AnonymousLoginButton = (props: ButtonProps) => {
+  const [disabled, setDisabled] = useState(false);
   const login = useCallback(() => {
-    signInAnonymously(auth).then(console.log);
+    setDisabled(true);
+    signInAnonymously(auth).finally(() => setDisabled(false));
   }, []);
 
-  return <Button onClick={login}>Login Anonymously</Button>;
+  return (
+    <Button
+      variant={"outlined"}
+      color={"secondary"}
+      onClick={login}
+      disabled={disabled}
+      {...props}
+    >
+      Continue as Guest
+    </Button>
+  );
 };

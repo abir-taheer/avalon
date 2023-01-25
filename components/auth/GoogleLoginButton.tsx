@@ -1,14 +1,33 @@
-import { Button } from "@mui/material";
-import { useCallback } from "react";
+import { Button, ButtonProps, Icon } from "@mui/material";
+import { useCallback, useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config";
+import { GoogleIcon } from "@/icons/Google";
 
-export const GoogleLoginButton = () => {
+export const GoogleLoginButton = (props: ButtonProps) => {
+  const [disabled, setDisabled] = useState(false);
+
   const login = useCallback(() => {
     const provider = new GoogleAuthProvider();
 
-    signInWithPopup(auth, provider).then(console.log);
+    setDisabled(true);
+    signInWithPopup(auth, provider)
+      .catch()
+      .finally(() => {
+        setDisabled(false);
+      });
   }, []);
 
-  return <Button onClick={login}>Login With Google</Button>;
+  return (
+    <Button
+      onClick={login}
+      startIcon={<GoogleIcon />}
+      variant={"outlined"}
+      disabled={disabled}
+      sx={{ padding: "0.5rem 1rem" }}
+      {...props}
+    >
+      Login With Google
+    </Button>
+  );
 };

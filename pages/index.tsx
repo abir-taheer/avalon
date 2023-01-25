@@ -13,6 +13,7 @@ import { LockTwoTone } from "@mui/icons-material";
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
 import { GamePreviewCard } from "@/components/game/GamePreviewCard";
 import { Stack, Typography } from "@mui/material";
+import { AuthBanner } from "@/components/auth/AuthBanner";
 
 const Home: NextPage = () => {
   const user = useAtomValue(authUserAtom);
@@ -21,9 +22,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <GoogleLoginButton />
-      <AnonymousLoginButton />
-      <SignOutButton />
+      <AuthBanner />
 
       {data?.id && (
         <Stack>

@@ -4,16 +4,18 @@ export default function Document() {
   return (
     <Html>
       <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=optional"
-          rel="stylesheet"
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin={"true"}
         />
         <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons&display=optional"
+          href="https://fonts.googleapis.com/css2?foiret+One&display=swap"
           rel="stylesheet"
         />
       </Head>
-      <body className={"mdc-typography mdc-theme--background"}>
+      <body>
         <Main />
         <NextScript />
       </body>
