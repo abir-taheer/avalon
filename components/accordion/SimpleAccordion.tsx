@@ -21,7 +21,7 @@ export const SimpleAccordion = ({
   const shouldRenderDetails = Boolean(open || renderDetailsIfHidden);
 
   return (
-    <Accordion expanded={open} onChange={(ev) => setOpen(!open)}>
+    <Accordion expanded={open} onChange={() => setOpen(!open)}>
       <AccordionSummary expandIcon={<ExpandMore />} id={id}>
         {summary}
       </AccordionSummary>

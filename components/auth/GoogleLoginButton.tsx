@@ -1,4 +1,4 @@
-import { Button, ButtonProps, Icon } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import { useCallback, useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config";

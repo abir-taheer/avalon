@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 
 export type DialogProviderProps = {
   children: ReactNode;
@@ -9,16 +9,12 @@ export type Dialog = {
 };
 
 export const DialogProvider = ({ children }: DialogProviderProps) => {
-  const [dialogs, setDialogs] = useState<Dialog[]>([]);
+  const [dialogs] = useState<Dialog[]>([]);
 
   const currentDialog = useMemo(
     () => dialogs[dialogs.length - 1] ?? null,
     [dialogs]
   );
-
-  const closeDialog = useCallback(() => {
-    setDialogs((dialogs) => dialogs.slice(0, -1));
-  }, [setDialogs]);
 
   return (
     <>

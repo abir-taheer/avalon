@@ -2,16 +2,8 @@ import { useGameQuery } from "@/queries/useGameQuery";
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/atoms";
 import { useMemo } from "react";
-import {
-  Button,
-  CircularProgress,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Stack, Typography } from "@mui/material";
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
-import Link from "next/link";
-import { LinkButton } from "@/components/button/LinkButton";
 
 export type JoinGameButtonProps = {
   id: string;

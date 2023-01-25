@@ -1,6 +1,5 @@
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
 import {
-  Avatar,
   CircularProgress,
   ListItem,
   ListItemAvatar,

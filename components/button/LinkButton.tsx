@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "@mui/material";
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
 
 export type LinkButtonProps = ButtonProps & {
   href: string;

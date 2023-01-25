@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useGameQuery } from "@/queries/useGameQuery";
 import { Button, CircularProgress } from "@mui/material";
 import { usePathParams } from "@/hooks/next/usePathParams";
