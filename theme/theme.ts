@@ -10,6 +10,14 @@ export const theme = createTheme({
       },
     },
   },
+  palette: {
+    primary: {
+      main: "#10ac84",
+    },
+    secondary: {
+      main: "#5f27cd",
+    },
+  },
   typography: {
     fontFamily: "'Unbounded', cursive",
     h1: {
@@ -29,12 +37,6 @@ export const theme = createTheme({
     },
     h6: {
       fontSize: "1rem",
-    },
-    body1: {
-      fontSize: "1rem",
-    },
-    body2: {
-      fontSize: "0.875rem",
     },
   },
 });

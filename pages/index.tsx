@@ -6,10 +6,6 @@ import {
 } from "@/components/auth";
 import { useAtomValue } from "jotai";
 import { authUserAtom } from "@/atoms";
-import { useEffect } from "react";
-import { firstName } from "faker-en";
-import { useAPI } from "@/hooks/api/useAPI";
-import { LockTwoTone } from "@mui/icons-material";
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
 import { GamePreviewCard } from "@/components/game/GamePreviewCard";
 import { Stack, Typography } from "@mui/material";
@@ -23,6 +19,12 @@ const Home: NextPage = () => {
   return (
     <div>
       <AuthBanner />
+
+      {user && (
+        <Typography variant={"h1"}>
+          You're currently signed in as {user.displayName}
+        </Typography>
+      )}
 
       {data?.id && (
         <Stack>
