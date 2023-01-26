@@ -1,11 +1,11 @@
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { userAtom } from "@/atoms";
 import { useAtomValue } from "jotai";
 import { getDefaultPhotoURL } from "@/utils";
 
-export const EditNameButton = () => {
+export const EditNameButton = (props: ButtonProps) => {
   const user = useAtomValue(userAtom);
   const handleClick = async () => {
     if (!user) {
@@ -34,6 +34,7 @@ export const EditNameButton = () => {
       startIcon={<Edit />}
       color={"secondary"}
       onClick={handleClick}
+      {...props}
     >
       Edit Name
     </Button>

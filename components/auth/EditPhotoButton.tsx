@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { authUserAtom } from "@/atoms";
 
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 
 import { AccountCircle } from "@mui/icons-material";
 import { ChangeEventHandler, useRef, useState } from "react";
@@ -15,7 +15,7 @@ import {
 import { storage } from "@/config";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 
-export const EditPhotoButton = () => {
+export const EditPhotoButton = (props: ButtonProps) => {
   const authUser = useAtomValue(authUserAtom);
   const inputRef = useRef<null | HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
@@ -69,6 +69,7 @@ export const EditPhotoButton = () => {
         color={"secondary"}
         onClick={() => inputRef.current?.click()}
         disabled={loading}
+        {...props}
       >
         {loading ? "Uploading photo..." : "Change Avatar"}
       </Button>

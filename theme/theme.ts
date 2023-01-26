@@ -5,7 +5,7 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          // borderRadius: 1,
+          borderRadius: 1,
         },
       },
     },
@@ -13,9 +13,11 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: "#10ac84",
+      contrastText: "#fff",
     },
     secondary: {
       main: "#5f27cd",
+      contrastText: "#fff",
     },
   },
   typography: {

@@ -1,5 +1,10 @@
 import { ReactNode, useId, useState } from "react";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionProps,
+  AccordionSummary,
+} from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 
 export type SimpleAccordionProps = {
@@ -7,6 +12,7 @@ export type SimpleAccordionProps = {
   children: ReactNode;
   renderDetailsIfHidden?: boolean;
   initialState?: boolean;
+  accordionProps?: Partial<AccordionProps>;
 };
 
 export const SimpleAccordion = ({
@@ -14,6 +20,7 @@ export const SimpleAccordion = ({
   children,
   renderDetailsIfHidden,
   initialState,
+  accordionProps,
 }: SimpleAccordionProps) => {
   const [open, setOpen] = useState(initialState ?? false);
   const id = useId();
@@ -21,7 +28,12 @@ export const SimpleAccordion = ({
   const shouldRenderDetails = Boolean(open || renderDetailsIfHidden);
 
   return (
-    <Accordion expanded={open} onChange={() => setOpen(!open)}>
+    <Accordion
+      expanded={open}
+      onChange={() => setOpen(!open)}
+      elevation={0}
+      {...accordionProps}
+    >
       <AccordionSummary expandIcon={<ExpandMore />} id={id}>
         {summary}
       </AccordionSummary>

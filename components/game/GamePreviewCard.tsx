@@ -1,15 +1,22 @@
 import { useGameQuery } from "@/queries/useGameQuery";
 import {
+  Button,
   Card,
-  CardActions,
   CardContent,
   List,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { LinkButton } from "@/components/button/LinkButton";
-import { PlayerListItem } from "@/components/game/PlayerListItem";
-import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
+import { ArrowForward, LinkOutlined } from "@mui/icons-material";
+import { useAtomValue } from "jotai";
+import { userAtom } from "@/atoms";
+import { useIsMobile } from "@/hooks/ui";
+import { useSnackbar } from "notistack";
+import { PlayersList } from "@/components/game/PlayersList";
+import { GameCardPreviewHeading } from "@/components/game/GameCardPreviewHeading";
+import { GameCardPreviewFooter } from "@/components/game/GameCardPreviewFooter";
 
 export type GamePreviewCardProps = {
   id: string;
@@ -22,37 +29,36 @@ export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
     return null;
   }
 
+  const { createdAt, playerIds, ownerId } = data;
+
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const createdAtString = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "short",
+    timeStyle: "short",
+    hour12: true,
+    timeZone,
+  }).format(createdAt.toDate());
+
   return (
     <Card variant={"outlined"}>
       <CardContent>
         <Stack spacing={2}>
-          <Typography variant="h5">
-            Game <code>{data.id}</code>
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {data.status}
-          </Typography>
-          <Typography variant="body2">
-            created at {data.createdAt.toDate().toString()}
+          <GameCardPreviewHeading id={id} />
+
+          <Typography
+            variant="subtitle2"
+            color={"gray"}
+            sx={{ marginBottom: 2 }}
+          >
+            created on {createdAtString}
           </Typography>
 
-          <SimpleAccordion
-            summary={`${data.playerIds.length} Players`}
-            // It will not load the information about the players until the user clicks on the accordion
-            renderDetailsIfHidden={false}
-            initialState={true}
-          >
-            <List>
-              {data.playerIds.map((id) => (
-                <PlayerListItem id={id} key={id} />
-              ))}
-            </List>
-          </SimpleAccordion>
+          <PlayersList playerIds={playerIds} ownerId={ownerId} />
+
+          <GameCardPreviewFooter id={id} />
         </Stack>
       </CardContent>
-      <CardActions>
-        <LinkButton href={"/game/" + id}>Go To Game</LinkButton>
-      </CardActions>
     </Card>
   );
 };
