@@ -1,19 +1,5 @@
 import { useGameQuery } from "@/queries/useGameQuery";
-import {
-  Button,
-  Card,
-  CardContent,
-  List,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { LinkButton } from "@/components/button/LinkButton";
-import { ArrowForward, LinkOutlined } from "@mui/icons-material";
-import { useAtomValue } from "jotai";
-import { userAtom } from "@/atoms";
-import { useIsMobile } from "@/hooks/ui";
-import { useSnackbar } from "notistack";
+import { Card, CardContent, Stack, Typography } from "@mui/material";
 import { PlayersList } from "@/components/game/PlayersList";
 import { GameCardPreviewHeading } from "@/components/game/GameCardPreviewHeading";
 import { GameCardPreviewFooter } from "@/components/game/GameCardPreviewFooter";

@@ -2,7 +2,6 @@ import { Button, Stack, Tooltip, Typography } from "@mui/material";
 import { LinkOutlined } from "@mui/icons-material";
 import { useIsMobile } from "@/hooks/ui";
 import { useSnackbar } from "notistack";
-import { makeStyles } from "@/utils/tss";
 
 export type GameCardPreviewHeadingProps = {
   id: string;

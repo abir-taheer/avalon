@@ -5,36 +5,37 @@ import { userAtom } from "@/atoms";
 import { auth } from "@/config";
 import Link from "next/link";
 import { Logout } from "@mui/icons-material";
+import { makeStyles } from "@/utils/tss";
+
+const useStyles = makeStyles({
+  AppBar: {
+    background: "white",
+  },
+  ToolbarLogo: {
+    flexGrow: 1,
+  },
+});
 
 export const Navbar = () => {
+  const { classes } = useStyles();
   const user = useAtomValue(userAtom);
+  const isSignedIn = Boolean(user);
 
   return (
     <AppBar
+      className={classes.AppBar}
       color={"transparent"}
-      sx={(theme) => ({ background: "white" })}
       position={"sticky"}
     >
       <Container maxWidth="md">
         <Toolbar disableGutters>
-          <Link
-            href={"/"}
-            passHref
-            style={{
-              flexGrow: 1,
-            }}
-          >
-            <Typography
-              variant="h6"
-              noWrap
-              fontWeight={"bold"}
-              style={{ flexGrow: 1 }}
-            >
+          <Link href={"/"} passHref className={classes.ToolbarLogo}>
+            <Typography variant="h6" noWrap fontWeight={"bold"}>
               Avalon & Friends
             </Typography>
           </Link>
 
-          {Boolean(user) && (
+          {isSignedIn && (
             <Button
               onClick={() => signOut(auth)}
               variant={"outlined"}
