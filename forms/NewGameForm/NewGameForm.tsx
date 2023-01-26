@@ -6,22 +6,28 @@ import {
   FormControlLabel,
   FormGroup,
   FormHelperText,
+  LinearProgress,
 } from "@mui/material";
 
 type FormType = ReturnType<typeof useNewGameForm>;
 
 type NewGameFormProps = {
   form: FormType;
+  disabled?: boolean;
 };
 
 export const NewGameForm = (props: NewGameFormProps) => {
-  const { errors, values, setFieldValue, submitForm } = props.form;
+  const { errors, values, setFieldValue, submitForm, isSubmitting } =
+    props.form;
+
+  const disabled = props.disabled || isSubmitting;
 
   return (
     <FormGroup>
       {characters.map((character) => (
-        <FormControl key={character}>
+        <FormControl key={character} disabled={disabled}>
           <FormControlLabel
+            disabled={disabled}
             label={character}
             control={
               <Checkbox
@@ -41,7 +47,11 @@ export const NewGameForm = (props: NewGameFormProps) => {
         </FormControl>
       ))}
 
-      <Button onClick={submitForm}>Submit</Button>
+      {isSubmitting && <LinearProgress variant={"indeterminate"} />}
+
+      <Button onClick={submitForm} disabled={disabled}>
+        Submit
+      </Button>
     </FormGroup>
   );
 };

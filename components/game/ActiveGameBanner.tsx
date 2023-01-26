@@ -35,7 +35,7 @@ export const ActiveGameBanner = () => {
         <Typography>Your current game:</Typography>
 
         <LinkButton
-          href={`/game/new-game`}
+          href={`/game/new`}
           variant={"contained"}
           startIcon={<Add />}
         >

@@ -3,15 +3,21 @@ import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
 import { useCreateGameMutation } from "@/mutations/useCreateGameMutation";
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
 import { Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 const NewGame = () => {
-  const { mutate } = useCreateGameMutation();
-
+  const { mutateAsync, isLoading } = useCreateGameMutation();
+  const router = useRouter();
   const { data } = useCurrentUserGameIdQuery();
 
   const form = useNewGameForm({
-    onSubmit: (values) => {
-      mutate(values);
+    onSubmit: async (values) => {
+      try {
+        const { id } = await mutateAsync(values);
+        await router.push(`/game/${id}`);
+      } catch (e) {
+        // TODO show dialog with specific error handling
+      }
     },
   });
 
@@ -21,7 +27,7 @@ const NewGame = () => {
 
       <pre>{JSON.stringify(data, null, 2)}</pre>
 
-      <NewGameForm form={form} />
+      <NewGameForm disabled={isLoading} form={form} />
     </div>
   );
 };
