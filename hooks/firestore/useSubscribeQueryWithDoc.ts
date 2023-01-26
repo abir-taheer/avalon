@@ -1,9 +1,5 @@
-import {
-  DocumentReference,
-  onSnapshot,
-  DocumentData,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { DocumentReference, onSnapshot } from "firebase/firestore";
+import { useEffect } from "react";
 import { QueryClient, QueryKey, useQueryClient } from "react-query";
 
 export type UseDocWithSnapshotProps<T> = {

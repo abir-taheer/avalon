@@ -1,24 +1,4 @@
-import { userAtom } from "@/atoms";
-import { fullName } from "faker-en/person/fullName";
 import { initializeApp } from "firebase/app";
-import { getAuth, updateProfile } from "firebase/auth";
-import {
-  getDatabase,
-  ref,
-  serverTimestamp,
-  onDisconnect,
-  onValue,
-  set,
-} from "firebase/database";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  onSnapshot,
-} from "firebase/firestore";
-import { useSetAtom } from "jotai";
-import { useEffect } from "react";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBCRBBaJCPxvv4A1iqBYaFDn8umbs-gpQQ",

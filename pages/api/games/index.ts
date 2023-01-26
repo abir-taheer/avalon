@@ -4,7 +4,7 @@ import {
   withAuth,
 } from "@/middleware";
 import { Game, GameStatus } from "@/schema";
-import { isGameOptions, validateGameOptions, flattenObject } from "@/utils";
+import { flattenObject, isGameOptions, validateGameOptions } from "@/utils";
 import { Timestamp } from "@firebase/firestore";
 import { word } from "faker-en/word";
 

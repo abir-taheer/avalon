@@ -6,7 +6,7 @@ import { QUERY_KEY } from "@/queries/queryKey";
 import { GameOptions } from "@/schema";
 import { useAtomValue } from "jotai";
 import { useCallback } from "react";
-import { useMutation, MutationFunction, useQueryClient } from "react-query";
+import { MutationFunction, useMutation, useQueryClient } from "react-query";
 
 export type UseCreateGameMutationData = {
   id: string;

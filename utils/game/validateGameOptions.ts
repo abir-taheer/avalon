@@ -1,6 +1,4 @@
-import { characters } from "@/forms/NewGameForm/useNewGameForm";
-import { GameOptions, Character, CharacterOptions } from "@/schema";
-import { flattenObject } from "@/utils";
+import { Character, GameOptions } from "@/schema";
 import { validateCharacterOptions } from "@/utils/game/validateCharacterOptions";
 import { FormikErrors } from "formik";
 

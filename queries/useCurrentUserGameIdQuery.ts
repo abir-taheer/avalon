@@ -2,9 +2,9 @@ import { userAtom } from "@/atoms";
 import { firestore } from "@/config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
 import { GameStatus } from "@/schema";
-import { query, where, collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useAtomValue } from "jotai";
-import { useQuery, useQueryClient, UseQueryOptions } from "react-query";
+import { useQuery } from "react-query";
 
 type CurrentUserGameIdQueryDataType = {
   id: string | null;
