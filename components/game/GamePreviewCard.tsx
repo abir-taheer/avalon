@@ -1,3 +1,6 @@
+import { GameCardPreviewFooter } from "@/components/game/GameCardPreviewFooter";
+import { GameCardPreviewHeading } from "@/components/game/GameCardPreviewHeading";
+import { PlayersList } from "@/components/game/PlayersList";
 import { useGameQuery } from "@/queries/useGameQuery";
 import {
   Card,
@@ -6,9 +9,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { PlayersList } from "@/components/game/PlayersList";
-import { GameCardPreviewHeading } from "@/components/game/GameCardPreviewHeading";
-import { GameCardPreviewFooter } from "@/components/game/GameCardPreviewFooter";
 import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()((theme) => ({

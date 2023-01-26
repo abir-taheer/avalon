@@ -1,4 +1,7 @@
+import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
+import { FlexDiv } from "@/components/flex/FlexDiv";
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
+import { CircleRounded } from "@mui/icons-material";
 import {
   LinearProgress,
   ListItem,
@@ -8,10 +11,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { CircleRounded } from "@mui/icons-material";
-import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
 import { makeStyles } from "tss-react/mui";
-import { FlexDiv } from "@/components/flex/FlexDiv";
 
 export type PlayerListItemProps = {
   id: string;

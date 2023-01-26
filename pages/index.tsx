@@ -1,11 +1,11 @@
-import type { NextPage } from "next";
-import { Divider, Stack } from "@mui/material";
-import { AuthBanner } from "@/components/auth/AuthBanner";
-import { ActiveGameBanner } from "@/components/game/ActiveGameBanner";
-import { useAtomValue } from "jotai";
 import { userAtom } from "@/atoms";
-import Image from "next/image";
+import { AuthBanner } from "@/components/auth/AuthBanner";
 import { FlexCenter } from "@/components/flex/FlexCenter";
+import { ActiveGameBanner } from "@/components/game/ActiveGameBanner";
+import { Divider, Stack } from "@mui/material";
+import { useAtomValue } from "jotai";
+import type { NextPage } from "next";
+import Image from "next/image";
 import { Fragment } from "react";
 import { makeStyles } from "tss-react/mui";
 

@@ -1,8 +1,8 @@
-import { atom } from "jotai";
-import axios, { AxiosInstance } from "axios";
 import { idTokenAtom } from "./user";
 import { appCheck } from "@/config";
+import axios, { AxiosInstance } from "axios";
 import { getToken } from "firebase/app-check";
+import { atom } from "jotai";
 
 const baseURL = "/api";
 

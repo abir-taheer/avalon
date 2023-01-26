@@ -1,5 +1,5 @@
-import { Stack, Typography } from "@mui/material";
 import { AnonymousLoginButton, GoogleLoginButton } from "@/components";
+import { Stack, Typography } from "@mui/material";
 
 export const UnauthenticatedBanner = () => {
   return (

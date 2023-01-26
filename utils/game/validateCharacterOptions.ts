@@ -1,7 +1,7 @@
-import { CharacterOptions } from "@/schema";
-import { FormikErrors } from "formik";
 import { characters } from "@/forms/NewGameForm/useNewGameForm";
+import { CharacterOptions } from "@/schema";
 import { optionDependencies } from "@/utils/game/validateGameOptions";
+import { FormikErrors } from "formik";
 
 export const validateCharacterOptions = (options: CharacterOptions) => {
   const errors: FormikErrors<CharacterOptions> = {};

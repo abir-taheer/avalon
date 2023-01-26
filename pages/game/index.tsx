@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
 import { LinkButton } from "@/components/button/LinkButton";
+import { Typography } from "@mui/material";
 
 export default function InvalidGamePage() {
   return (

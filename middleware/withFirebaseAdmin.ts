@@ -1,13 +1,13 @@
-import { UserRecord } from "firebase-admin/auth";
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import * as firebaseAdmin from "firebase-admin";
-import { Firestore } from "firebase-admin/firestore";
-import { Database } from "firebase-admin/database";
-import { Auth } from "firebase-admin/auth";
-import { FIREBASE_CONFIG } from "@/constants";
 import { ApiHandlerError, withErrorHandler } from "./withErrorHandler";
-import { app } from "firebase-admin";
+import { FIREBASE_CONFIG } from "@/constants";
 import { Game, GameStatus } from "@/schema";
+import * as firebaseAdmin from "firebase-admin";
+import { app } from "firebase-admin";
+import { UserRecord } from "firebase-admin/auth";
+import { Auth } from "firebase-admin/auth";
+import { Database } from "firebase-admin/database";
+import { Firestore } from "firebase-admin/firestore";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 type App = app.App;
 

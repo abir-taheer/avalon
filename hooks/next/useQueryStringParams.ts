@@ -1,5 +1,5 @@
-import { parse } from "querystring";
 import { useRouter } from "next/router";
+import { parse } from "querystring";
 import { useMemo } from "react";
 
 export const useQueryStringParams = () => {

@@ -1,5 +1,5 @@
-import { Character } from "@/schema";
 import { characters } from "@/forms/NewGameForm/useNewGameForm";
+import { Character } from "@/schema";
 
 const charactersSet: Set<string> = new Set(characters);
 

@@ -1,7 +1,7 @@
-import Image from "next/image";
 import FallbackIcon from "@/assets/icons/avatar.png";
-import { makeStyles } from "tss-react/mui";
 import classNames from "classnames";
+import Image from "next/image";
+import { makeStyles } from "tss-react/mui";
 
 export type OptimizedAvatarProps = {
   src?: string;

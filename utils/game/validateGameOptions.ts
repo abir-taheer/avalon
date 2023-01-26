@@ -1,8 +1,8 @@
-import { GameOptions, Character, CharacterOptions } from "@/schema";
-import { FormikErrors } from "formik";
 import { characters } from "@/forms/NewGameForm/useNewGameForm";
-import { validateCharacterOptions } from "@/utils/game/validateCharacterOptions";
+import { GameOptions, Character, CharacterOptions } from "@/schema";
 import { flattenObject } from "@/utils";
+import { validateCharacterOptions } from "@/utils/game/validateCharacterOptions";
+import { FormikErrors } from "formik";
 
 export const optionDependencies: Record<Character, Character[]> = {
   // Merlin and oberon are always available

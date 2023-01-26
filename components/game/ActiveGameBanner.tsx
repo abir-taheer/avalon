@@ -1,14 +1,14 @@
+import { userAtom } from "@/atoms";
+import { LinkButton } from "@/components/button/LinkButton";
+import { GamePreviewCard } from "@/components/game/GamePreviewCard";
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
+import { Add } from "@mui/icons-material";
 import {
   CircularProgress,
   LinearProgress,
   Stack,
   Typography,
 } from "@mui/material";
-import { GamePreviewCard } from "@/components/game/GamePreviewCard";
-import { LinkButton } from "@/components/button/LinkButton";
-import { Add } from "@mui/icons-material";
-import { userAtom } from "@/atoms";
 import { useAtomValue } from "jotai";
 
 export const ActiveGameBanner = () => {

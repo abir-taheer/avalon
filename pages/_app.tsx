@@ -1,14 +1,14 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import { DialogProvider } from "@/components/dialog/DialogProvider";
-import { useAuthListener } from "@/hooks/auth";
 import { Navbar } from "@/components/navigation/Navbar";
-import { QueryClientProvider } from "react-query";
+import { useAuthListener } from "@/hooks/auth";
 import { queryClient } from "@/queries/queryClient";
-import { Container } from "@mui/material";
 import { ThemeProvider } from "@/theme";
-import { SnackbarProvider } from "notistack";
 import { withAppEmotionCache } from "@/utils/tss";
+import { Container } from "@mui/material";
+import type { AppProps } from "next/app";
+import { SnackbarProvider } from "notistack";
+import { QueryClientProvider } from "react-query";
 import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()((theme) => ({

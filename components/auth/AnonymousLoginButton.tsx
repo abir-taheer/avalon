@@ -1,7 +1,7 @@
-import { useCallback, useState } from "react";
-import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/config";
 import { Button, ButtonProps } from "@mui/material";
+import { signInAnonymously } from "firebase/auth";
+import { useCallback, useState } from "react";
 
 export const AnonymousLoginButton = (props: ButtonProps) => {
   const [loading, setLoading] = useState(false);

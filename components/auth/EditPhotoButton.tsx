@@ -1,19 +1,15 @@
-import { useAtomValue } from "jotai";
 import { authUserAtom } from "@/atoms";
-
-import { Button, ButtonProps } from "@mui/material";
-
+import { storage } from "@/config";
+import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { AccountCircle } from "@mui/icons-material";
-import { ChangeEventHandler, useRef, useState } from "react";
-
+import { Button, ButtonProps } from "@mui/material";
 import {
   getDownloadURL,
   ref as storageRef,
   uploadBytes,
 } from "firebase/storage";
-
-import { storage } from "@/config";
-import { updateUserProfile } from "@/utils/user/updateUserProfile";
+import { useAtomValue } from "jotai";
+import { ChangeEventHandler, useRef, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()({

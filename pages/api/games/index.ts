@@ -3,10 +3,10 @@ import {
   FirebaseAdminHandlerWithUser,
   withAuth,
 } from "@/middleware";
-import { word } from "faker-en/word";
 import { Game, GameStatus } from "@/schema";
 import { isGameOptions, validateGameOptions, flattenObject } from "@/utils";
 import { Timestamp } from "@firebase/firestore";
+import { word } from "faker-en/word";
 
 const getGameId = (length: number) => {
   return Array.from(Array(length), () => word()).join("-");

@@ -1,6 +1,6 @@
-import { Button, Stack, Tooltip, Typography } from "@mui/material";
-import { LinkOutlined } from "@mui/icons-material";
 import { useIsMobile } from "@/hooks/ui";
+import { LinkOutlined } from "@mui/icons-material";
+import { Button, Stack, Tooltip, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 
 export type GameCardPreviewHeadingProps = {

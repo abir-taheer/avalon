@@ -1,9 +1,9 @@
-import { Button, ButtonProps } from "@mui/material";
-import { useCallback, useState } from "react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config";
 import { GoogleIcon } from "@/icons/Google";
+import { Button, ButtonProps } from "@mui/material";
 import classNames from "classnames";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useCallback, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()((theme) => ({

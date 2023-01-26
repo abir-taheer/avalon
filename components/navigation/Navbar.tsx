@@ -1,10 +1,10 @@
+import { userAtom } from "@/atoms";
+import { auth } from "@/config";
+import { Logout } from "@mui/icons-material";
 import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
 import { signOut } from "firebase/auth";
 import { useAtomValue } from "jotai";
-import { userAtom } from "@/atoms";
-import { auth } from "@/config";
 import Link from "next/link";
-import { Logout } from "@mui/icons-material";
 import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()({

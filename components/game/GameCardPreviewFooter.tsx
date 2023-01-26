@@ -1,6 +1,6 @@
-import { Stack } from "@mui/material";
 import { LinkButton } from "@/components/button/LinkButton";
 import { ArrowForward } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 
 export type GameCardPreviewFooterProps = {
   id: string;

@@ -1,5 +1,5 @@
-import { ThemeProvider as Provider } from "@mui/material";
 import { theme } from "@/theme";
+import { ThemeProvider as Provider } from "@mui/material";
 import { ReactNode } from "react";
 
 export type ThemeProviderProps = {

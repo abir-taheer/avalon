@@ -1,11 +1,11 @@
-import { ReactNode, useId, useState } from "react";
+import { ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
   AccordionProps,
   AccordionSummary,
 } from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
+import { ReactNode, useId, useState } from "react";
 
 export type SimpleAccordionProps = {
   summary: ReactNode;

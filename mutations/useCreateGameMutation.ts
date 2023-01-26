@@ -1,12 +1,12 @@
-import { useMutation, MutationFunction, useQueryClient } from "react-query";
-import { GameOptions } from "@/schema";
-import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
-import { useCallback } from "react";
-import { useAPI } from "@/hooks";
-import { QUERY_KEY } from "@/queries/queryKey";
-import { POST_GamesAPIResponse } from "@/pages/api/games";
-import { useAtomValue } from "jotai";
 import { userAtom } from "@/atoms";
+import { useAPI } from "@/hooks";
+import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
+import { POST_GamesAPIResponse } from "@/pages/api/games";
+import { QUERY_KEY } from "@/queries/queryKey";
+import { GameOptions } from "@/schema";
+import { useAtomValue } from "jotai";
+import { useCallback } from "react";
+import { useMutation, MutationFunction, useQueryClient } from "react-query";
 
 export type UseCreateGameMutationData = {
   id: string;

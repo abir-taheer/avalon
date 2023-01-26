@@ -1,9 +1,9 @@
-import { Player } from "@/schema";
-import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
-import { List, Typography } from "@mui/material";
-import { PlayerListItem } from "@/components/game/PlayerListItem";
-import { useAtomValue } from "jotai";
 import { userAtom } from "@/atoms";
+import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
+import { PlayerListItem } from "@/components/game/PlayerListItem";
+import { Player } from "@/schema";
+import { List, Typography } from "@mui/material";
+import { useAtomValue } from "jotai";
 
 export type PlayersListProps = {
   playerIds: Player["id"][];

@@ -1,6 +1,6 @@
 import { Character, GameOptions } from "@/schema";
-import { useFormik, FormikConfig } from "formik";
 import { validateGameOptions } from "@/utils/game/validateGameOptions";
+import { useFormik, FormikConfig } from "formik";
 
 export type NewGameFormConfig = FormikConfig<GameOptions>;
 

@@ -1,9 +1,9 @@
-import { Button, ButtonProps } from "@mui/material";
-import { Edit } from "@mui/icons-material";
-import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { userAtom } from "@/atoms";
-import { useAtomValue } from "jotai";
 import { getDefaultPhotoURL } from "@/utils";
+import { updateUserProfile } from "@/utils/user/updateUserProfile";
+import { Edit } from "@mui/icons-material";
+import { Button, ButtonProps } from "@mui/material";
+import { useAtomValue } from "jotai";
 
 export const EditNameButton = (props: ButtonProps) => {
   const user = useAtomValue(userAtom);
