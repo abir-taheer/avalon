@@ -1,5 +1,10 @@
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { GamePreviewCard } from "@/components/game/GamePreviewCard";
 import { LinkButton } from "@/components/button/LinkButton";
 import { Add } from "@mui/icons-material";
@@ -17,7 +22,7 @@ export const ActiveGameBanner = () => {
   });
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <LinearProgress variant={"indeterminate"} />;
   }
 
   return (

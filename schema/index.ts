@@ -4,7 +4,7 @@ export type RealTimeUser = {
   uid: string;
   displayName?: string;
   photoURL?: string;
-  active: Boolean;
+  active: boolean;
 };
 
 export type Player = {

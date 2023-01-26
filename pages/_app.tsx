@@ -8,11 +8,16 @@ import { queryClient } from "@/queries/queryClient";
 import { Container } from "@mui/material";
 import { ThemeProvider } from "@/theme";
 import { SnackbarProvider } from "notistack";
-import { makeStyles, withAppEmotionCache } from "@/utils/tss";
+import { withAppEmotionCache } from "@/utils/tss";
+import { makeStyles } from "tss-react/mui";
 
-const useStyles = makeStyles((theme) => ({
-  snackbarSuccess: {
+const useStyles = makeStyles()((theme) => ({
+  SuccessSnackbar: {
     backgroundColor: theme.palette.success.main,
+  },
+  ContentContainer: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
 }));
 
@@ -24,20 +29,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider>
       <SnackbarProvider
         maxSnack={3}
-        classes={{
-          variantSuccess: classes.snackbarSuccess,
-        }}
+        classes={{ variantSuccess: classes.SuccessSnackbar }}
       >
         <QueryClientProvider client={queryClient}>
           <DialogProvider>
             <Navbar />
-            <Container
-              maxWidth={"md"}
-              sx={(theme) => ({
-                paddingTop: theme.spacing(4),
-                paddingBottom: theme.spacing(4),
-              })}
-            >
+            <Container maxWidth={"md"} className={classes.ContentContainer}>
               <Component {...pageProps} />
             </Container>
           </DialogProvider>

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import FallbackIcon from "@/assets/icons/avatar.png";
+import { makeStyles } from "tss-react/mui";
+import classNames from "classnames";
 
 export type OptimizedAvatarProps = {
   src?: string;
@@ -9,6 +11,14 @@ export type OptimizedAvatarProps = {
   className?: string;
 };
 
+const useStyles = makeStyles()((theme) => ({
+  Avatar: {
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: `1px solid ${theme.palette.grey[300]}`,
+  },
+}));
+
 export const OptimizedAvatar = ({
   src,
   alt,
@@ -16,18 +26,16 @@ export const OptimizedAvatar = ({
   height,
   className,
 }: OptimizedAvatarProps) => {
+  const { classes } = useStyles();
+
   return (
     <Image
       src={src ?? FallbackIcon}
       alt={alt ?? "User Avatar"}
       width={width}
       height={height}
-      style={{
-        borderRadius: "50%",
-        objectFit: "cover",
-      }}
+      className={classNames(classes.Avatar, className)}
       referrerPolicy={"no-referrer"}
-      className={className}
     />
   );
 };

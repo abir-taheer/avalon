@@ -4,10 +4,11 @@ import { auth } from "@/config";
 import { Button, ButtonProps } from "@mui/material";
 
 export const AnonymousLoginButton = (props: ButtonProps) => {
-  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const login = useCallback(() => {
-    setDisabled(true);
-    signInAnonymously(auth).finally(() => setDisabled(false));
+    setLoading(true);
+    signInAnonymously(auth).finally(() => setLoading(false));
   }, []);
 
   return (
@@ -15,10 +16,10 @@ export const AnonymousLoginButton = (props: ButtonProps) => {
       variant={"outlined"}
       color={"secondary"}
       onClick={login}
-      disabled={disabled}
+      disabled={loading}
       {...props}
     >
-      Continue as Guest
+      {loading ? "Signing you in..." : "Continue as Guest"}
     </Button>
   );
 };

@@ -1,6 +1,6 @@
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
 import {
-  CircularProgress,
+  LinearProgress,
   ListItem,
   ListItemAvatar,
   ListItemProps,
@@ -10,7 +10,8 @@ import {
 } from "@mui/material";
 import { CircleRounded } from "@mui/icons-material";
 import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
-import styled from "@emotion/styled";
+import { makeStyles } from "tss-react/mui";
+import { FlexDiv } from "@/components/flex/FlexDiv";
 
 export type PlayerListItemProps = {
   id: string;
@@ -18,12 +19,31 @@ export type PlayerListItemProps = {
   itemProps?: ListItemProps;
 };
 
-const FlexDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-`;
+type UseStylesParams = {
+  active: boolean;
+};
+
+const useStyles = makeStyles<UseStylesParams>()((theme, params) => ({
+  OwnerLabel: {
+    color: theme.palette.secondary.main,
+    fontSize: 12,
+  },
+  PlayerTextLabel: {
+    flexGrow: 1,
+  },
+  ActiveIndicator: {
+    color: params.active
+      ? theme.palette.success.main
+      : theme.palette.error.main,
+    fontSize: 12,
+  },
+  ActiveLabel: {
+    color: params.active
+      ? theme.palette.success.main
+      : theme.palette.error.main,
+    fontSize: 12,
+  },
+}));
 
 export const PlayerListItem = ({
   id,
@@ -32,8 +52,19 @@ export const PlayerListItem = ({
 }: PlayerListItemProps) => {
   const { data, isLoading } = useRealtimeUserQuery({ id });
 
-  if (isLoading || !data) {
-    return <CircularProgress />;
+  // This is fine since it doesn't get rendered until data is loaded anyways
+  const active = data?.active ?? false;
+
+  const { classes } = useStyles({ active });
+
+  if (isLoading) {
+    return <LinearProgress variant={"indeterminate"} />;
+  }
+
+  // Very bizarre situation for sure
+  // For simplicity's sake, we'll just not render anything
+  if (!data) {
+    return null;
   }
 
   return (
@@ -42,22 +73,21 @@ export const PlayerListItem = ({
         <OptimizedAvatar src={data.photoURL} width={48} height={48} />
       </ListItemAvatar>
 
-      <FlexDiv>
+      <FlexDiv
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        width={"100%"}
+      >
         <ListItemText
-          sx={{ flexGrow: 1 }}
+          className={classes.PlayerTextLabel}
           primary={data.displayName}
           secondary={
             <Stack direction={"row"} spacing={1} alignItems={"center"}>
-              <CircleRounded
-                style={{
-                  color: data.active ? "#27ae60" : "#e74c3c",
-                  fontSize: 12,
-                }}
-              />
+              <CircleRounded className={classes.ActiveIndicator} />
               <Typography
                 variant={"body2"}
                 component={"span"}
-                sx={{ fontSize: 12 }}
+                className={classes.ActiveLabel}
               >
                 {data.active ? "online" : "offline"}
               </Typography>
@@ -66,11 +96,7 @@ export const PlayerListItem = ({
         />
 
         {isOwner && (
-          <Typography
-            variant={"body2"}
-            sx={{ fontSize: 12 }}
-            color={"secondary"}
-          >
+          <Typography variant={"body2"} className={classes.OwnerLabel}>
             Game Owner
           </Typography>
         )}

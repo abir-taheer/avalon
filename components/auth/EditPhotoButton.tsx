@@ -14,8 +14,17 @@ import {
 
 import { storage } from "@/config";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
+import { makeStyles } from "tss-react/mui";
+
+const useStyles = makeStyles()({
+  FileInput: {
+    height: 0,
+    width: 0,
+  },
+});
 
 export const EditPhotoButton = (props: ButtonProps) => {
+  const { classes } = useStyles();
   const authUser = useAtomValue(authUserAtom);
   const inputRef = useRef<null | HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
@@ -60,7 +69,7 @@ export const EditPhotoButton = (props: ButtonProps) => {
         ref={inputRef}
         type="file"
         accept="image/*"
-        style={{ height: 0, width: 0 }}
+        className={classes.FileInput}
         onChange={onUpload}
       />
       <Button

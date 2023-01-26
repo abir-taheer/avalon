@@ -1,21 +1,39 @@
 import { useGameQuery } from "@/queries/useGameQuery";
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { PlayersList } from "@/components/game/PlayersList";
 import { GameCardPreviewHeading } from "@/components/game/GameCardPreviewHeading";
 import { GameCardPreviewFooter } from "@/components/game/GameCardPreviewFooter";
+import { makeStyles } from "tss-react/mui";
+
+const useStyles = makeStyles()((theme) => ({
+  CreatedAt: {
+    color: theme.palette.grey[500],
+    marginBottom: theme.spacing(2),
+    banana: "",
+  },
+}));
 
 export type GamePreviewCardProps = {
   id: string;
 };
 
 export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
+  const { classes } = useStyles();
   const { data } = useGameQuery({ id });
 
   if (!data) {
-    return null;
+    return <LinearProgress variant={"indeterminate"} />;
   }
 
   const { createdAt, playerIds, ownerId } = data;
+
+  const created = createdAt.toDate();
 
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -24,7 +42,7 @@ export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
     timeStyle: "short",
     hour12: true,
     timeZone,
-  }).format(createdAt.toDate());
+  }).format(created);
 
   return (
     <Card variant={"outlined"}>
@@ -32,11 +50,7 @@ export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
         <Stack spacing={2}>
           <GameCardPreviewHeading id={id} />
 
-          <Typography
-            variant="subtitle2"
-            color={"gray"}
-            sx={{ marginBottom: 2 }}
-          >
+          <Typography variant="subtitle2" className={classes.CreatedAt}>
             created on {createdAtString}
           </Typography>
 

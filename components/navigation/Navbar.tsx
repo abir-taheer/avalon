@@ -5,9 +5,9 @@ import { userAtom } from "@/atoms";
 import { auth } from "@/config";
 import Link from "next/link";
 import { Logout } from "@mui/icons-material";
-import { makeStyles } from "@/utils/tss";
+import { makeStyles } from "tss-react/mui";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles()({
   AppBar: {
     background: "white",
   },
