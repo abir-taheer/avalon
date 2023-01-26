@@ -33,7 +33,7 @@ export const PlayersList = ({ playerIds, ownerId }: PlayersListProps) => {
             id={id}
             key={id}
             itemProps={{ sx: { paddingLeft: 0 } }}
-            isOwner={ownerId === user?.uid}
+            isOwner={ownerId === id}
           />
         ))}
       </List>
