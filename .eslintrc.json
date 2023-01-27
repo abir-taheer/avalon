@@ -2,9 +2,7 @@
   "extends": "next/core-web-vitals",
   "ignorePatterns": ["firebase"],
   "rules": {
-    "react/no-unescaped-entities": "off",
-    "no-unused-vars": "error",
-    "unused-imports/no-unused-imports": "error"
+    "react/no-unescaped-entities": "off"
   },
   "plugins": ["unused-imports"]
 }
