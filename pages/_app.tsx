@@ -1,4 +1,4 @@
-import { DialogProvider } from "@/components/dialog/DialogProvider";
+import { DialogQueue } from "@/components/dialog/queue/DialogQueue";
 import { Navbar } from "@/components/navigation/Navbar";
 import { useAuthListener } from "@/hooks/auth";
 import { queryClient } from "@/queries/queryClient";
@@ -32,12 +32,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         classes={{ variantSuccess: classes.SuccessSnackbar }}
       >
         <QueryClientProvider client={queryClient}>
-          <DialogProvider>
-            <Navbar />
-            <Container maxWidth={"md"} className={classes.ContentContainer}>
-              <Component {...pageProps} />
-            </Container>
-          </DialogProvider>
+          <DialogQueue />
+          <Navbar />
+          <Container maxWidth={"md"} className={classes.ContentContainer}>
+            <Component {...pageProps} />
+          </Container>
         </QueryClientProvider>
       </SnackbarProvider>
     </ThemeProvider>

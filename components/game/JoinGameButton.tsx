@@ -1,6 +1,7 @@
 import { useJoinGameMutation } from "@/mutations/useJoinGameMutation";
 import { Button, ButtonProps } from "@mui/material";
 import { useSnackbar } from "notistack";
+import { useErrorDialog } from "@/components/dialog/error/useErrorDialog";
 
 export type JoinGameButtonProps = {
   id: string;
