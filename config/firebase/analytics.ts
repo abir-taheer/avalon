@@ -1,5 +1,5 @@
-import { app } from "./app";
 import { Analytics, initializeAnalytics } from "firebase/analytics";
+import { app } from "./app";
 
 export let analytics: Analytics;
 

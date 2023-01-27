@@ -1,10 +1,10 @@
+import { UserRecord } from "firebase-admin/auth";
 import { ApiHandlerError } from "./withErrorHandler";
 import {
+  withFirebaseAdmin,
   WithFirebaseAdminContext,
   WithFirebaseAdminHandler,
-  withFirebaseAdmin,
 } from "./withFirebaseAdmin";
-import { UserRecord } from "firebase-admin/auth";
 
 type ContextWithUser = Omit<WithFirebaseAdminContext, "user"> & {
   user: UserRecord;

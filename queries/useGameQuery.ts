@@ -1,12 +1,9 @@
 import { firestore } from "@/config";
-import {
-  subscribeQueryWithDoc,
-  useSubscribeQueryWithDoc,
-} from "@/hooks/firestore/useSubscribeQueryWithDoc";
+import { useSubscribeQueryWithDoc } from "@/hooks/firestore/useSubscribeQueryWithDoc";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
 import { Game } from "@/schema";
 import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useQuery } from "react-query";
 
 export type UseGameProps = {

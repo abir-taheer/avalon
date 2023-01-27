@@ -1,8 +1,8 @@
 import { JoinGameButton } from "@/components/game/JoinGameButton";
+import { LeaveGameButton } from "@/components/game/LeaveGameButton";
 import { usePathParams } from "@/hooks/next/usePathParams";
 import { useGameQuery } from "@/queries/useGameQuery";
 import { Button, CircularProgress } from "@mui/material";
-import { LeaveGameButton } from "@/components/game/LeaveGameButton";
 
 type ExpectedPathParams = {
   id: string;

@@ -1,7 +1,7 @@
-import { Button, ButtonProps } from "@mui/material";
-import { useSnackbar } from "notistack";
 import { useLeaveGameMutation } from "@/mutations/useLeaveGameMutation";
+import { Button, ButtonProps } from "@mui/material";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 
 export type LeaveGameButtonProps = {
   id: string;

@@ -1,5 +1,5 @@
-import { Button, ButtonProps } from "@mui/material";
 import { useJoinGameMutation } from "@/mutations/useJoinGameMutation";
+import { Button, ButtonProps } from "@mui/material";
 import { useSnackbar } from "notistack";
 
 export type JoinGameButtonProps = {

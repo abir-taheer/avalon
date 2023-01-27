@@ -1,5 +1,5 @@
-import { ErrorCode } from "./error-code";
 import { NextApiHandler } from "next";
+import { ErrorCode } from "./error-code";
 
 export type ApiHandlerErrorProps = {
   code: ErrorCode;

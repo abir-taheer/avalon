@@ -1,4 +1,3 @@
-import "../styles/globals.css";
 import { DialogProvider } from "@/components/dialog/DialogProvider";
 import { Navbar } from "@/components/navigation/Navbar";
 import { useAuthListener } from "@/hooks/auth";
@@ -10,6 +9,7 @@ import type { AppProps } from "next/app";
 import { SnackbarProvider } from "notistack";
 import { QueryClientProvider } from "react-query";
 import { makeStyles } from "tss-react/mui";
+import "../styles/globals.css";
 
 const useStyles = makeStyles()((theme) => ({
   SuccessSnackbar: {

@@ -1,4 +1,3 @@
-import { characters, useNewGameForm } from "./useNewGameForm";
 import {
   Button,
   Checkbox,
@@ -8,6 +7,7 @@ import {
   FormHelperText,
   LinearProgress,
 } from "@mui/material";
+import { characters, useNewGameForm } from "./useNewGameForm";
 
 type FormType = ReturnType<typeof useNewGameForm>;
 

@@ -1,9 +1,7 @@
-import { firestore, realtime } from "@/config";
-import { useSubscribeQueryWithDoc } from "@/hooks/firestore/useSubscribeQueryWithDoc";
+import { realtime } from "@/config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
-import { Game, RealTimeUser } from "@/schema";
+import { RealTimeUser } from "@/schema";
 import { onValue, ref } from "firebase/database";
-import { doc } from "firebase/firestore";
 import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "react-query";
 

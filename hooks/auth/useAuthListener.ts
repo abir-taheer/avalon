@@ -1,13 +1,12 @@
-import { authUserAtom, idTokenAtom, userAtom } from "@/atoms";
-import { auth } from "@/config";
-import { realtime } from "@/config";
+import { authUserAtom, userAtom } from "@/atoms";
+import { auth, realtime } from "@/config";
 import { RealTimeUser } from "@/schema";
 import { getDefaultPhotoURL } from "@/utils";
 import { fullName } from "faker-en";
 import { updateProfile } from "firebase/auth";
 import { onDisconnect, onValue, ref, set, update } from "firebase/database";
-import { useAtom, useSetAtom } from "jotai";
-import { useEffect, useMemo } from "react";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
 export const useAuthListener = () => {
   const [authUser, setAuthUser] = useAtom(authUserAtom);

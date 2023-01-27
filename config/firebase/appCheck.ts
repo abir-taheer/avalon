@@ -1,10 +1,10 @@
-import { app } from "./app";
 import { RECAPTCHA_SITE_KEY } from "@/constants";
 import {
   AppCheck,
-  ReCaptchaV3Provider,
   initializeAppCheck,
+  ReCaptchaV3Provider,
 } from "firebase/app-check";
+import { app } from "./app";
 
 export const RecaptchaProvider = new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY);
 
