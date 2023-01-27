@@ -14,11 +14,13 @@ export type WrappedApiResponse<Data> = {
   data: Data;
 };
 
-export type FirebaseAdminHandlerWithUser = (context: ContextWithUser) => any;
+export type FirebaseAdminHandlerWithUser<Response = unknown> = (
+  context: ContextWithUser
+) => Response | Promise<Response>;
 
 export const withAuth = (next: FirebaseAdminHandlerWithUser) => {
   const handler: WithFirebaseAdminHandler = async (context) => {
-    const { user, firestore } = context;
+    const { user } = context;
 
     if (!user) {
       throw new ApiHandlerError({

@@ -2,6 +2,7 @@ import { JoinGameButton } from "@/components/game/JoinGameButton";
 import { usePathParams } from "@/hooks/next/usePathParams";
 import { useGameQuery } from "@/queries/useGameQuery";
 import { Button, CircularProgress } from "@mui/material";
+import { LeaveGameButton } from "@/components/game/LeaveGameButton";
 
 type ExpectedPathParams = {
   id: string;
@@ -33,6 +34,7 @@ export default function GamePage() {
       <pre>{JSON.stringify(game, null, 2)}</pre>
 
       <JoinGameButton id={id} />
+      <LeaveGameButton id={id} />
     </>
   );
 }

@@ -7,35 +7,34 @@ import { useAtomValue } from "jotai";
 import { useCallback } from "react";
 import { MutationFunction, useMutation, useQueryClient } from "react-query";
 
-export type UseCreateGameMutationData = API.Game.POST.Response;
-export type UseCreateGameMutationVariables = API.Game.POST.BodyParams;
+export type UseLeaveGameMutationData = API.Game.Join.DELETE.Response;
+export type UseLeaveGameMutationVariables = API.Game.Join.DELETE.BodyParams;
 
 export type UseCreateGameMutationProps = {
   mutation?: UseMutationWrapperProps<
-    UseCreateGameMutationData,
-    UseCreateGameMutationVariables
+    UseLeaveGameMutationData,
+    UseLeaveGameMutationVariables
   >;
 };
 
-export const useCreateGameMutation = (props?: UseCreateGameMutationProps) => {
+export const useLeaveGameMutation = (props?: UseCreateGameMutationProps) => {
   const api = useAPI();
   const queryClient = useQueryClient();
   const user = useAtomValue(userAtom);
 
   const mutationFn: MutationFunction<
-    UseCreateGameMutationData,
-    UseCreateGameMutationVariables
+    UseLeaveGameMutationData,
+    UseLeaveGameMutationVariables
   > = useCallback(
     async (options) => {
-      const { data } = await api.post<API.Game.POST.Response>(
-        "/games",
-        options
-      );
+      const { data } = await api<API.Game.Join.DELETE.Response>("/games/join", {
+        method: "DELETE",
+        data: options,
+      });
 
-      queryClient.setQueryData(
-        [QUERY_KEY.USER_CURRENT_GAME_ID, user?.uid],
-        data
-      );
+      queryClient.setQueryData([QUERY_KEY.USER_CURRENT_GAME_ID, user?.uid], {
+        id: null,
+      });
 
       return data;
     },
@@ -43,7 +42,7 @@ export const useCreateGameMutation = (props?: UseCreateGameMutationProps) => {
   );
 
   return useMutation({
-    mutationKey: [MUTATION_KEY.CREATE_GAME],
+    mutationKey: [MUTATION_KEY.LEAVE_GAME],
     mutationFn,
     ...props?.mutation,
   });

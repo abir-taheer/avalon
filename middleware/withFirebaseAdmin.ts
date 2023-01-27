@@ -29,9 +29,9 @@ const getApp = (): App => {
   );
 };
 
-export type WithFirebaseAdminHandler = (
+export type WithFirebaseAdminHandler<Response = unknown> = (
   context: WithFirebaseAdminContext
-) => any | Promise<any>;
+) => Response | Promise<Response>;
 
 export type WithFirebaseAdminContext = {
   req: NextApiRequest;

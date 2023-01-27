@@ -1,21 +1,25 @@
 import { Button, ButtonProps } from "@mui/material";
-import { useJoinGameMutation } from "@/mutations/useJoinGameMutation";
 import { useSnackbar } from "notistack";
+import { useLeaveGameMutation } from "@/mutations/useLeaveGameMutation";
+import { useRouter } from "next/router";
 
-export type JoinGameButtonProps = {
+export type LeaveGameButtonProps = {
   id: string;
 } & Partial<ButtonProps>;
 
-export const JoinGameButton = (props: JoinGameButtonProps) => {
+export const LeaveGameButton = (props: LeaveGameButtonProps) => {
   const { id, ...buttonProps } = props;
-  const { mutateAsync, isLoading } = useJoinGameMutation();
+  const { mutateAsync, isLoading } = useLeaveGameMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const handleClick = async () => {
     try {
       await mutateAsync({ id });
 
-      enqueueSnackbar("Joined game", { variant: "success" });
+      await router.push("/");
+
+      enqueueSnackbar("Left game", { variant: "success" });
     } catch (e) {
       // TODO handle error
       console.error(e);
@@ -29,7 +33,7 @@ export const JoinGameButton = (props: JoinGameButtonProps) => {
       variant={"contained"}
       onClick={handleClick}
     >
-      {isLoading ? "Joining..." : "Join Game"}
+      {isLoading ? "Leaving..." : "Leave Game"}
     </Button>
   );
 };
