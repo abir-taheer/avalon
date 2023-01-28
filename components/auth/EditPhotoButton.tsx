@@ -1,5 +1,5 @@
 import { authUserAtom } from "@/atoms";
-import { storage } from "@/config";
+import { storage } from "@/client-config";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { AccountCircle } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";

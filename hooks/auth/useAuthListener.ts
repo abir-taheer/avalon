@@ -1,6 +1,6 @@
 import { authUserAtom, userAtom } from "@/atoms";
-import { auth, realtime } from "@/config";
-import { RealTimeUser } from "@/schema";
+import { auth, realtime } from "@/client-config";
+import { RealTimeUser } from "@/typed/schema";
 import { getDefaultPhotoURL } from "@/utils";
 import { fullName } from "faker-en";
 import { updateProfile } from "firebase/auth";

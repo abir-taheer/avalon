@@ -1,7 +1,7 @@
 import { userAtom } from "@/atoms";
-import { firestore } from "@/config";
+import { firestore } from "@/client-config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
-import { GameStatus } from "@/schema";
+import { GameStatus } from "@/typed/schema";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useAtomValue } from "jotai";
 import { useQuery } from "react-query";

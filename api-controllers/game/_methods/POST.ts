@@ -1,13 +1,9 @@
-import { InvalidBodyParamsError } from "@/api-controllers/common-errors";
-import { ApiHandlerError, FirebaseAdminHandlerWithUser } from "@/middleware";
-import { Game, GameOptions, GameStatus } from "@/schema";
-import {
-  flattenObject,
-  generateGameId,
-  isGameOptions,
-  validateGameOptions,
-} from "@/utils";
+import { FirebaseAdminHandlerWithUser } from "@/middleware";
+import { Game, GameOptions, GameStatus, isGameOptions } from "@/typed/schema";
+import { flattenObject, generateGameId, validateGameOptions } from "@/utils";
 import { Timestamp } from "@firebase/firestore";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
+import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 
 export type BodyParams = GameOptions & {};
 

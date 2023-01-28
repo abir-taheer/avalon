@@ -1,12 +1,13 @@
-import { FIREBASE_CONFIG } from "@/constants";
-import { Game, GameStatus } from "@/schema";
 import * as firebaseAdmin from "firebase-admin";
+import { Game, GameStatus } from "@/typed/schema";
+import { UserRecord } from "firebase-admin/auth";
+import { NextApiHandler } from "next";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
+import { withErrorHandler } from "@/middleware/withErrorHandler";
+import { ApiHandlerWithContext } from "@/typed/api/ApiHandlerWithContext";
+import { ApiContext } from "@/typed/api/ApiContext";
 import { app } from "firebase-admin";
-import { Auth, UserRecord } from "firebase-admin/auth";
-import { Database } from "firebase-admin/database";
-import { Firestore } from "firebase-admin/firestore";
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { ApiHandlerError, withErrorHandler } from "./withErrorHandler";
+import { FIREBASE_CONFIG } from "@/constants";
 
 type App = app.App;
 
@@ -28,25 +29,7 @@ const getApp = (): App => {
   );
 };
 
-export type WithFirebaseAdminHandler<Response = unknown> = (
-  context: WithFirebaseAdminContext
-) => Response | Promise<Response>;
-
-export type WithFirebaseAdminContext = {
-  req: NextApiRequest;
-  res: NextApiResponse;
-  user: UserRecord | null;
-  getCurrentGame: (userId: string) => Promise<Game | null>;
-
-  admin: typeof firebaseAdmin;
-  app: app.App;
-
-  auth: Auth;
-  firestore: Firestore;
-  realtime: Database;
-};
-
-export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
+export const withApiContext = (next: ApiHandlerWithContext) => {
   const handler: NextApiHandler = async (req, res) => {
     let user: null | UserRecord = null;
     const appCheckToken = req.headers["x-firebase-appcheck"] || "";
@@ -91,7 +74,7 @@ export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
       return games.docs?.[0]?.data() as Game;
     };
 
-    const context: WithFirebaseAdminContext = {
+    const context: ApiContext = {
       app,
       req,
       res,
@@ -114,7 +97,8 @@ export const withFirebaseAdmin = (next: WithFirebaseAdminHandler) => {
       levels++;
     }
 
-    res.status(200).json({ data: response });
+    // Return a success of true unless an error was thrown
+    res.status(200).json({ data: response, success: true });
   };
 
   return withErrorHandler(handler);

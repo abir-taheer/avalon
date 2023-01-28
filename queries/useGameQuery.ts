@@ -1,7 +1,7 @@
-import { firestore } from "@/config";
+import { firestore } from "@/client-config";
 import { useSubscribeQueryWithDoc } from "@/hooks/firestore/useSubscribeQueryWithDoc";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
-import { Game } from "@/schema";
+import { Game } from "@/typed/schema";
 import { doc, getDoc } from "firebase/firestore";
 import { useMemo } from "react";
 import { useQuery } from "react-query";

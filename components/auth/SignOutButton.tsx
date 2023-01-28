@@ -1,4 +1,4 @@
-import { auth } from "@/config";
+import { auth } from "@/client-config";
 import { Button } from "@mui/material";
 import { signOut } from "firebase/auth";
 import { useCallback } from "react";

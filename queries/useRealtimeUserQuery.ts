@@ -1,6 +1,6 @@
-import { realtime } from "@/config";
+import { realtime } from "@/client-config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
-import { RealTimeUser } from "@/schema";
+import { RealTimeUser } from "@/typed/schema";
 import { onValue, ref } from "firebase/database";
 import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "react-query";

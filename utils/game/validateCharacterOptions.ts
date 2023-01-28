@@ -1,5 +1,5 @@
 import { characters } from "@/forms/NewGameForm/useNewGameForm";
-import { CharacterOptions } from "@/schema";
+import { CharacterOptions } from "@/typed/schema";
 import { optionDependencies } from "@/utils/game/validateGameOptions";
 import { FormikErrors } from "formik";
 

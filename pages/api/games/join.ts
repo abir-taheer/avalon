@@ -1,7 +1,8 @@
 import * as API from "@/api-controllers";
-import { ApiHandlerError, withAuth } from "@/middleware";
+import { withAuthenticatedApiContext } from "@/middleware";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 
-export default withAuth(async (context) => {
+export default withAuthenticatedApiContext(async (context) => {
   const { req } = context;
 
   if (req.method === "POST") {

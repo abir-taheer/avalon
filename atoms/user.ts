@@ -1,4 +1,4 @@
-import { RealTimeUser } from "@/schema";
+import { RealTimeUser } from "@/typed/schema";
 import { User } from "firebase/auth";
 import { atom } from "jotai";
 

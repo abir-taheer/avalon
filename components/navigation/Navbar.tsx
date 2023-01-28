@@ -1,5 +1,5 @@
 import { userAtom } from "@/atoms";
-import { auth } from "@/config";
+import { auth } from "@/client-config";
 import { Logout } from "@mui/icons-material";
 import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
 import { signOut } from "firebase/auth";

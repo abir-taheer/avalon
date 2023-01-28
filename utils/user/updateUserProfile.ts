@@ -1,4 +1,4 @@
-import { auth, realtime } from "@/config";
+import { auth, realtime } from "@/client-config";
 import { updateProfile } from "firebase/auth";
 import { ref, update } from "firebase/database";
 

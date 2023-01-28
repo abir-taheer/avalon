@@ -1,6 +1,7 @@
-import { InvalidBodyParamsError } from "@/api-controllers/common-errors";
-import { ApiHandlerError, FirebaseAdminHandlerWithUser } from "@/middleware";
-import { Game, GameStatus } from "@/schema";
+import { FirebaseAdminHandlerWithUser } from "@/middleware";
+import { Game, GameStatus } from "@/typed/schema";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
+import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 
 export type BodyParams = {
   id: string;

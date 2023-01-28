@@ -3,9 +3,10 @@ import {
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
 import { Container, DialogTitle, DialogContent, Button } from "@mui/material";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 
 export type ErrorDialogProps = {
-  error: Error;
+  error: ApiHandlerError;
 };
 
 export const ErrorDialog: UseDialogComponent<ErrorDialogProps, null> = ({
@@ -16,7 +17,9 @@ export const ErrorDialog: UseDialogComponent<ErrorDialogProps, null> = ({
     <Container maxWidth={"sm"}>
       <DialogTitle>There was an error performing that action</DialogTitle>
       <DialogContent>
-        <pre>{error.message}</pre>
+        <pre>
+          {error.code} - {error.message}
+        </pre>
       </DialogContent>
 
       <Button onClick={() => closeDialog(null)}>Close</Button>
@@ -24,6 +27,6 @@ export const ErrorDialog: UseDialogComponent<ErrorDialogProps, null> = ({
   );
 };
 
-export const useErrorDialog = () => {
+export const useApiResponseErrorDialog = () => {
   return useDialog(ErrorDialog);
 };

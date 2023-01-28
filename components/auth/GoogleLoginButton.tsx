@@ -1,4 +1,4 @@
-import { auth } from "@/config";
+import { auth } from "@/client-config";
 import { GoogleIcon } from "@/icons/Google";
 import { Button, ButtonProps } from "@mui/material";
 import classNames from "classnames";

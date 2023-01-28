@@ -1,16 +1,18 @@
 import { useAtomValue } from "jotai";
 import { idTokenAtom } from "@/atoms";
-import { useErrorDialog } from "@/components/dialog/error/useErrorDialog";
-import Axios from "axios";
+import { useApiResponseErrorDialog } from "@/components/dialog/error/useApiResponseErrorDialog";
+import Axios, { AxiosError } from "axios";
 import { useMemo } from "react";
 import { appCheckTokenAtom } from "@/atoms/appCheckToken";
+import { isApiHandlerResponse } from "@/typed/api/ApiHandlerResponse";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 
 const baseURL = "/api";
 
 export const useAPI = () => {
   const idToken = useAtomValue(idTokenAtom);
   const appCheckToken = useAtomValue(appCheckTokenAtom);
-  const openErrorDialog = useErrorDialog();
+  const openErrorDialog = useApiResponseErrorDialog();
 
   return useMemo(() => {
     const authorization = idToken ? `Bearer ${idToken}` : undefined;
@@ -25,9 +27,25 @@ export const useAPI = () => {
 
     instance.interceptors.response.use(
       (response) => response.data,
-      (error) => {
-        console.log(error);
-        openErrorDialog({ error });
+      async (error: AxiosError) => {
+        const { response } = error;
+
+        if (
+          response &&
+          isApiHandlerResponse(response?.data) &&
+          response.data.success === false
+        ) {
+          const wrappedError = new ApiHandlerError({
+            code: response.data.code,
+            message: response.data.error,
+            status: response.status,
+          });
+
+          await openErrorDialog({ error: wrappedError });
+        } else {
+          // We have no idea what happened, so just throw the error
+          throw error;
+        }
       }
     );
 

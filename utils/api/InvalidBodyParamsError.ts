@@ -1,4 +1,4 @@
-import { ApiHandlerError } from "@/middleware";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 
 export class InvalidBodyParamsError extends ApiHandlerError {
   constructor() {

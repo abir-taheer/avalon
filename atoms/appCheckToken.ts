@@ -1,10 +1,13 @@
-import { idTokenAtom } from "@/atoms/user";
 import { atom } from "jotai";
 import { getToken } from "firebase/app-check";
-import { appCheck } from "@/config";
+import { appCheck } from "@/client-config";
 
 export const appCheckTokenAtom = atom(async (get) => {
-  const result = await getToken(appCheck, false);
+  try {
+    const result = await getToken(appCheck, false);
 
-  return result.token || null;
+    return result.token;
+  } catch (error) {}
+
+  return null;
 });

@@ -4,5 +4,5 @@
   "rules": {
     "react/no-unescaped-entities": "off"
   },
-  "plugins": ["unused-imports"]
+  "plugins": []
 }

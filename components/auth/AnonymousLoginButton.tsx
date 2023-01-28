@@ -1,4 +1,4 @@
-import { auth } from "@/config";
+import { auth } from "@/client-config";
 import { Button, ButtonProps } from "@mui/material";
 import { signInAnonymously } from "firebase/auth";
 import { useCallback, useState } from "react";
