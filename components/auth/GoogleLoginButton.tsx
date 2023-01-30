@@ -2,7 +2,11 @@ import { auth } from "@/client-config";
 import { GoogleIcon } from "@/icons/Google";
 import { Button, ButtonProps } from "@mui/material";
 import classNames from "classnames";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  UserCredential,
+} from "firebase/auth";
 import { useCallback, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 
@@ -15,9 +19,13 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export const GoogleLoginButton = (props: ButtonProps) => {
+export type GoogleLoginButtonProps = ButtonProps & {
+  onSuccess?: (user: UserCredential) => void;
+};
+
+export const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
   const { classes } = useStyles();
-  const { className, ...rest } = props;
+  const { className, onSuccess, ...rest } = props;
   const [disabled, setDisabled] = useState(false);
 
   const login = useCallback(() => {
@@ -25,6 +33,11 @@ export const GoogleLoginButton = (props: ButtonProps) => {
 
     setDisabled(true);
     signInWithPopup(auth, provider)
+      .then((user) => {
+        if (onSuccess) {
+          onSuccess(user);
+        }
+      })
       .catch()
       .finally(() => {
         setDisabled(false);

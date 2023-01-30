@@ -1,12 +1,11 @@
-import { userAtom } from "@/atoms";
 import { getDefaultPhotoURL } from "@/utils";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { Edit } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";
-import { useAtomValue } from "jotai";
+import { useAuth } from "@/hooks";
 
 export const EditNameButton = (props: ButtonProps) => {
-  const user = useAtomValue(userAtom);
+  const { user } = useAuth();
   const handleClick = async () => {
     if (!user) {
       throw new Error("User not signed in");

@@ -1,4 +1,3 @@
-import { authUserAtom } from "@/atoms";
 import { storage } from "@/client-config";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { AccountCircle } from "@mui/icons-material";
@@ -8,9 +7,9 @@ import {
   ref as storageRef,
   uploadBytes,
 } from "firebase/storage";
-import { useAtomValue } from "jotai";
 import { ChangeEventHandler, useRef, useState } from "react";
 import { makeStyles } from "tss-react/mui";
+import { useAuth } from "@/hooks";
 
 const useStyles = makeStyles()({
   FileInput: {
@@ -21,7 +20,7 @@ const useStyles = makeStyles()({
 
 export const EditPhotoButton = (props: ButtonProps) => {
   const { classes } = useStyles();
-  const authUser = useAtomValue(authUserAtom);
+  const { authUser } = useAuth();
   const inputRef = useRef<null | HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
 

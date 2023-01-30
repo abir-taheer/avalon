@@ -1,10 +1,9 @@
-import { userAtom } from "@/atoms";
 import { firestore } from "@/client-config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
 import { GameStatus } from "@/typed/schema";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useAtomValue } from "jotai";
 import { useQuery } from "react-query";
+import { useAuth } from "@/hooks";
 
 type CurrentUserGameIdQueryDataType = {
   id: string | null;
@@ -17,7 +16,7 @@ export type UseCurrentUserGameIdProps = {
 export const useCurrentUserGameIdQuery = (
   props?: UseCurrentUserGameIdProps
 ) => {
-  const user = useAtomValue(userAtom);
+  const { user } = useAuth();
 
   return useQuery<CurrentUserGameIdQueryDataType>({
     queryKey: [QUERY_KEY.USER_CURRENT_GAME_ID, user?.uid],

@@ -5,14 +5,15 @@ import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
 import { Add } from "@mui/icons-material";
 import {
   CircularProgress,
+  Container,
   LinearProgress,
   Stack,
   Typography,
 } from "@mui/material";
-import { useAtomValue } from "jotai";
+import { useAuth } from "@/hooks";
 
 export const ActiveGameBanner = () => {
-  const user = useAtomValue(userAtom);
+  const { user } = useAuth();
 
   // Only bother with loading it if the user is signed in
   const { data, isLoading } = useCurrentUserGameIdQuery({
@@ -32,7 +33,7 @@ export const ActiveGameBanner = () => {
         justifyContent={"space-between"}
         alignItems={"center"}
       >
-        <Typography>Your current game:</Typography>
+        <Typography>My current game:</Typography>
 
         <LinkButton
           href={`/game/new`}

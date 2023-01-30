@@ -2,7 +2,7 @@ import { userAtom } from "@/atoms";
 import { AuthBanner } from "@/components/auth/AuthBanner";
 import { FlexCenter } from "@/components/flex/FlexCenter";
 import { ActiveGameBanner } from "@/components/game/ActiveGameBanner";
-import { Divider, Stack } from "@mui/material";
+import { Container, Divider, Stack } from "@mui/material";
 import { useAtomValue } from "jotai";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -39,18 +39,20 @@ const Home: NextPage = () => {
   const signedIn = Boolean(user);
 
   return (
-    <Stack spacing={4}>
-      {!signedIn && <Hero />}
+    <Container maxWidth={"md"}>
+      <Stack spacing={4}>
+        {!signedIn && <Hero />}
 
-      <AuthBanner />
+        <AuthBanner />
 
-      {signedIn && (
-        <Fragment>
-          <Divider />
-          <ActiveGameBanner />
-        </Fragment>
-      )}
-    </Stack>
+        {signedIn && (
+          <Fragment>
+            <Divider />
+            <ActiveGameBanner />
+          </Fragment>
+        )}
+      </Stack>
+    </Container>
   );
 };
 

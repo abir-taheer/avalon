@@ -1,13 +1,12 @@
-import { userAtom } from "@/atoms";
 import { EditNameButton } from "@/components/auth/EditNameButton";
 import { EditPhotoButton } from "@/components/auth/EditPhotoButton";
 import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
 import { useIsMobile } from "@/hooks/ui";
 import { Container, Stack, Typography } from "@mui/material";
-import { useAtomValue } from "jotai";
+import { useAuth } from "@/hooks";
 
 export const AuthenticatedBanner = () => {
-  const user = useAtomValue(userAtom);
+  const { user } = useAuth();
 
   const isMobile = useIsMobile();
 

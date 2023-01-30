@@ -1,5 +1,5 @@
-import { GameCardPreviewFooter } from "@/components/game/GameCardPreviewFooter";
-import { GameCardPreviewHeading } from "@/components/game/GameCardPreviewHeading";
+import { GameCardPreviewFooter } from "@/components/game/GamePreviewCard/GameCardPreviewFooter";
+import { GameCardPreviewHeading } from "@/components/game/GamePreviewCard/GameCardPreviewHeading";
 import { PlayersList } from "@/components/game/PlayersList";
 import { useGameQuery } from "@/queries/useGameQuery";
 import {

@@ -2,6 +2,7 @@ import { useIsMobile } from "@/hooks/ui";
 import { LinkOutlined } from "@mui/icons-material";
 import { Button, Stack, Tooltip, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
+import Link from "next/link";
 
 export type GameCardPreviewHeadingProps = {
   id: string;
@@ -30,9 +31,11 @@ export const GameCardPreviewHeading = ({ id }: GameCardPreviewHeadingProps) => {
       alignContent={"space-between"}
       spacing={3}
     >
-      <Typography variant="h4" color={"primary"}>
-        <code>{id}</code>
-      </Typography>
+      <Link passHref href={"/game/" + id}>
+        <Typography variant="h4" color={"primary"}>
+          <code>{id}</code>
+        </Typography>
+      </Link>
 
       <Tooltip title={gameLink}>
         <Button

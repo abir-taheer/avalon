@@ -1,10 +1,9 @@
-import { userAtom } from "@/atoms";
 import { AuthenticatedBanner } from "@/components/auth/AuthenticatedBanner";
 import { UnauthenticatedBanner } from "@/components/auth/UnauthenticatedBanner";
-import { useAtomValue } from "jotai";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 export const AuthBanner = () => {
-  const user = useAtomValue(userAtom);
+  const { user } = useAuth();
 
   const signedIn = Boolean(user);
 

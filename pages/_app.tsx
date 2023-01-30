@@ -4,7 +4,6 @@ import { useAuthListener } from "@/hooks/auth";
 import { queryClient } from "@/queries/queryClient";
 import { ThemeProvider } from "@/theme";
 import { withAppEmotionCache } from "@/utils/tss";
-import { Container } from "@mui/material";
 import type { AppProps } from "next/app";
 import { SnackbarProvider } from "notistack";
 import { QueryClientProvider } from "react-query";
@@ -12,12 +11,12 @@ import { makeStyles } from "tss-react/mui";
 import "../styles/globals.css";
 
 const useStyles = makeStyles()((theme) => ({
-  SuccessSnackbar: {
-    backgroundColor: theme.palette.success.main,
-  },
-  ContentContainer: {
+  ContentRoot: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+  },
+  SuccessSnackbar: {
+    backgroundColor: theme.palette.success.main,
   },
 }));
 
@@ -34,9 +33,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <DialogQueue />
           <Navbar />
-          <Container maxWidth={"md"} className={classes.ContentContainer}>
+          <div className={classes.ContentRoot}>
             <Component {...pageProps} />
-          </Container>
+          </div>
         </QueryClientProvider>
       </SnackbarProvider>
     </ThemeProvider>

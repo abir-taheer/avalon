@@ -1,9 +1,7 @@
 import * as API from "@/api-controllers";
-import { userAtom } from "@/atoms";
-import { useAPI } from "@/hooks";
+import { useAPI, useAuth } from "@/hooks";
 import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
 import { QUERY_KEY } from "@/queries/queryKey";
-import { useAtomValue } from "jotai";
 import { useCallback } from "react";
 import { MutationFunction, useMutation, useQueryClient } from "react-query";
 
@@ -20,7 +18,7 @@ export type UseCreateGameMutationProps = {
 export const useLeaveGameMutation = (props?: UseCreateGameMutationProps) => {
   const api = useAPI();
   const queryClient = useQueryClient();
-  const user = useAtomValue(userAtom);
+  const { user } = useAuth();
 
   const mutationFn: MutationFunction<
     UseLeaveGameMutationData,
