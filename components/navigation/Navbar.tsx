@@ -5,6 +5,7 @@ import { signOut } from "firebase/auth";
 import Link from "next/link";
 import { makeStyles } from "tss-react/mui";
 import { useAuth } from "@/hooks";
+import { SignOutButton } from "@/components";
 
 const useStyles = makeStyles()({
   AppBar: {
@@ -34,15 +35,7 @@ export const Navbar = () => {
             </Typography>
           </Link>
 
-          {isSignedIn && (
-            <Button
-              onClick={() => signOut(auth)}
-              variant={"outlined"}
-              startIcon={<Logout />}
-            >
-              Log Out
-            </Button>
-          )}
+          {isSignedIn && <SignOutButton />}
         </Toolbar>
       </Container>
     </AppBar>

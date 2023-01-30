@@ -3,6 +3,8 @@ import { Button, ButtonProps } from "@mui/material";
 import { signInAnonymously, UserCredential } from "firebase/auth";
 import { useCallback, useState } from "react";
 import { makeStyles } from "tss-react/mui";
+import { useSetAtom } from "jotai";
+import { authCounterAtom } from "@/atoms";
 
 const useStyles = makeStyles()((theme) => ({
   Button: {
@@ -19,6 +21,7 @@ export type AnonymousLoginButtonProps = ButtonProps & {
 
 export const AnonymousLoginButton = (props: AnonymousLoginButtonProps) => {
   const { onSuccess, ...buttonProps } = props;
+  const setAuthCounter = useSetAtom(authCounterAtom);
   const [loading, setLoading] = useState(false);
   const { classes } = useStyles();
 
@@ -30,8 +33,11 @@ export const AnonymousLoginButton = (props: AnonymousLoginButtonProps) => {
           onSuccess(user);
         }
       })
-      .finally(() => setLoading(false));
-  }, [onSuccess]);
+      .finally(() => {
+        setAuthCounter((c) => c + 1);
+        setLoading(false);
+      });
+  }, [onSuccess, setAuthCounter]);
 
   return (
     <Button

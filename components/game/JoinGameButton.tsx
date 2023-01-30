@@ -3,6 +3,7 @@ import { Button, ButtonProps } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useAuthRequiredDialog } from "@/components/dialog/auth/useAuthRequiredDialog";
 import { useAuth } from "@/hooks";
+import { useCallback, useEffect, useState } from "react";
 
 export type JoinGameButtonProps = {
   id: string;
@@ -13,14 +14,10 @@ export const JoinGameButton = (props: JoinGameButtonProps) => {
   const { mutateAsync, isLoading } = useJoinGameMutation();
   const { enqueueSnackbar } = useSnackbar();
   const { isSignedIn } = useAuth();
+  const [queuedAttempt, setQueuedAttempt] = useState(false);
   const openAuthDialog = useAuthRequiredDialog();
 
-  const handleClick = async () => {
-    if (!isSignedIn) {
-      await openAuthDialog(undefined);
-      return;
-    }
-
+  const join = useCallback(async () => {
     try {
       await mutateAsync({ id });
 
@@ -29,7 +26,27 @@ export const JoinGameButton = (props: JoinGameButtonProps) => {
       // TODO handle error
       console.error(e);
     }
+  }, [id, mutateAsync, enqueueSnackbar]);
+
+  const handleClick = async () => {
+    if (!isSignedIn) {
+      const auth = await openAuthDialog(undefined);
+
+      if (auth) {
+        setQueuedAttempt(true);
+      }
+
+      return;
+    }
+
+    await join();
   };
+
+  useEffect(() => {
+    if (queuedAttempt) {
+      join().finally(() => setQueuedAttempt(false));
+    }
+  }, [queuedAttempt, join]);
 
   return (
     <Button

@@ -1,16 +1,19 @@
-import { authUserAtom, userAtom } from "@/atoms";
+import { authCounterAtom, authUserAtom, userAtom } from "@/atoms";
 import { auth, realtime } from "@/client-config";
 import { RealTimeUser } from "@/typed/schema";
 import { getDefaultPhotoURL } from "@/utils";
 import { fullName } from "faker-en";
 import { updateProfile } from "firebase/auth";
 import { onDisconnect, onValue, ref, set, update } from "firebase/database";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
+import { updateUserProfile } from "@/utils/user/updateUserProfile";
+import { getIsSigningOut } from "@/utils/auth/isSigningOut";
 
 export const useAuthListener = () => {
   const [authUser, setAuthUser] = useAtom(authUserAtom);
-  const [user, setUser] = useAtom(userAtom);
+  const setUser = useSetAtom(userAtom);
+  const counter = useAtomValue(authCounterAtom);
 
   useEffect(() => {
     return auth.onAuthStateChanged(async (user) => {
@@ -33,6 +36,15 @@ export const useAuthListener = () => {
 
         if (data) {
           setUser(data);
+
+          const isSigningOut = getIsSigningOut();
+
+          if (!data.active && !isSigningOut) {
+            await updateUserProfile({
+              active: true,
+            });
+          }
+
           return;
         }
 
@@ -71,19 +83,5 @@ export const useAuthListener = () => {
     onDisconnect(userRef).update(offline);
 
     return unsubscribe;
-  }, [authUser, setUser]);
-
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-
-    if (!user.active) {
-      const userRef = ref(realtime, "/user/" + user.uid);
-
-      update(ref(realtime, "/user/" + user.uid), {
-        active: true,
-      });
-    }
-  }, [user]);
+  }, [authUser, setUser, counter]);
 };
