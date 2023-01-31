@@ -3,37 +3,21 @@ import { Navbar } from "@/components/navigation/Navbar";
 import { useAuthListener } from "@/hooks/auth";
 import { queryClient } from "@/queries/queryClient";
 import { ThemeProvider } from "@/theme";
-import { withAppEmotionCache } from "@/utils/tss";
 import type { AppProps } from "next/app";
 import { SnackbarProvider } from "notistack";
 import { QueryClientProvider } from "react-query";
-import { makeStyles } from "tss-react/mui";
 import "../styles/globals.css";
 
-const useStyles = makeStyles()((theme) => ({
-  ContentRoot: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  SuccessSnackbar: {
-    backgroundColor: theme.palette.success.main,
-  },
-}));
-
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   useAuthListener();
-  const { classes } = useStyles();
 
   return (
     <ThemeProvider>
-      <SnackbarProvider
-        maxSnack={3}
-        classes={{ variantSuccess: classes.SuccessSnackbar }}
-      >
+      <SnackbarProvider maxSnack={3}>
         <QueryClientProvider client={queryClient}>
           <DialogQueue />
           <Navbar />
-          <div className={classes.ContentRoot}>
+          <div>
             <Component {...pageProps} />
           </div>
         </QueryClientProvider>
@@ -41,5 +25,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   );
 }
-
-export default withAppEmotionCache(MyApp);

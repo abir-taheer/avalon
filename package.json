@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
-    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
     "@faker-js/faker": "^7.6.0",
     "@mui/icons-material": "^5.11.0",
@@ -28,8 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
-    "sharp": "^0.31.3",
-    "tss-react": "^4.5.2"
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
     "@firebase/app-types": "^0.9.0",

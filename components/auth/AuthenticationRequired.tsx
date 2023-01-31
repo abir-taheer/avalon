@@ -1,19 +1,8 @@
-import { Container, Divider, Stack, Typography } from "@mui/material";
 import { AnonymousLoginButton, GoogleLoginButton } from "@/components";
 import { UndrawAuthentication } from "@/illustrations/UndrawAuthentication";
-import { makeStyles } from "tss-react/mui";
-
-const useStyles = makeStyles()({
-  Illustration: {
-    height: 200,
-    width: 200,
-    objectFit: "contain",
-  },
-});
+import { Container, Divider, Stack, Typography } from "@mui/material";
 
 export const AuthenticationRequired = () => {
-  const { classes } = useStyles();
-
   return (
     <Container maxWidth={"sm"}>
       <Stack
@@ -22,7 +11,7 @@ export const AuthenticationRequired = () => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <UndrawAuthentication className={classes.Illustration} />
+        <UndrawAuthentication />
 
         <Typography textAlign={"center"}>
           You'll need to sign in to continue
