@@ -56,5 +56,5 @@ export const AuthRequiredDialog: UseDialogComponent<
 };
 
 export const useAuthRequiredDialog = () => {
-  return useDialog(AuthRequiredDialog);
+  return useDialog<AuthRequiredDialogProps, boolean>(AuthRequiredDialog);
 };

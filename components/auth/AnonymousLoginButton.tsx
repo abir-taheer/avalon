@@ -5,6 +5,9 @@ import { useCallback, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 import { useSetAtom } from "jotai";
 import { authCounterAtom } from "@/atoms";
+import { useEditDisplayNameDialog } from "@/components/dialog/auth/useEditDisplayNameDialog";
+import { updateUserProfile } from "@/utils/user/updateUserProfile";
+import { getDefaultPhotoURL } from "@/utils";
 
 const useStyles = makeStyles()((theme) => ({
   Button: {
@@ -23,21 +26,35 @@ export const AnonymousLoginButton = (props: AnonymousLoginButtonProps) => {
   const { onSuccess, ...buttonProps } = props;
   const setAuthCounter = useSetAtom(authCounterAtom);
   const [loading, setLoading] = useState(false);
+  const promptDisplayName = useEditDisplayNameDialog();
   const { classes } = useStyles();
 
   const login = useCallback(() => {
     setLoading(true);
     signInAnonymously(auth)
-      .then((user) => {
+      .then(async (credential) => {
+        const newProfile = await promptDisplayName({
+          initialValue: credential.user.displayName ?? "",
+        });
+
+        if (newProfile?.displayName) {
+          const name = newProfile.displayName;
+
+          await updateUserProfile({
+            displayName: name,
+            photoURL: getDefaultPhotoURL({ name }),
+          });
+        }
+
         if (onSuccess) {
-          onSuccess(user);
+          onSuccess(credential);
         }
       })
       .finally(() => {
         setAuthCounter((c) => c + 1);
         setLoading(false);
       });
-  }, [onSuccess, setAuthCounter]);
+  }, [promptDisplayName, onSuccess, setAuthCounter]);
 
   return (
     <Button

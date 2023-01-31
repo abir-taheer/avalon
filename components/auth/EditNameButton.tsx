@@ -3,28 +3,32 @@ import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { Edit } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";
 import { useAuth } from "@/hooks";
+import { useEditDisplayNameDialog } from "@/components/dialog/auth/useEditDisplayNameDialog";
 
 export const EditNameButton = (props: ButtonProps) => {
   const { user } = useAuth();
+  const promptName = useEditDisplayNameDialog();
+
   const handleClick = async () => {
     if (!user) {
       throw new Error("User not signed in");
     }
 
-    // TODO - update with real input field
-    const newName = prompt("Enter your new display name");
+    const newName = await promptName({ initialValue: user.displayName });
 
-    if (!newName || newName === user.displayName) {
+    if (!newName?.displayName || newName.displayName === user.displayName) {
       return;
     }
+
+    const { displayName } = newName;
 
     let photoURL = user.photoURL;
 
     if (!photoURL || photoURL?.startsWith("https://ui-avatars.com/api/")) {
-      photoURL = getDefaultPhotoURL({ name: newName });
+      photoURL = getDefaultPhotoURL({ name: displayName });
     }
 
-    await updateUserProfile({ displayName: newName, photoURL });
+    await updateUserProfile({ displayName, photoURL });
   };
 
   return (

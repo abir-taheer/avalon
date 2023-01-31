@@ -36,6 +36,10 @@ export type UseDialogComponent<PropType, ReturnType> = FunctionComponent<
   UseDialogComponentProps<PropType, ReturnType>
 >;
 
+export type OpenDialogFn<PropType, ReturnType> = (
+  props: PropType
+) => Promise<ReturnType | null>;
+
 export const useDialog = <PropType, ReturnType>(
   DialogComponent: UseDialogComponent<PropType, ReturnType>,
   dialogProps?: Partial<Omit<DialogProps, "open" | "onClose">>
@@ -43,7 +47,7 @@ export const useDialog = <PropType, ReturnType>(
   const pushDialog = usePushDialog<PropType, ReturnType>();
   const popDialog = usePopDialog();
 
-  const openDialog = useCallback(
+  const openDialog: OpenDialogFn<PropType, ReturnType> = useCallback(
     (props: PropType) => {
       return new Promise((resolve) => {
         const closeDialog: CloseDialogFn<ReturnType> = (value) => {
