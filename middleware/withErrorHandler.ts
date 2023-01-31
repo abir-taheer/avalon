@@ -9,8 +9,10 @@ export const withErrorHandler = (next: NextApiHandler) => {
       // If the error is of a known type, return it
       if (e instanceof ApiHandlerError) {
         return res.status(e.status).json({
-          error: e.message,
-          code: e.code,
+          error: {
+            message: e.message,
+            code: e.code,
+          },
           success: false,
         });
       }
@@ -21,8 +23,10 @@ export const withErrorHandler = (next: NextApiHandler) => {
     }
 
     res.status(500).json({
-      error: "Internal server error",
-      code: "internal",
+      error: {
+        message: "Internal server error",
+        code: "internal",
+      },
       success: false,
     });
   };
