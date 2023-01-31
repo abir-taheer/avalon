@@ -1,7 +1,7 @@
 import {
   CharacterOptions,
   isCharacterOptions,
-} from "@/typed/schema/CharacterOptions";
+} from "@/types/schema/CharacterOptions";
 
 export type GameOptions = {
   characters: CharacterOptions;

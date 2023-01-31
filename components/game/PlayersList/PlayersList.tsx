@@ -1,6 +1,6 @@
 import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
 import { PlayerListItem } from "@/components/game/PlayersList/PlayerListItem";
-import { Player } from "@/typed/schema";
+import { Player } from "@/types/schema";
 import { List, Typography } from "@mui/material";
 
 export type PlayersListProps = {

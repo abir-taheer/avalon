@@ -1,4 +1,4 @@
-import { isPlayer, Player } from "@/typed/schema/Player";
+import { isPlayer, Player } from "@/types/schema/Player";
 
 export type Vote = {
   player: Player;

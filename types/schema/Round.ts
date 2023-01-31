@@ -1,5 +1,5 @@
-import { isVote, Vote } from "@/typed/schema/Vote";
-import { isPlayer, Player } from "@/typed/schema/Player";
+import { isVote, Vote } from "@/types/schema/Vote";
+import { isPlayer, Player } from "@/types/schema/Player";
 
 export type Round = {
   number: number;

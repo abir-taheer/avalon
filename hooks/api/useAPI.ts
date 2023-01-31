@@ -3,7 +3,7 @@ import { idTokenAtom } from "@/atoms";
 import { useApiResponseErrorDialog } from "@/components/dialog/error/useApiResponseErrorDialog";
 import Axios, { AxiosError } from "axios";
 import { useMemo } from "react";
-import { isApiHandlerResponse } from "@/typed/api/ApiHandlerResponse";
+import { isApiHandlerResponse } from "@/types/api/ApiHandlerResponse";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import { useAppCheckToken } from "@/hooks/api/useAppCheckToken";
 

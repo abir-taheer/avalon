@@ -1,5 +1,5 @@
 import { FirebaseAdminHandlerWithUser } from "@/middleware";
-import { Game, GameOptions, GameStatus, isGameOptions } from "@/typed/schema";
+import { Game, GameOptions, GameStatus, isGameOptions } from "@/types/schema";
 import { flattenObject, generateGameId, validateGameOptions } from "@/utils";
 import { Timestamp } from "@firebase/firestore";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";

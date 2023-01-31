@@ -1,4 +1,4 @@
-import { ApiErrorCode, isApiErrorCode } from "@/typed/api/ApiErrorCode";
+import { ApiErrorCode, isApiErrorCode } from "@/types/api/ApiErrorCode";
 
 export type ApiHandlerResponse<DataType = unknown> =
   | {

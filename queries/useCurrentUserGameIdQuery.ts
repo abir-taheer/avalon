@@ -1,6 +1,6 @@
 import { firestore } from "@/client-config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
-import { GameStatus } from "@/typed/schema";
+import { GameStatus } from "@/types/schema";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useQuery } from "react-query";
 import { useAuth } from "@/hooks";

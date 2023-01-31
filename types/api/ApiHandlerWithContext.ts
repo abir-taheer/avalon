@@ -1,4 +1,4 @@
-import { ApiContext } from "@/typed/api/ApiContext";
+import { ApiContext } from "@/types/api/ApiContext";
 
 export type ApiHandlerWithContext<Response = unknown> = (
   context: ApiContext

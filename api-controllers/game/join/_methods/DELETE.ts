@@ -1,5 +1,5 @@
 import { FirebaseAdminHandlerWithUser } from "@/middleware";
-import { Game } from "@/typed/schema";
+import { Game } from "@/types/schema";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 

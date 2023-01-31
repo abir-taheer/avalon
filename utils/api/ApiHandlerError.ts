@@ -1,4 +1,4 @@
-import { ApiErrorCode } from "@/typed/api";
+import { ApiErrorCode } from "@/types/api";
 
 export type ApiHandlerErrorProps = {
   code: ApiErrorCode;

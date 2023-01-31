@@ -1,6 +1,6 @@
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
-import { ApiHandlerWithContext } from "@/typed/api/ApiHandlerWithContext";
-import { ApiContextWithAuth } from "@/typed/api/ApiContextWithAuth";
+import { ApiHandlerWithContext } from "@/types/api/ApiHandlerWithContext";
+import { ApiContextWithAuth } from "@/types/api/ApiContextWithAuth";
 import { withApiContext } from "@/middleware/withApiContext";
 
 export type FirebaseAdminHandlerWithUser<Response = unknown> = (

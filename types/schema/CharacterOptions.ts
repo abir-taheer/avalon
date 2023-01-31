@@ -1,4 +1,4 @@
-import { Character, characters } from "@/typed/schema/Character";
+import { Character, characters } from "@/types/schema/Character";
 
 export type CharacterOptions = Record<Character, boolean>;
 

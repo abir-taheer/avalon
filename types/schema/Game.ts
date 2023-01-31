@@ -1,6 +1,6 @@
 import { Timestamp } from "@firebase/firestore";
-import { GameStatus, isGameStatus } from "@/typed/schema/GameStatus";
-import { GameOptions, isGameOptions } from "@/typed/schema/GameOptions";
+import { GameStatus, isGameStatus } from "@/types/schema/GameStatus";
+import { GameOptions, isGameOptions } from "@/types/schema/GameOptions";
 
 export type Game = {
   id: string;
