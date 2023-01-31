@@ -3,15 +3,15 @@ import { idTokenAtom } from "@/atoms";
 import { useApiResponseErrorDialog } from "@/components/dialog/error/useApiResponseErrorDialog";
 import Axios, { AxiosError } from "axios";
 import { useMemo } from "react";
-import { appCheckTokenAtom } from "@/atoms/appCheckToken";
 import { isApiHandlerResponse } from "@/typed/api/ApiHandlerResponse";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
+import { useAppCheckToken } from "@/hooks/api/useAppCheckToken";
 
 const baseURL = "/api";
 
 export const useAPI = () => {
   const idToken = useAtomValue(idTokenAtom);
-  const appCheckToken = useAtomValue(appCheckTokenAtom);
+  const appCheckToken = useAppCheckToken();
   const openErrorDialog = useApiResponseErrorDialog();
 
   return useMemo(() => {

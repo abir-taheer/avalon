@@ -23,9 +23,12 @@ export type EditDisplayNameDialogOnCloseReturnType = {
 const useStyles = makeStyles()((theme) => ({
   Root: {
     padding: theme.spacing(2),
+    minWidth: "25vw",
+    maxWidth: 500,
   },
   Content: {
     padding: 0,
+    width: "100%",
   },
   NameInput: {
     marginTop: theme.spacing(2),
