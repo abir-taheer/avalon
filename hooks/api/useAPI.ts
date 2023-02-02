@@ -30,14 +30,16 @@ export const useAPI = () => {
       async (error: AxiosError) => {
         const { response } = error;
 
+        console.log(isApiHandlerResponse(response?.data), "yes?");
+
         if (
           response &&
           isApiHandlerResponse(response?.data) &&
           response.data.success === false
         ) {
           const wrappedError = new ApiHandlerError({
-            code: response.data.code,
-            message: response.data.error,
+            code: response.data.error.code,
+            message: response.data.error.message,
             status: response.status,
           });
 

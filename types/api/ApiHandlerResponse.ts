@@ -7,11 +7,12 @@ export type ApiHandlerResponse<DataType = unknown> =
 
       // Error Fields
       error?: never;
-      code?: never;
     }
   | {
-      error: string;
-      code: ApiErrorCode;
+      error: {
+        message: string;
+        code: ApiErrorCode;
+      };
       success: false;
 
       // Success Fields
@@ -21,12 +22,17 @@ export type ApiHandlerResponse<DataType = unknown> =
 export const isApiHandlerResponse = (
   response: any
 ): response is ApiHandlerResponse => {
+  if (typeof response !== "object") {
+    return false;
+  }
+
   const isSuccess =
     response.success === true && typeof response.data !== "undefined";
+
   const isError =
     response.success === false &&
-    typeof response.error !== "undefined" &&
-    isApiErrorCode(response.code);
+    typeof response.error === "object" &&
+    isApiErrorCode(response.error.code);
 
   return isSuccess || isError;
 };
