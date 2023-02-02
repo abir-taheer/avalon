@@ -1,4 +1,3 @@
-import { SignOutButton } from "@/components";
 import { useAuth } from "@/hooks";
 import { AppBar, Container, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
@@ -16,8 +15,6 @@ export const Navbar = () => {
               Avalon & Friends
             </Typography>
           </Link>
-
-          {isSignedIn && <SignOutButton />}
         </Toolbar>
       </Container>
     </AppBar>
