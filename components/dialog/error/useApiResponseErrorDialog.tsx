@@ -2,32 +2,49 @@ import {
   useDialog,
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
-import { UndrawNotify } from "@/illustrations/UndrawNotify";
-import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import {
-  Button,
-  DialogContent,
   DialogTitle,
+  DialogContent,
+  Button,
   Stack,
   Typography,
 } from "@mui/material";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
+import { UndrawNotify } from "@/illustrations/UndrawNotify";
+import { makeStyles } from "tss-react/mui";
 
 export type ErrorDialogProps = {
   error: ApiHandlerError;
 };
 
+const useStyles = makeStyles()((theme) => ({
+  Root: {
+    minWidth: 350,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: theme.spacing(2),
+  },
+  NotifyIllustration: {
+    minWidth: 200,
+    minHeight: 200,
+  },
+}));
+
 export const ErrorDialog: UseDialogComponent<ErrorDialogProps, null> = ({
   closeDialog,
   error,
 }) => {
+  const { classes } = useStyles();
+
   return (
     <Stack
       spacing={2}
       justifyContent={"center"}
       alignItems={"center"}
       paddingBottom={1}
+      className={classes.Root}
     >
-      <UndrawNotify />
+      <UndrawNotify className={classes.NotifyIllustration} />
       <DialogTitle color={"error"}>{error.code}</DialogTitle>
       <DialogContent>
         <Typography variant={"body2"} textAlign={"center"}>

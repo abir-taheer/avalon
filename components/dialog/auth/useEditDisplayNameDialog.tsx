@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { FormEventHandler, useState } from "react";
+import { makeStyles } from "tss-react/mui";
 
 export type EditDisplayNameDialogProps = {
   initialValue?: string;
@@ -19,10 +20,26 @@ export type EditDisplayNameDialogOnCloseReturnType = {
   displayName: string;
 };
 
+const useStyles = makeStyles()((theme) => ({
+  Root: {
+    padding: theme.spacing(2),
+    minWidth: "25vw",
+    maxWidth: 500,
+  },
+  Content: {
+    padding: 0,
+    width: "100%",
+  },
+  NameInput: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
 export const EditDisplayNameDialog: UseDialogComponent<
   EditDisplayNameDialogProps,
   EditDisplayNameDialogOnCloseReturnType
 > = ({ closeDialog, initialValue }) => {
+  const { classes } = useStyles();
   const [displayName, setDisplayName] = useState(initialValue ?? "");
 
   const submit = () => {
@@ -38,9 +55,14 @@ export const EditDisplayNameDialog: UseDialogComponent<
   };
 
   return (
-    <Stack spacing={2} justifyContent={"center"} alignItems={"center"}>
+    <Stack
+      spacing={2}
+      justifyContent={"center"}
+      alignItems={"center"}
+      className={classes.Root}
+    >
       <DialogTitle>Edit Profile</DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.Content}>
         <form onSubmit={onSubmit}>
           <TextField
             value={displayName}
@@ -49,6 +71,7 @@ export const EditDisplayNameDialog: UseDialogComponent<
             variant={"outlined"}
             label={"Display Name"}
             autoComplete={"name"}
+            className={classes.NameInput}
           />
         </form>
       </DialogContent>

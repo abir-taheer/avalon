@@ -1,20 +1,32 @@
-import { authCounterAtom } from "@/atoms";
 import { auth } from "@/client-config";
 import { GoogleIcon } from "@/icons/Google";
 import { Button, ButtonProps } from "@mui/material";
+import classNames from "classnames";
 import {
   GoogleAuthProvider,
   signInWithPopup,
   UserCredential,
 } from "firebase/auth";
-import { useSetAtom } from "jotai";
 import { useCallback, useState } from "react";
+import { makeStyles } from "tss-react/mui";
+import { useSetAtom } from "jotai";
+import { authCounterAtom } from "@/atoms";
+
+const useStyles = makeStyles()((theme) => ({
+  GoogleButton: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  },
+}));
 
 export type GoogleLoginButtonProps = ButtonProps & {
   onSuccess?: (user: UserCredential) => void;
 };
 
 export const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
+  const { classes } = useStyles();
   const { className, onSuccess, ...rest } = props;
   const setAuthCounter = useSetAtom(authCounterAtom);
   const [disabled, setDisabled] = useState(false);
@@ -42,6 +54,7 @@ export const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
       startIcon={<GoogleIcon />}
       variant={"outlined"}
       disabled={disabled}
+      className={classNames(classes.GoogleButton, className)}
       {...rest}
     >
       Login With Google

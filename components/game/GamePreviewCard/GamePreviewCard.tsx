@@ -9,12 +9,22 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { makeStyles } from "tss-react/mui";
+
+const useStyles = makeStyles()((theme) => ({
+  CreatedAt: {
+    color: theme.palette.grey[500],
+    marginBottom: theme.spacing(2),
+    banana: "",
+  },
+}));
 
 export type GamePreviewCardProps = {
   id: string;
 };
 
 export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
+  const { classes } = useStyles();
   const { data } = useGameQuery({ id });
 
   if (!data) {
@@ -40,7 +50,7 @@ export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
         <Stack spacing={2}>
           <GameCardPreviewHeading id={id} />
 
-          <Typography variant="subtitle2">
+          <Typography variant="subtitle2" className={classes.CreatedAt}>
             created on {createdAtString}
           </Typography>
 

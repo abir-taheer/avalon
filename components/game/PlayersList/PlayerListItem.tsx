@@ -11,12 +11,39 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { makeStyles } from "tss-react/mui";
 
 export type PlayerListItemProps = {
   id: string;
   isOwner?: boolean;
   itemProps?: ListItemProps;
 };
+
+type UseStylesParams = {
+  active: boolean;
+};
+
+const useStyles = makeStyles<UseStylesParams>()((theme, params) => ({
+  OwnerLabel: {
+    color: theme.palette.secondary.main,
+    fontSize: 12,
+  },
+  PlayerTextLabel: {
+    flexGrow: 1,
+  },
+  ActiveIndicator: {
+    color: params.active
+      ? theme.palette.success.main
+      : theme.palette.error.main,
+    fontSize: 12,
+  },
+  ActiveLabel: {
+    color: params.active
+      ? theme.palette.success.main
+      : theme.palette.error.main,
+    fontSize: 12,
+  },
+}));
 
 export const PlayerListItem = ({
   id,
@@ -27,6 +54,8 @@ export const PlayerListItem = ({
 
   // This is fine since it doesn't get rendered until data is loaded anyways
   const active = data?.active ?? false;
+
+  const { classes } = useStyles({ active });
 
   if (isLoading) {
     return <LinearProgress variant={"indeterminate"} />;
@@ -50,18 +79,27 @@ export const PlayerListItem = ({
         width={"100%"}
       >
         <ListItemText
+          className={classes.PlayerTextLabel}
           primary={data.displayName}
           secondary={
             <Stack direction={"row"} spacing={1} alignItems={"center"}>
-              <CircleRounded />
-              <Typography variant={"body2"} component={"span"}>
+              <CircleRounded className={classes.ActiveIndicator} />
+              <Typography
+                variant={"body2"}
+                component={"span"}
+                className={classes.ActiveLabel}
+              >
                 {data.active ? "online" : "offline"}
               </Typography>
             </Stack>
           }
         />
 
-        {isOwner && <Typography variant={"body2"}>Game Owner</Typography>}
+        {isOwner && (
+          <Typography variant={"body2"} className={classes.OwnerLabel}>
+            Game Owner
+          </Typography>
+        )}
       </FlexDiv>
     </ListItem>
   );
