@@ -15,7 +15,9 @@ export type UseCreateGameMutationProps = {
   >;
 };
 
-export const useLeaveGameMutation = (props?: UseCreateGameMutationProps) => {
+export const useRemovePlayerFromGameMutation = (
+  props?: UseCreateGameMutationProps
+) => {
   const api = useAPI();
   const queryClient = useQueryClient();
   const { user } = useAuth();

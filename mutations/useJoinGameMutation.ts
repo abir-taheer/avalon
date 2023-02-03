@@ -33,7 +33,7 @@ export const useJoinGameMutation = (props?: UseCreateGameMutationProps) => {
       );
 
       queryClient.setQueryData([QUERY_KEY.USER_CURRENT_GAME_ID, user?.uid], {
-        id: options.id,
+        id: options.game,
       });
 
       return data;

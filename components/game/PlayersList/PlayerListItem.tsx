@@ -23,9 +23,11 @@ import {
 import { makeStyles } from "tss-react/mui";
 import { useState } from "react";
 import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
+import { useRemovePlayerFromGameMutation } from "@/mutations/useRemovePlayerFromGameMutation";
 
 export type PlayerListItemProps = {
   id: string;
+  gameId: string;
   isOwner?: boolean;
   itemProps?: ListItemProps;
   showSettings?: boolean;
@@ -64,12 +66,13 @@ const useStyles = makeStyles<UseStylesParams>()((theme, params) => ({
 export const PlayerListItem = ({
   id,
   isOwner,
+  gameId,
   itemProps,
   showSettings,
 }: PlayerListItemProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { data, isLoading } = useRealtimeUserQuery({ id });
-
+  const { mutateAsync } = useRemovePlayerFromGameMutation();
   const askForConfirmation = useSimpleConfirmDialog();
 
   const closeMenu = () => setAnchorEl(null);
@@ -83,7 +86,7 @@ export const PlayerListItem = ({
     closeMenu();
 
     if (confirmed) {
-      console.log("remove player");
+      await mutateAsync({ game: gameId, user: id });
     }
   };
 

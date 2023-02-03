@@ -4,7 +4,8 @@ import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 
 export type BodyParams = {
-  id: string;
+  game: string;
+  user: string;
 };
 
 export type Response = {
@@ -13,7 +14,11 @@ export type Response = {
 
 const isBodyParams = (body: any): body is BodyParams => {
   return (
-    typeof body === "object" && typeof body.id === "string" && Boolean(body.id)
+    typeof body === "object" &&
+    typeof body.game === "string" &&
+    Boolean(body.game) &&
+    typeof body.user === "string" &&
+    Boolean(body.user)
   );
 };
 
@@ -26,9 +31,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     throw new InvalidBodyParamsError();
   }
 
-  const { id } = req.body;
-
-  const gameDoc = await firestore.collection("games").doc(id).get();
+  const gameDoc = await firestore.collection("games").doc(req.body.game).get();
 
   if (!gameDoc.exists) {
     throw new ApiHandlerError({
@@ -50,7 +53,29 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     });
   }
 
-  const playerIds = game.playerIds.filter((id) => id !== user.uid);
+  const isRemovingSelf = req.body.user === user.uid;
+  const isGameOwner = game.ownerId === user.uid;
+
+  if (!isRemovingSelf && !isGameOwner) {
+    throw new ApiHandlerError({
+      code: "permission-denied",
+      message:
+        "You cannot remove other users if you are not the owner of this game",
+      status: 403,
+    });
+  }
+
+  const targetUserIsInGame = game.playerIds.some((id) => id === req.body.user);
+
+  if (!targetUserIsInGame) {
+    throw new ApiHandlerError({
+      code: "invalid-argument",
+      message: "The user you are trying to remove is not in this game",
+      status: 400,
+    });
+  }
+
+  const playerIds = game.playerIds.filter((id) => id !== req.body.user);
 
   if (playerIds.length === 0) {
     await gameDoc.ref.delete();
@@ -60,7 +85,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
 
     // Remove the player from the game
     await gameDoc.ref.update({
-      playerIds: game.playerIds.filter((id) => id !== user.uid),
+      playerIds,
       ownerId,
     });
   }

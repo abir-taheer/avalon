@@ -19,7 +19,7 @@ export const JoinGameButton = (props: JoinGameButtonProps) => {
 
   const join = useCallback(async () => {
     try {
-      await mutateAsync({ id });
+      await mutateAsync({ game: id });
 
       enqueueSnackbar("Joined game", { variant: "success" });
     } catch (e) {

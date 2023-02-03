@@ -4,7 +4,7 @@ import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 
 export type BodyParams = {
-  id: string;
+  game: string;
 };
 
 export type Response = {
@@ -13,7 +13,9 @@ export type Response = {
 
 export const isBodyParams = (body: any): body is BodyParams => {
   return (
-    typeof body === "object" && typeof body.id === "string" && Boolean(body.id)
+    typeof body === "object" &&
+    typeof body.game === "string" &&
+    Boolean(body.game)
   );
 };
 
@@ -26,11 +28,9 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async (
     throw new InvalidBodyParamsError();
   }
 
-  const { id } = req.body;
-
   const usersExistingGame = await getCurrentGame(user.uid);
 
-  if (usersExistingGame?.id === id) {
+  if (usersExistingGame?.id === req.body.game) {
     throw new ApiHandlerError({
       code: "permission-denied",
       message: "You are already in this game",
@@ -46,7 +46,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async (
     });
   }
 
-  const gameDoc = await firestore.collection("games").doc(id).get();
+  const gameDoc = await firestore.collection("games").doc(req.body.game).get();
 
   if (!gameDoc.exists) {
     throw new ApiHandlerError({

@@ -5,11 +5,16 @@ import { List, Typography } from "@mui/material";
 import { useAuth } from "@/hooks";
 
 export type PlayersListProps = {
+  gameId: string;
   playerIds: Player["id"][];
   ownerId?: Player["id"];
 };
 
-export const PlayersList = ({ playerIds, ownerId }: PlayersListProps) => {
+export const PlayersList = ({
+  gameId,
+  playerIds,
+  ownerId,
+}: PlayersListProps) => {
   const { user } = useAuth();
 
   return (
@@ -30,6 +35,7 @@ export const PlayersList = ({ playerIds, ownerId }: PlayersListProps) => {
         {playerIds.map((id) => (
           <PlayerListItem
             id={id}
+            gameId={gameId}
             key={id}
             itemProps={{ sx: { paddingLeft: 0 } }}
             isOwner={ownerId === id}

@@ -45,7 +45,11 @@ export default function GamePage() {
           <pre>{JSON.stringify(game, null, 2)}</pre>
         </Grid>
         <Grid item xs={5}>
-          <PlayersList playerIds={game.playerIds} ownerId={game.ownerId} />
+          <PlayersList
+            gameId={game.id}
+            playerIds={game.playerIds}
+            ownerId={game.ownerId}
+          />
           {playerInGame ? (
             <LeaveGameButton id={id} />
           ) : (

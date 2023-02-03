@@ -1,7 +1,8 @@
-import { useLeaveGameMutation } from "@/mutations/useLeaveGameMutation";
+import { useRemovePlayerFromGameMutation } from "@/mutations/useRemovePlayerFromGameMutation";
 import { Button, ButtonProps } from "@mui/material";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import { useAuth } from "@/hooks";
 
 export type LeaveGameButtonProps = {
   id: string;
@@ -9,13 +10,18 @@ export type LeaveGameButtonProps = {
 
 export const LeaveGameButton = (props: LeaveGameButtonProps) => {
   const { id, ...buttonProps } = props;
-  const { mutateAsync, isLoading } = useLeaveGameMutation();
+  const { user } = useAuth();
+  const { mutateAsync, isLoading } = useRemovePlayerFromGameMutation();
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
 
   const handleClick = async () => {
+    if (!user) {
+      throw new Error("LeaveGameButton clicked but user is not signed in");
+    }
+
     try {
-      await mutateAsync({ id });
+      await mutateAsync({ game: id, user: user.uid });
 
       await router.push("/");
 
