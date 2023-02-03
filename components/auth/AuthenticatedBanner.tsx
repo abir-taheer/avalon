@@ -4,6 +4,7 @@ import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
 import { useIsMobile } from "@/hooks/ui";
 import { Container, Stack, Typography } from "@mui/material";
 import { useAuth } from "@/hooks";
+import { SignOutButton } from "@/components";
 
 export const AuthenticatedBanner = () => {
   const { user } = useAuth();
@@ -18,6 +19,8 @@ export const AuthenticatedBanner = () => {
         <Typography>You're signed in as</Typography>
         <Typography color={"primary"}>{user!.displayName}</Typography>
       </Stack>
+
+      <SignOutButton />
 
       <Container maxWidth={"sm"}>
         <Stack
