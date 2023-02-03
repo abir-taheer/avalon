@@ -9,7 +9,11 @@ import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { Logout } from "@mui/icons-material";
 import { setIsSigningOut } from "@/utils/auth/isSigningOut";
 
-export const SignOutButton = () => {
+export type SignOutButtonProps = {
+  fullWidth?: boolean;
+};
+
+export const SignOutButton = (props: SignOutButtonProps) => {
   const setAuthCounter = useSetAtom(authCounterAtom);
   const { user } = useAuth();
 
@@ -31,7 +35,13 @@ export const SignOutButton = () => {
   }, [user, setAuthCounter]);
 
   return (
-    <Button onClick={logout} startIcon={<Logout />} variant={"outlined"}>
+    <Button
+      color={"error"}
+      onClick={logout}
+      startIcon={<Logout />}
+      variant={"outlined"}
+      {...props}
+    >
       Sign Out
     </Button>
   );

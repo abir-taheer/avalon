@@ -1,3 +1,3 @@
 export * from "./generateGameId";
-export * from "./validateCharacterOptions";
+export * from "utils/game/validateOptionalCharacterOptions";
 export * from "./validateGameOptions";

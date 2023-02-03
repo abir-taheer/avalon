@@ -39,7 +39,7 @@ const Home: NextPage = () => {
   const signedIn = Boolean(user);
 
   return (
-    <Container maxWidth={"md"}>
+    <Container maxWidth={"lg"}>
       <Stack spacing={4}>
         {!signedIn && <Hero />}
 

@@ -3,11 +3,14 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
-  FormGroup,
   FormHelperText,
   LinearProgress,
+  Stack,
+  Typography,
 } from "@mui/material";
-import { characters, useNewGameForm } from "./useNewGameForm";
+import { useNewGameForm } from "./useNewGameForm";
+import { optionalCharacters } from "@/types/schema";
+import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 
 type FormType = ReturnType<typeof useNewGameForm>;
 
@@ -23,35 +26,57 @@ export const NewGameForm = (props: NewGameFormProps) => {
   const disabled = props.disabled || isSubmitting;
 
   return (
-    <FormGroup>
-      {characters.map((character) => (
-        <FormControl key={character} disabled={disabled}>
-          <FormControlLabel
-            disabled={disabled}
-            label={character}
-            control={
-              <Checkbox
-                checked={values.characters[character]}
-                onChange={(ev) =>
-                  setFieldValue(
-                    `characters.${character}`,
-                    ev.currentTarget.checked
-                  )
-                }
-              />
-            }
-          />
-          <FormHelperText error>
-            {errors.characters?.[character]}
-          </FormHelperText>
-        </FormControl>
-      ))}
-
+    <Stack spacing={2}>
       {isSubmitting && <LinearProgress variant={"indeterminate"} />}
 
-      <Button onClick={submitForm} disabled={disabled}>
+      {optionalCharacters.map((character) => {
+        const error = errors.optionalCharacters?.[character];
+        const hasError = Boolean(error);
+
+        return (
+          <FormControl key={character} disabled={disabled}>
+            <FormControlLabel
+              disabled={disabled}
+              label={character}
+              control={
+                <Checkbox
+                  checked={values.optionalCharacters[character]}
+                  onChange={(ev) =>
+                    setFieldValue(
+                      `optionalCharacters.${character}`,
+                      ev.currentTarget.checked
+                    )
+                  }
+                />
+              }
+            />
+
+            <FormHelperText error={hasError}>{error}</FormHelperText>
+          </FormControl>
+        );
+      })}
+
+      <Typography variant={"body2"}>
+        At least{" "}
+        <Typography
+          color={"primary"}
+          variant={"inherit"}
+          component={"span"}
+          fontWeight={"bold"}
+        >
+          {getMinimumNumberOfPlayersRequired(values)}
+        </Typography>{" "}
+        players required with these settings
+      </Typography>
+
+      <Button
+        onClick={submitForm}
+        disabled={disabled}
+        variant={"outlined"}
+        fullWidth
+      >
         Submit
       </Button>
-    </FormGroup>
+    </Stack>
   );
 };

@@ -1,22 +1,34 @@
 import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
-import { FlexDiv } from "@/components/flex/FlexDiv";
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
-import { CircleRounded } from "@mui/icons-material";
 import {
+  AutoAwesome,
+  Block,
+  CircleRounded,
+  MoreVert,
+} from "@mui/icons-material";
+import {
+  IconButton,
   LinearProgress,
   ListItem,
   ListItemAvatar,
+  ListItemIcon,
   ListItemProps,
+  ListItemSecondaryAction,
   ListItemText,
+  Menu,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
+import { useState } from "react";
+import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
 
 export type PlayerListItemProps = {
   id: string;
   isOwner?: boolean;
   itemProps?: ListItemProps;
+  showSettings?: boolean;
 };
 
 type UseStylesParams = {
@@ -43,14 +55,50 @@ const useStyles = makeStyles<UseStylesParams>()((theme, params) => ({
       : theme.palette.error.main,
     fontSize: 12,
   },
+  MenuItemText: {
+    fontSize: 12,
+    fontWeight: "lighter",
+  },
 }));
 
 export const PlayerListItem = ({
   id,
   isOwner,
   itemProps,
+  showSettings,
 }: PlayerListItemProps) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { data, isLoading } = useRealtimeUserQuery({ id });
+
+  const askForConfirmation = useSimpleConfirmDialog();
+
+  const closeMenu = () => setAnchorEl(null);
+
+  const removePlayer = async () => {
+    const confirmed = await askForConfirmation({
+      title: "Remove player",
+      message: `Are you sure you want to remove ${data?.displayName} from the game?`,
+    });
+
+    closeMenu();
+
+    if (confirmed) {
+      console.log("remove player");
+    }
+  };
+
+  const promotePlayer = async () => {
+    const confirmed = await askForConfirmation({
+      title: "Promote player",
+      message: `Are you sure you want to make ${data?.displayName} the game owner?`,
+    });
+
+    closeMenu();
+
+    if (confirmed) {
+      console.log("promote player");
+    }
+  };
 
   // This is fine since it doesn't get rendered until data is loaded anyways
   const active = data?.active ?? false;
@@ -73,34 +121,65 @@ export const PlayerListItem = ({
         <OptimizedAvatar src={data.photoURL} width={48} height={48} />
       </ListItemAvatar>
 
-      <FlexDiv
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        width={"100%"}
-      >
-        <ListItemText
-          className={classes.PlayerTextLabel}
-          primary={data.displayName}
-          secondary={
-            <Stack direction={"row"} spacing={1} alignItems={"center"}>
-              <CircleRounded className={classes.ActiveIndicator} />
-              <Typography
-                variant={"body2"}
-                component={"span"}
-                className={classes.ActiveLabel}
-              >
-                {data.active ? "online" : "offline"}
-              </Typography>
-            </Stack>
-          }
-        />
+      <ListItemText
+        className={classes.PlayerTextLabel}
+        primary={data.displayName}
+        secondary={
+          <Stack direction={"row"} spacing={1} alignItems={"center"}>
+            <CircleRounded className={classes.ActiveIndicator} />
+            <Typography
+              variant={"body2"}
+              component={"span"}
+              className={classes.ActiveLabel}
+            >
+              {data.active ? "online" : "offline"}
+            </Typography>
+          </Stack>
+        }
+      />
 
+      <ListItemSecondaryAction>
         {isOwner && (
           <Typography variant={"body2"} className={classes.OwnerLabel}>
             Game Owner
           </Typography>
         )}
-      </FlexDiv>
+
+        {showSettings && (
+          <>
+            <IconButton onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+              <MoreVert />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={closeMenu}
+            >
+              <MenuItem onClick={removePlayer}>
+                <ListItemIcon>
+                  <Block />
+                </ListItemIcon>
+                <ListItemText className={classes.MenuItemText}>
+                  <Typography className={classes.MenuItemText}>
+                    Remove From Game
+                  </Typography>
+                </ListItemText>
+              </MenuItem>
+
+              <MenuItem onClick={promotePlayer}>
+                <ListItemIcon>
+                  <AutoAwesome />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography className={classes.MenuItemText}>
+                    Make game owner
+                  </Typography>
+                </ListItemText>
+              </MenuItem>
+            </Menu>
+          </>
+        )}
+      </ListItemSecondaryAction>
     </ListItem>
   );
 };

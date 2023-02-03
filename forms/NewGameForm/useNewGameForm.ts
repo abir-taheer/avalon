@@ -1,10 +1,10 @@
-import { Character, GameOptions } from "@/types/schema";
+import { OptionalCharacter, GameOptions } from "@/types/schema";
 import { validateGameOptions } from "@/utils/game/validateGameOptions";
 import { FormikConfig, useFormik } from "formik";
 
 export type NewGameFormConfig = FormikConfig<GameOptions>;
 
-export const characters: Character[] = [
+export const characters: OptionalCharacter[] = [
   "merlin",
   "assassin",
   "percival",
@@ -14,7 +14,7 @@ export const characters: Character[] = [
 ];
 
 const initialValues: GameOptions = {
-  characters: {
+  optionalCharacters: {
     merlin: true,
     assassin: true,
     percival: false,

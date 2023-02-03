@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getToken } from "firebase/app-check";
 import { appCheck } from "@/client-config";
-import { useApiResponseErrorDialog } from "@/components/dialog/error/useApiResponseErrorDialog";
+import { useApiResponseErrorDialog } from "@/components/dialog/error/ApiResponseErrorDialog";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 
 export const useAppCheckToken = () => {

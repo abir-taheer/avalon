@@ -1,8 +1,11 @@
-import { Character, GameOptions } from "@/types/schema";
-import { validateCharacterOptions } from "@/utils/game/validateCharacterOptions";
+import { OptionalCharacter, GameOptions } from "@/types/schema";
+import { validateOptionalCharacterOptions } from "@/utils/game/validateOptionalCharacterOptions";
 import { FormikErrors } from "formik";
 
-export const optionDependencies: Record<Character, Character[]> = {
+export const optionDependencies: Record<
+  OptionalCharacter,
+  OptionalCharacter[]
+> = {
   // Merlin and oberon are always available
   merlin: [],
   oberon: [],
@@ -19,10 +22,12 @@ export const optionDependencies: Record<Character, Character[]> = {
 export const validateGameOptions = (values: GameOptions) => {
   const errors: FormikErrors<GameOptions> = {};
 
-  const characterErrors = validateCharacterOptions(values.characters);
+  const characterErrors = validateOptionalCharacterOptions(
+    values.optionalCharacters
+  );
 
   if (Object.keys(characterErrors).length > 0) {
-    errors.characters = characterErrors;
+    errors.optionalCharacters = characterErrors;
   }
 
   return errors;

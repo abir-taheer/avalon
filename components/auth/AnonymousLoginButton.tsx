@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 import { useSetAtom } from "jotai";
 import { authCounterAtom } from "@/atoms";
-import { useEditDisplayNameDialog } from "@/components/dialog/auth/useEditDisplayNameDialog";
+import { useEditDisplayNameDialog } from "@/components/dialog/auth/EditDisplayNameDialog";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { getDefaultPhotoURL } from "@/utils";
 

@@ -20,15 +20,14 @@ export const AuthenticatedBanner = () => {
         <Typography color={"primary"}>{user!.displayName}</Typography>
       </Stack>
 
-      <SignOutButton />
-
-      <Container maxWidth={"sm"}>
+      <Container maxWidth={"lg"}>
         <Stack
           spacing={isMobile ? 1 : 2}
           direction={isMobile ? "column" : "row"}
         >
           <EditNameButton fullWidth />
           <EditPhotoButton fullWidth />
+          <SignOutButton fullWidth />
         </Stack>
       </Container>
     </Stack>

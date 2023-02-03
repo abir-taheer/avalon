@@ -4,6 +4,8 @@ import { usePathParams } from "@/hooks/next/usePathParams";
 import { useGameQuery } from "@/queries/useGameQuery";
 import { Button, CircularProgress, Container, Grid } from "@mui/material";
 import { PlayersList } from "@/components/game/PlayersList";
+import { useMemo } from "react";
+import { useAuth } from "@/hooks";
 
 type ExpectedPathParams = {
   id: string;
@@ -11,7 +13,7 @@ type ExpectedPathParams = {
 
 export default function GamePage() {
   const { id } = usePathParams<ExpectedPathParams>();
-
+  const { user } = useAuth();
   const {
     data: game,
     isLoading,
@@ -20,6 +22,11 @@ export default function GamePage() {
     id,
     query: { enabled: Boolean(id) },
   });
+
+  const playerInGame = useMemo(
+    () => game && user && game.playerIds.includes(user.uid),
+    [game, user]
+  );
 
   if (isLoading) {
     return <CircularProgress />;
@@ -34,13 +41,18 @@ export default function GamePage() {
       <Button onClick={() => refetch()}>refetch</Button>
 
       <Grid container>
-        <Grid item xs={7}></Grid>
+        <Grid item xs={7}>
+          <pre>{JSON.stringify(game, null, 2)}</pre>
+        </Grid>
         <Grid item xs={5}>
           <PlayersList playerIds={game.playerIds} ownerId={game.ownerId} />
+          {playerInGame ? (
+            <LeaveGameButton id={id} />
+          ) : (
+            <JoinGameButton id={id} />
+          )}
         </Grid>
       </Grid>
-      <JoinGameButton id={id} />
-      <LeaveGameButton id={id} />
     </Container>
   );
 }

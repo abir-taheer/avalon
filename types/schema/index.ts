@@ -1,5 +1,5 @@
-export * from "./Character";
-export * from "./CharacterOptions";
+export * from "types/schema/OptionalCharacter";
+export * from "types/schema/OptionalCharacterOptions";
 export * from "./Game";
 export * from "./GameOptions";
 export * from "./GameStatus";

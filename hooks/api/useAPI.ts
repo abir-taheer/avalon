@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai";
 import { idTokenAtom } from "@/atoms";
-import { useApiResponseErrorDialog } from "@/components/dialog/error/useApiResponseErrorDialog";
+import { useApiResponseErrorDialog } from "@/components/dialog/error/ApiResponseErrorDialog";
 import Axios, { AxiosError } from "axios";
 import { useMemo } from "react";
 import { isApiHandlerResponse } from "@/types/api/ApiHandlerResponse";

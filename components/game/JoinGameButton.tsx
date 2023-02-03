@@ -1,7 +1,7 @@
 import { useJoinGameMutation } from "@/mutations/useJoinGameMutation";
 import { Button, ButtonProps } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useAuthRequiredDialog } from "@/components/dialog/auth/useAuthRequiredDialog";
+import { useAuthRequiredDialog } from "@/components/dialog/auth/AuthRequiredDialog";
 import { useAuth } from "@/hooks";
 import { useCallback, useEffect, useState } from "react";
 

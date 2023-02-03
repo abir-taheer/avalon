@@ -1,12 +1,13 @@
-import { characters } from "@/forms/NewGameForm/useNewGameForm";
-import { CharacterOptions } from "@/types/schema";
+import { OptionalCharacterOptions, optionalCharacters } from "@/types/schema";
 import { optionDependencies } from "@/utils/game/validateGameOptions";
 import { FormikErrors } from "formik";
 
-export const validateCharacterOptions = (options: CharacterOptions) => {
-  const errors: FormikErrors<CharacterOptions> = {};
+export const validateOptionalCharacterOptions = (
+  options: OptionalCharacterOptions
+) => {
+  const errors: FormikErrors<OptionalCharacterOptions> = {};
 
-  const charactersToCheck = characters.filter((char) => options[char]);
+  const charactersToCheck = optionalCharacters.filter((char) => options[char]);
 
   charactersToCheck.forEach((opt) => {
     const failingDependency = optionDependencies[opt].find(

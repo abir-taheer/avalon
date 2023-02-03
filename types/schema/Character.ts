@@ -1,20 +1,13 @@
-export type Character =
-  | "merlin"
-  | "assassin"
-  | "percival"
-  | "morgana"
-  | "mordred"
-  | "oberon";
+import {
+  isOptionalCharacter,
+  OptionalCharacter,
+  optionalCharacters,
+} from "@/types/schema/OptionalCharacter";
 
-export const characters = [
-  "merlin",
-  "assassin",
-  "percival",
-  "morgana",
-  "mordred",
-  "oberon",
-] as const;
+export type Character = "minion" | "knight" | OptionalCharacter;
 
 export const isCharacter = (value: any): value is Character => {
-  return characters.includes(value);
+  return value === "minion" || value === "knight" || isOptionalCharacter(value);
 };
+
+export const characters = ["knight", "minion", ...optionalCharacters] as const;

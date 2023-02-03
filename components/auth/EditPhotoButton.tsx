@@ -7,21 +7,11 @@ import {
   ref as storageRef,
   uploadBytes,
 } from "firebase/storage";
-import { ChangeEventHandler, useRef, useState } from "react";
-import { makeStyles } from "tss-react/mui";
+import { ChangeEventHandler, useMemo, useState } from "react";
 import { useAuth } from "@/hooks";
 
-const useStyles = makeStyles()({
-  FileInput: {
-    height: 0,
-    width: 0,
-  },
-});
-
 export const EditPhotoButton = (props: ButtonProps) => {
-  const { classes } = useStyles();
   const { authUser } = useAuth();
-  const inputRef = useRef<null | HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
 
   const onUpload: ChangeEventHandler<HTMLInputElement> = async (ev) => {
@@ -58,25 +48,26 @@ export const EditPhotoButton = (props: ButtonProps) => {
     setLoading(false);
   };
 
+  const inputElement = useMemo(() => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    // @ts-ignore
+    input.onchange = onUpload;
+
+    return input;
+  }, []);
+
   return (
-    <>
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/*"
-        className={classes.FileInput}
-        onChange={onUpload}
-      />
-      <Button
-        variant={"outlined"}
-        startIcon={<AccountCircle />}
-        color={"secondary"}
-        onClick={() => inputRef.current?.click()}
-        disabled={loading}
-        {...props}
-      >
-        {loading ? "Uploading photo..." : "Change Avatar"}
-      </Button>
-    </>
+    <Button
+      variant={"outlined"}
+      startIcon={<AccountCircle />}
+      color={"secondary"}
+      onClick={() => inputElement.click()}
+      disabled={loading}
+      {...props}
+    >
+      {loading ? "Uploading photo..." : "Change Avatar"}
+    </Button>
   );
 };

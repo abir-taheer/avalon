@@ -1,7 +1,6 @@
 import { AppBar, Container, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
 import { makeStyles } from "tss-react/mui";
-import { useAuth } from "@/hooks";
 
 const useStyles = makeStyles()({
   AppBar: {
@@ -14,8 +13,6 @@ const useStyles = makeStyles()({
 
 export const Navbar = () => {
   const { classes } = useStyles();
-  const { user } = useAuth();
-  const isSignedIn = Boolean(user);
 
   return (
     <AppBar

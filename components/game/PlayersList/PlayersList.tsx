@@ -2,6 +2,7 @@ import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
 import { PlayerListItem } from "@/components/game/PlayersList/PlayerListItem";
 import { Player } from "@/types/schema";
 import { List, Typography } from "@mui/material";
+import { useAuth } from "@/hooks";
 
 export type PlayersListProps = {
   playerIds: Player["id"][];
@@ -9,6 +10,8 @@ export type PlayersListProps = {
 };
 
 export const PlayersList = ({ playerIds, ownerId }: PlayersListProps) => {
+  const { user } = useAuth();
+
   return (
     <SimpleAccordion
       summary={
@@ -30,6 +33,7 @@ export const PlayersList = ({ playerIds, ownerId }: PlayersListProps) => {
             key={id}
             itemProps={{ sx: { paddingLeft: 0 } }}
             isOwner={ownerId === id}
+            showSettings={user?.uid === ownerId && user?.uid !== id}
           />
         ))}
       </List>

@@ -3,7 +3,7 @@ import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { Edit } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";
 import { useAuth } from "@/hooks";
-import { useEditDisplayNameDialog } from "@/components/dialog/auth/useEditDisplayNameDialog";
+import { useEditDisplayNameDialog } from "@/components/dialog/auth/EditDisplayNameDialog";
 
 export const EditNameButton = (props: ButtonProps) => {
   const { user } = useAuth();

@@ -1,16 +1,16 @@
 import {
-  CharacterOptions,
-  isCharacterOptions,
-} from "@/types/schema/CharacterOptions";
+  OptionalCharacterOptions,
+  isOptionalCharacterOptions,
+} from "@/types/schema/OptionalCharacterOptions";
 
 export type GameOptions = {
-  characters: CharacterOptions;
+  optionalCharacters: OptionalCharacterOptions;
 };
 
 export const isGameOptions = (value: any): value is GameOptions => {
   return (
     typeof value === "object" &&
-    typeof value.characters !== "undefined" &&
-    isCharacterOptions(value.characters)
+    typeof value.optionalCharacters !== "undefined" &&
+    isOptionalCharacterOptions(value.optionalCharacters)
   );
 };
