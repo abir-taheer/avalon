@@ -24,6 +24,7 @@ import { makeStyles } from "tss-react/mui";
 import { useState } from "react";
 import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
 import { useRemovePlayerFromGameMutation } from "@/mutations/useRemovePlayerFromGameMutation";
+import { useTransferOwnershipMutation } from "@/mutations/useTransferOwnershipMutation";
 
 export type PlayerListItemProps = {
   id: string;
@@ -72,7 +73,10 @@ export const PlayerListItem = ({
 }: PlayerListItemProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { data, isLoading } = useRealtimeUserQuery({ id });
-  const { mutateAsync } = useRemovePlayerFromGameMutation();
+  const { mutateAsync: removePlayerFromGame } =
+    useRemovePlayerFromGameMutation();
+
+  const { mutateAsync: makePlayerOwner } = useTransferOwnershipMutation();
   const askForConfirmation = useSimpleConfirmDialog();
 
   const closeMenu = () => setAnchorEl(null);
@@ -86,7 +90,7 @@ export const PlayerListItem = ({
     closeMenu();
 
     if (confirmed) {
-      await mutateAsync({ game: gameId, user: id });
+      await removePlayerFromGame({ game: gameId, user: id });
     }
   };
 
@@ -99,7 +103,7 @@ export const PlayerListItem = ({
     closeMenu();
 
     if (confirmed) {
-      console.log("promote player");
+      await makePlayerOwner({ game: gameId, user: id });
     }
   };
 

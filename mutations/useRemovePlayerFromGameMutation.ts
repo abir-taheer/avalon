@@ -5,26 +5,27 @@ import { QUERY_KEY } from "@/queries/queryKey";
 import { useCallback } from "react";
 import { MutationFunction, useMutation, useQueryClient } from "react-query";
 
-export type UseLeaveGameMutationData = API.Game.Join.DELETE.Response;
-export type UseLeaveGameMutationVariables = API.Game.Join.DELETE.BodyParams;
+export type UseRemovePlayerFromGameMutationData = API.Game.Join.DELETE.Response;
+export type UseRemovePlayerFromGameMutationVariables =
+  API.Game.Join.DELETE.BodyParams;
 
-export type UseCreateGameMutationProps = {
+export type UseRemovePlayerFromGameMutationProps = {
   mutation?: UseMutationWrapperProps<
-    UseLeaveGameMutationData,
-    UseLeaveGameMutationVariables
+    UseRemovePlayerFromGameMutationData,
+    UseRemovePlayerFromGameMutationVariables
   >;
 };
 
 export const useRemovePlayerFromGameMutation = (
-  props?: UseCreateGameMutationProps
+  props?: UseRemovePlayerFromGameMutationProps
 ) => {
   const api = useAPI();
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
   const mutationFn: MutationFunction<
-    UseLeaveGameMutationData,
-    UseLeaveGameMutationVariables
+    UseRemovePlayerFromGameMutationData,
+    UseRemovePlayerFromGameMutationVariables
   > = useCallback(
     async (options) => {
       const { data } = await api<API.Game.Join.DELETE.Response>("/games/join", {
