@@ -1,7 +1,8 @@
-import { isPlayer, Player } from "@/types/schema/Player";
+import { isPlayer } from "@/types/schema/Player";
+import { RealTimeUser } from "@/types/schema/RealTimeUser";
 
 export type Vote = {
-  player: Player;
+  playerId: RealTimeUser["uid"];
   approval: boolean;
 };
 

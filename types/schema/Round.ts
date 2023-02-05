@@ -1,10 +1,11 @@
 import { isVote, Vote } from "@/types/schema/Vote";
 import { isPlayer, Player } from "@/types/schema/Player";
+import { RealTimeUser } from "@/types/schema/RealTimeUser";
 
 export type Round = {
   number: number;
-  leader: Player;
-  team: Player[];
+  leaderId: RealTimeUser["uid"];
+  teamIds: Array<RealTimeUser["uid"]>;
   votes: Vote[];
   passed?: boolean;
   completed?: boolean;

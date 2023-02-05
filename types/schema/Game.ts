@@ -1,12 +1,13 @@
 import { Timestamp } from "@firebase/firestore";
 import { GameStatus, isGameStatus } from "@/types/schema/GameStatus";
 import { GameOptions, isGameOptions } from "@/types/schema/GameOptions";
+import { RealTimeUser } from "@/types/schema/RealTimeUser";
 
 export type Game = {
   id: string;
   status: GameStatus;
-  ownerId: string;
-  playerIds: string[];
+  ownerId: RealTimeUser["uid"];
+  playerIds: Array<RealTimeUser["uid"]>;
   createdAt: Timestamp;
   options: GameOptions;
 };

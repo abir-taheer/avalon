@@ -7,46 +7,49 @@ import {
   ref as storageRef,
   uploadBytes,
 } from "firebase/storage";
-import { ChangeEventHandler, useMemo, useState } from "react";
+import { ChangeEventHandler, useCallback, useMemo, useState } from "react";
 import { useAuth } from "@/hooks";
 
 export const EditPhotoButton = (props: ButtonProps) => {
   const { authUser } = useAuth();
   const [loading, setLoading] = useState(false);
 
-  const onUpload: ChangeEventHandler<HTMLInputElement> = async (ev) => {
-    if (!authUser) {
-      throw new Error("User not signed in");
-    }
+  const onUpload: ChangeEventHandler<HTMLInputElement> = useCallback(
+    async (ev) => {
+      if (!authUser) {
+        throw new Error("User not signed in");
+      }
 
-    // TODO - add real error reporting here instead of alerts
+      // TODO - add real error reporting here instead of alerts
 
-    const file = ev.target.files?.[0];
-    if (!file) {
-      alert("No file");
-      return;
-    }
+      const file = ev.target.files?.[0];
+      if (!file) {
+        alert("No file");
+        return;
+      }
 
-    const maxSize = 1024 * 1024 * 5;
+      const maxSize = 1024 * 1024 * 5;
 
-    if (file.size > maxSize) {
-      alert("File too large");
-      return;
-    }
+      if (file.size > maxSize) {
+        alert("File too large");
+        return;
+      }
 
-    const objectRef = storageRef(storage, `avatars/${authUser.uid}`);
+      const objectRef = storageRef(storage, `avatars/${authUser.uid}`);
 
-    setLoading(true);
+      setLoading(true);
 
-    const snapshot = await uploadBytes(objectRef, file);
+      const snapshot = await uploadBytes(objectRef, file);
 
-    const photoURL = await getDownloadURL(snapshot.ref);
+      const photoURL = await getDownloadURL(snapshot.ref);
 
-    // Update their profile entry in the auth service
-    await updateUserProfile({ photoURL });
+      // Update their profile entry in the auth service
+      await updateUserProfile({ photoURL });
 
-    setLoading(false);
-  };
+      setLoading(false);
+    },
+    []
+  );
 
   const inputElement = useMemo(() => {
     const input = document.createElement("input");
@@ -56,7 +59,7 @@ export const EditPhotoButton = (props: ButtonProps) => {
     input.onchange = onUpload;
 
     return input;
-  }, []);
+  }, [onUpload]);
 
   return (
     <Button
