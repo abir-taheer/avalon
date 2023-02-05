@@ -8,12 +8,14 @@ export type PlayersListProps = {
   gameId: string;
   playerIds: Player["id"][];
   ownerId?: Player["id"];
+  initialState?: boolean;
 };
 
 export const PlayersList = ({
   gameId,
   playerIds,
   ownerId,
+  initialState = true,
 }: PlayersListProps) => {
   const { user } = useAuth();
 
@@ -26,7 +28,7 @@ export const PlayersList = ({
       }
       // It will not load the information about the players until the user clicks on the accordion
       renderDetailsIfHidden={false}
-      initialState={true}
+      initialState={initialState}
       accordionProps={{
         sx: { border: "1px solid rgba(0, 0, 0, 0.12)" },
       }}

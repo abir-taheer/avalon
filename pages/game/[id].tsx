@@ -1,11 +1,9 @@
-import { JoinGameButton } from "@/components/game/JoinGameButton";
-import { LeaveGameButton } from "@/components/game/LeaveGameButton";
 import { usePathParams } from "@/hooks/next/usePathParams";
 import { useGameQuery } from "@/queries/useGameQuery";
 import { Button, CircularProgress, Container, Grid } from "@mui/material";
 import { PlayersList } from "@/components/game/PlayersList";
-import { useMemo } from "react";
-import { useAuth } from "@/hooks";
+import { useIsMobile } from "@/hooks/ui";
+import { GameWindow } from "@/components/game/GameWindow/GameWindow";
 
 type ExpectedPathParams = {
   id: string;
@@ -13,7 +11,8 @@ type ExpectedPathParams = {
 
 export default function GamePage() {
   const { id } = usePathParams<ExpectedPathParams>();
-  const { user } = useAuth();
+  const isMobile = useIsMobile();
+
   const {
     data: game,
     isLoading,
@@ -22,11 +21,6 @@ export default function GamePage() {
     id,
     query: { enabled: Boolean(id) },
   });
-
-  const playerInGame = useMemo(
-    () => game && user && game.playerIds.includes(user.uid),
-    [game, user]
-  );
 
   if (isLoading) {
     return <CircularProgress />;
@@ -38,23 +32,18 @@ export default function GamePage() {
 
   return (
     <Container maxWidth={"lg"}>
-      <Button onClick={() => refetch()}>refetch</Button>
-
-      <Grid container>
-        <Grid item xs={7}>
-          <pre>{JSON.stringify(game, null, 2)}</pre>
+      <Grid container spacing={2}>
+        <Grid item md={7} xs={12}>
+          <GameWindow game={game} />
         </Grid>
-        <Grid item xs={5}>
+
+        <Grid item md={5} xs={12}>
           <PlayersList
             gameId={game.id}
             playerIds={game.playerIds}
             ownerId={game.ownerId}
+            initialState={!isMobile}
           />
-          {playerInGame ? (
-            <LeaveGameButton id={id} />
-          ) : (
-            <JoinGameButton id={id} />
-          )}
         </Grid>
       </Grid>
     </Container>
