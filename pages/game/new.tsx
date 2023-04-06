@@ -1,19 +1,21 @@
 import { NewGameForm } from "@/forms/NewGameForm/NewGameForm";
 import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
 import { useCreateGameMutation } from "@/mutations/useCreateGameMutation";
-import { Button, Card, Container, Typography } from "@mui/material";
+import { Button, Card, Container, Divider, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { makeStyles } from "tss-react/mui";
 import { FlexCenter } from "@/components/flex/FlexCenter";
 import { useCharacterGuideDialog } from "@/components/dialog/game/CharacterGuideDialog";
 import { useAuthRequiredDialog } from "@/components/dialog/auth/AuthRequiredDialog";
 import { useAuth } from "@/hooks";
-import { useCallback, useEffect, useState } from "react";
-import { GameOptions } from "@/types/schema";
+import { useEffect, useState } from "react";
 
 const useStyles = makeStyles()((theme) => ({
   Card: {
     padding: theme.spacing(2),
+  },
+  Form: {
+    paddingBottom: theme.spacing(2),
   },
 }));
 
@@ -47,12 +49,14 @@ const NewGame = () => {
     },
   });
 
+  const { submitForm, isSubmitting } = form;
+
   useEffect(() => {
     if (actionQueued && user) {
       setActionQueued(false);
-      form.submitForm().then(console.log);
+      submitForm().then(console.log);
     }
-  }, [actionQueued, user]);
+  }, [submitForm, actionQueued, user]);
 
   return (
     <Container maxWidth={"md"}>
@@ -65,7 +69,19 @@ const NewGame = () => {
             View Character Guide
           </Button>
         </FlexCenter>
-        <NewGameForm disabled={isLoading} form={form} />
+        <NewGameForm
+          disabled={isLoading}
+          form={form}
+          className={classes.Form}
+        />
+        <Button
+          onClick={submitForm}
+          disabled={isSubmitting || isLoading}
+          variant={"outlined"}
+          fullWidth
+        >
+          Submit
+        </Button>
       </Card>
     </Container>
   );

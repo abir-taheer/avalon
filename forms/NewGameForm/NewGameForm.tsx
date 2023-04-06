@@ -17,16 +17,17 @@ type FormType = ReturnType<typeof useNewGameForm>;
 type NewGameFormProps = {
   form: FormType;
   disabled?: boolean;
+  className?: string;
 };
 
 export const NewGameForm = (props: NewGameFormProps) => {
-  const { errors, values, setFieldValue, submitForm, isSubmitting } =
-    props.form;
+  const { className, form } = props;
+  const { errors, values, setFieldValue, isSubmitting } = form;
 
   const disabled = props.disabled || isSubmitting;
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} className={className}>
       {isSubmitting && <LinearProgress variant={"indeterminate"} />}
 
       {optionalCharacters.map((character) => {
@@ -68,15 +69,6 @@ export const NewGameForm = (props: NewGameFormProps) => {
         </Typography>{" "}
         players required with these settings
       </Typography>
-
-      <Button
-        onClick={submitForm}
-        disabled={disabled}
-        variant={"outlined"}
-        fullWidth
-      >
-        Submit
-      </Button>
     </Stack>
   );
 };

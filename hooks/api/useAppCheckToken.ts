@@ -16,13 +16,13 @@ export const useAppCheckToken = () => {
       .catch(async (er) => {
         console.log(er);
 
-        await openErrorDialog({
-          error: new ApiHandlerError({
-            message: "Unable to instantiate app check token. Are you human fr?",
-            code: "permission-denied",
-            status: 400,
-          }),
+        const error = new ApiHandlerError({
+          message: "Unable to instantiate app check token. Are you human fr?",
+          code: "permission-denied",
+          status: 400,
         });
+
+        await openErrorDialog({ error });
       });
   });
 
