@@ -2,6 +2,8 @@ import { Stack } from "@mui/material";
 import { Game } from "@/types/schema";
 import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
 import { NewGameForm } from "@/forms/NewGameForm/NewGameForm";
+import { useAuth } from "@/hooks";
+import { ViewOnlyOptionsPreview } from "@/components/game/GameWindow/ViewOnlyOptionsPreview";
 
 export type OptionsPreviewProps = {
   game: Game;
@@ -13,9 +15,17 @@ export const OptionsPreview = ({ game }: OptionsPreviewProps) => {
     initialValues: game.options,
   });
 
+  const { user } = useAuth();
+
+  const isOwner = user?.uid === game.ownerId;
+
   return (
     <Stack>
-      <NewGameForm form={form} />
+      {isOwner ? (
+        <NewGameForm form={form} />
+      ) : (
+        <ViewOnlyOptionsPreview game={game} />
+      )}
     </Stack>
   );
 };

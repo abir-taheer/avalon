@@ -1,6 +1,6 @@
 import { usePathParams } from "@/hooks/next/usePathParams";
 import { useGameQuery } from "@/queries/useGameQuery";
-import { Button, CircularProgress, Container, Grid } from "@mui/material";
+import { CircularProgress, Container, Grid } from "@mui/material";
 import { PlayersList } from "@/components/game/PlayersList";
 import { useIsMobile } from "@/hooks/ui";
 import { GameWindow } from "@/components/game/GameWindow/GameWindow";
