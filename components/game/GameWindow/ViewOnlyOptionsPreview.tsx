@@ -12,6 +12,8 @@ import {
 import { CharacterAvatar } from "@/components/avatar/CharacterAvatar";
 import { useMemo } from "react";
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
+import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
+import { useAuth } from "@/hooks";
 
 export type ViewOnlyOptionsPreviewProps = {
   game: Game;
@@ -31,14 +33,30 @@ export const ViewOnlyOptionsPreview = ({
       ),
     [game.options.optionalCharacters]
   );
+  const { user } = useAuth();
 
-  const { data } = useRealtimeUserQuery({
+  const isOwner = user?.uid === game.ownerId;
+
+  const { data: owner } = useRealtimeUserQuery({
     id: game.ownerId,
+    query: {
+      enabled: !isOwner,
+    },
   });
+
+  const minimumPlayersNeeded = useMemo(
+    () => getMinimumNumberOfPlayersRequired(game.options),
+    [game.options]
+  );
+
+  const hasEnoughPlayers = useMemo(
+    () => game.playerIds.length >= minimumPlayersNeeded,
+    [game.playerIds.length, minimumPlayersNeeded]
+  );
 
   return (
     <Stack>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List dense>
         {characters.map((character) => {
           const isEnabled = game.options.optionalCharacters[character];
           const subtitleColor = isEnabled ? colors.green[500] : colors.red[500];
@@ -65,12 +83,24 @@ export const ViewOnlyOptionsPreview = ({
         })}
       </List>
 
-      <Typography variant={"subtitle2"}>
-        Waiting for{" "}
-        <Typography color={"primary"} component={"span"} variant={"inherit"}>
-          {data?.displayName ?? "..."}
-        </Typography>{" "}
-        to start the game
+      <Typography variant={"subtitle2"} align={"center"}>
+        {hasEnoughPlayers ? (
+          `Waiting for ${
+            isOwner ? "you" : owner?.displayName ?? "..."
+          } to start the game`
+        ) : (
+          <Typography variant={"inherit"} component={"span"}>
+            Need{" "}
+            <Typography
+              variant={"inherit"}
+              component={"span"}
+              color={"primary"}
+            >
+              {minimumPlayersNeeded}
+            </Typography>{" "}
+            players to start. Waiting for more players to join...
+          </Typography>
+        )}
       </Typography>
     </Stack>
   );
