@@ -1,4 +1,4 @@
-import { colors, Stack, Typography } from "@mui/material";
+import { Button, colors, Stack, Typography } from "@mui/material";
 import { Game } from "@/types/schema";
 import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
 import { useAuth } from "@/hooks";
