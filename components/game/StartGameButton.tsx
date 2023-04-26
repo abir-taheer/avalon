@@ -1,24 +1,27 @@
 import { AdsClick } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { useStartGameMutation } from "@/mutations/useStartGameMutation";
 
 export type StartGameButtonProps = {
   id: string;
+  disabled?: boolean;
 };
 
-export const StartGameButton = ({ id }: StartGameButtonProps) => {
-  const [disabled, setDisabled] = useState(false);
+export const StartGameButton = ({ id, disabled }: StartGameButtonProps) => {
+  const { mutateAsync, isLoading } = useStartGameMutation();
 
   const handleClick = async () => {
-    setDisabled(true);
-    setTimeout(setDisabled, 1000, false);
+    const data = await mutateAsync({ game: id });
+
+    console.log(data);
   };
 
   return (
     <Button
       variant={"contained"}
       startIcon={<AdsClick />}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={handleClick}
     >
       Start Game

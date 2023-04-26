@@ -5,6 +5,7 @@ import {
   Character,
   Game,
   GameStatus,
+  isEvilCharacter,
   optionalCharacters,
 } from "@/types/schema";
 import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
@@ -103,18 +104,22 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
   const roles = game.playerIds.map((userId, index) => {
     let role: Character = enabledRoles[index];
 
-    const isGood = role === "merlin" || role === "percival";
-    if (!isGood) {
-      numEvil++;
+    if (typeof role !== "undefined") {
+      if (isEvilCharacter(role)) {
+        numEvil++;
+      }
+
+      return {
+        userId,
+        role,
+      };
     }
 
-    if (!role) {
-      if (numEvil < numEvilPlayersRequired) {
-        role = "minion";
-        numEvil++;
-      } else {
-        role = "knight";
-      }
+    if (numEvil < numEvilPlayersRequired) {
+      numEvil++;
+      role = "minion";
+    } else {
+      role = "knight";
     }
 
     return {
