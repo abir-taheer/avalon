@@ -1,13 +1,15 @@
 import { Divider, Stack } from "@mui/material";
 import { LeaveGameButton } from "@/components/game/LeaveGameButton";
 import { JoinGameButton } from "@/components/game/JoinGameButton";
-import { Game } from "@/types/schema";
+import { Game, GameStatus } from "@/types/schema";
 import { useAuth } from "@/hooks";
-import { useMemo } from "react";
-import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
-import { OptionsPreview } from "@/components/game/GameWindow/OptionsPreview";
+import { useEffect, useMemo } from "react";
 import { CancelOutlined, PersonAddOutlined } from "@mui/icons-material";
 import { makeStyles } from "tss-react/mui";
+import { OptionsPreview } from "@/components/game/GameWindow/OptionsPreview";
+import { usePrevious } from "@/hooks/general/usePrevious";
+import { useRoleDialog } from "@/components/dialog/game/PlayerRoleDialog";
+import { Gameplay } from "@/components/game/GameWindow/Gameplay";
 
 export type GameWindowProps = {
   game: Game;
@@ -25,11 +27,17 @@ const useStyles = makeStyles()({
 export const GameWindow = ({ game }: GameWindowProps) => {
   const { user } = useAuth();
   const { classes } = useStyles();
+  const previousStatus = usePrevious(game.status);
+  const openRoleDialog = useRoleDialog();
 
-  const form = useNewGameForm({
-    initialValues: game.options,
-    onSubmit: () => {},
-  });
+  useEffect(() => {
+    if (
+      previousStatus === GameStatus.waiting &&
+      game.status === GameStatus.started
+    ) {
+      openRoleDialog({ game });
+    }
+  }, [openRoleDialog, game, previousStatus]);
 
   const playerInGame = useMemo(
     () => game && user && game.playerIds.includes(user.uid),
@@ -38,18 +46,24 @@ export const GameWindow = ({ game }: GameWindowProps) => {
 
   return (
     <Stack spacing={2}>
-      <OptionsPreview game={game} />
+      {game.status === GameStatus.waiting && <OptionsPreview game={game} />}
+
+      {game.status === GameStatus.started && playerInGame && (
+        <Gameplay game={game} />
+      )}
 
       <Divider />
 
-      {playerInGame ? (
+      {game.status === GameStatus.waiting && playerInGame && (
         <LeaveGameButton
           id={game.id}
           className={classes.LeaveGameButton}
           startIcon={<CancelOutlined />}
           color={"error"}
         />
-      ) : (
+      )}
+
+      {game.status === GameStatus.waiting && !playerInGame && (
         <JoinGameButton id={game.id} startIcon={<PersonAddOutlined />} />
       )}
     </Stack>

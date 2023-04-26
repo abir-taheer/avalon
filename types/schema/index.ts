@@ -7,4 +7,5 @@ export * from "./GameStatus";
 export * from "./Player";
 export * from "./RealTimeUser";
 export * from "./Round";
+export * from "./Role";
 export * from "./Vote";

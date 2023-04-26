@@ -1,6 +1,5 @@
-import { Button, colors, Stack, Typography } from "@mui/material";
+import { colors, Stack, Typography } from "@mui/material";
 import { Game } from "@/types/schema";
-import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
 import { useAuth } from "@/hooks";
 import { ViewOnlyOptionsPreview } from "@/components/game/GameWindow/ViewOnlyOptionsPreview";
 import { useMemo } from "react";
@@ -12,11 +11,6 @@ export type OptionsPreviewProps = {
 };
 
 export const OptionsPreview = ({ game }: OptionsPreviewProps) => {
-  const form = useNewGameForm({
-    onSubmit: () => {},
-    initialValues: game.options,
-  });
-
   const { user } = useAuth();
 
   const isOwner = user?.uid === game.ownerId;

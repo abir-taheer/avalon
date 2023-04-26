@@ -3,20 +3,19 @@ import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import {
   Character,
+  CompactRole,
   Game,
   GameStatus,
   isEvilCharacter,
   optionalCharacters,
+  Role,
   Round,
   RoundStatus,
 } from "@/types/schema";
 import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 import { shuffleArray } from "@/utils/random/shuffleArray";
 import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
-import {
-  generatePlayerContext,
-  Role,
-} from "@/utils/game/generatePlayerContext";
+import { generatePlayerContext } from "@/utils/game/generatePlayerContext";
 
 export type BodyParams = {
   game: string;
@@ -107,7 +106,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
 
   let numEvil = 0;
 
-  const roles: Role[] = game.playerIds.map((playerId, index) => {
+  const roles: CompactRole[] = game.playerIds.map((playerId, index) => {
     let role: Character = enabledRoles[index];
 
     if (typeof role !== "undefined") {
@@ -143,15 +142,18 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
 
     const otherRoles = roles.filter((row) => row.playerId !== playerId);
 
+    const roleData: Role = {
+      playerId,
+      role,
+      context: generatePlayerContext(role, otherRoles),
+    };
+
     await firestore
       .collection("games")
       .doc(game.id)
       .collection("roles")
       .doc(playerId)
-      .set({
-        role,
-        context: generatePlayerContext(role, otherRoles),
-      });
+      .set(roleData);
   }
 
   const gameOrder = shuffleArray(game.playerIds);

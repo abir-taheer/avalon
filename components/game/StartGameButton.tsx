@@ -13,8 +13,6 @@ export const StartGameButton = ({ id, disabled }: StartGameButtonProps) => {
 
   const handleClick = async () => {
     const data = await mutateAsync({ game: id });
-
-    console.log(data);
   };
 
   return (

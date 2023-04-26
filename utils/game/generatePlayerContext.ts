@@ -1,13 +1,12 @@
 import { Character, isEvilCharacter } from "@/types/schema";
+import { CompactRole } from "@/types/schema/Role";
 
-export type Role = {
-  playerId: string;
-  role: Character;
-};
-
-export const generatePlayerContext = (character: Character, roles: Role[]) => {
-  let evilRoles: Role[] = [];
-  let merlinRoles: Role[] = [];
+export const generatePlayerContext = (
+  character: Character,
+  roles: CompactRole[]
+) => {
+  let evilRoles: CompactRole[] = [];
+  let merlinRoles: CompactRole[] = [];
 
   if (character !== "oberon" && isEvilCharacter(character)) {
     evilRoles = roles
