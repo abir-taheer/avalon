@@ -2,13 +2,21 @@ import { isVote, Vote } from "@/types/schema/Vote";
 import { isPlayer, Player } from "@/types/schema/Player";
 import { RealTimeUser } from "@/types/schema/RealTimeUser";
 
+export enum RoundStatus {
+  "team_selection" = "team_selection",
+  "voting" = "voting",
+  "completed" = "completed",
+}
+
 export type Round = {
+  id: string;
   number: number;
   leaderId: RealTimeUser["uid"];
-  teamIds: Array<RealTimeUser["uid"]>;
-  votes: Vote[];
-  passed?: boolean;
-  completed?: boolean;
+  teamPlayerIds: Array<RealTimeUser["uid"]>;
+  votedPlayerIds: Array<RealTimeUser["uid"]>;
+  status?: RoundStatus;
+  previousFails?: number;
+  createdAt: Date;
 };
 
 export const isRound = (value: any): value is Round => {

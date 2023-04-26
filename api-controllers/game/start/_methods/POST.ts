@@ -7,17 +7,23 @@ import {
   GameStatus,
   isEvilCharacter,
   optionalCharacters,
+  Round,
+  RoundStatus,
 } from "@/types/schema";
 import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 import { shuffleArray } from "@/utils/random/shuffleArray";
 import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
+import {
+  generatePlayerContext,
+  Role,
+} from "@/utils/game/generatePlayerContext";
 
 export type BodyParams = {
   game: string;
 };
 
 export type Response = {
-  success: boolean;
+  round: Round;
 };
 
 export const isBodyParams = (body: any): body is BodyParams => {
@@ -101,7 +107,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
 
   let numEvil = 0;
 
-  const roles = game.playerIds.map((userId, index) => {
+  const roles: Role[] = game.playerIds.map((playerId, index) => {
     let role: Character = enabledRoles[index];
 
     if (typeof role !== "undefined") {
@@ -110,7 +116,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
       }
 
       return {
-        userId,
+        playerId,
         role,
       };
     }
@@ -123,14 +129,60 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     }
 
     return {
-      userId,
+      playerId,
       role,
     };
   });
 
-  console.log(roles);
+  // Remember to shuffle them again soon
+
+  // The O(n) complexity of this is not ideal but for such a small situation we don't care
+  // Simplicity is more important here
+  for (let i = 0; i < roles.length; i++) {
+    const { playerId, role } = roles[i];
+
+    const otherRoles = roles.filter((row) => row.playerId !== playerId);
+
+    await firestore
+      .collection("games")
+      .doc(game.id)
+      .collection("roles")
+      .doc(playerId)
+      .set({
+        role,
+        context: generatePlayerContext(role, otherRoles),
+      });
+  }
+
+  const gameOrder = shuffleArray(game.playerIds);
+
+  await gameDoc.ref.update({
+    playerIds: gameOrder,
+  });
+
+  const roundData: Round = {
+    id: "1",
+    number: 1,
+    leaderId: gameOrder[0],
+    status: RoundStatus.team_selection,
+    teamPlayerIds: [],
+    votedPlayerIds: [],
+    previousFails: 0,
+    createdAt: new Date(),
+  };
+
+  await firestore
+    .collection("games")
+    .doc(game.id)
+    .collection("rounds")
+    .doc("1")
+    .set(roundData);
+
+  await gameDoc.ref.update({
+    status: GameStatus.started,
+  });
 
   return {
-    success: false,
+    round: roundData,
   };
 };
