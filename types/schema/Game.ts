@@ -2,12 +2,15 @@ import { Timestamp } from "@firebase/firestore";
 import { GameStatus, isGameStatus } from "@/types/schema/GameStatus";
 import { GameOptions, isGameOptions } from "@/types/schema/GameOptions";
 import { RealTimeUser } from "@/types/schema/RealTimeUser";
+import { Round } from "@/types/schema/Round";
 
 export type Game = {
   id: string;
   status: GameStatus;
   ownerId: RealTimeUser["uid"];
   playerIds: Array<RealTimeUser["uid"]>;
+
+  currentRoundId?: null | Round["id"];
   createdAt: Timestamp;
   options: GameOptions;
 };

@@ -8,7 +8,6 @@ import {
   Typography,
   colors,
   LinearProgress,
-  TypographyProps,
   capitalize,
   Divider,
   Button,
@@ -18,9 +17,8 @@ import { useRoleQuery } from "@/queries/useRoleQuery";
 import { Game } from "@/types/schema";
 import { CharacterAvatar } from "@/components/avatar/CharacterAvatar";
 import { CharacterGuide } from "@/utils/game/CharacterGuide";
-import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
 import { FlexCenter } from "@/components/flex/FlexCenter";
-import { Close } from "@mui/icons-material";
+import { PlayerName } from "@/components/auth/PlayerName";
 
 export type RoleDialogProps = {
   game: Game;
@@ -29,22 +27,10 @@ export type RoleDialogProps = {
 const useStyles = makeStyles()((theme) => ({
   Root: {
     padding: theme.spacing(2),
+    width: 450,
+    maxWidth: "90vw",
   },
 }));
-
-type PlayerNameProps = {
-  playerId: string;
-} & Omit<TypographyProps, "children">;
-
-const PlayerName = ({ playerId, ...typography }: PlayerNameProps) => {
-  const { data, isLoading } = useRealtimeUserQuery({ id: playerId });
-
-  return (
-    <Typography component={"span"} variant={"inherit"} {...typography}>
-      {isLoading ? "Loading..." : data?.displayName ?? "Unknown Player"}
-    </Typography>
-  );
-};
 
 export const RoleDialog: UseDialogComponent<RoleDialogProps, null> = ({
   closeDialog,

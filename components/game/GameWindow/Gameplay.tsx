@@ -1,6 +1,7 @@
 import { Game } from "@/types/schema";
 import { useRoleDialog } from "@/components/dialog/game/PlayerRoleDialog";
 import { Button, Stack } from "@mui/material";
+import { CurrentRound } from "@/components/game/Round/CurrentRound";
 
 export type GameplayProps = {
   game: Game;
@@ -15,6 +16,8 @@ export const Gameplay = ({ game }: GameplayProps) => {
           Show your role
         </Button>
       </div>
+
+      <CurrentRound game={game} />
     </Stack>
   );
 };

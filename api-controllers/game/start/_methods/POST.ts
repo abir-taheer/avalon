@@ -162,6 +162,12 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     playerIds: gameOrder,
   });
 
+  let teamSize = 2;
+
+  if (game.playerIds.length >= 8) {
+    teamSize = 3;
+  }
+
   const roundData: Round = {
     id: "1",
     number: 1,
@@ -171,6 +177,8 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     votedPlayerIds: [],
     previousFails: 0,
     createdAt: new Date(),
+    teamSize,
+    gameId: game.id,
   };
 
   await firestore
@@ -182,6 +190,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
 
   await gameDoc.ref.update({
     status: GameStatus.started,
+    currentRoundId: "1",
   });
 
   return {

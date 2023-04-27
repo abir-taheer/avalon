@@ -4,8 +4,7 @@ import { JoinGameButton } from "@/components/game/JoinGameButton";
 import { Game, GameStatus } from "@/types/schema";
 import { useAuth } from "@/hooks";
 import { useEffect, useMemo } from "react";
-import { CancelOutlined, PersonAddOutlined } from "@mui/icons-material";
-import { makeStyles } from "tss-react/mui";
+import { PersonAddOutlined } from "@mui/icons-material";
 import { OptionsPreview } from "@/components/game/GameWindow/OptionsPreview";
 import { usePrevious } from "@/hooks/general/usePrevious";
 import { useRoleDialog } from "@/components/dialog/game/PlayerRoleDialog";
@@ -15,18 +14,8 @@ export type GameWindowProps = {
   game: Game;
 };
 
-const useStyles = makeStyles()({
-  LeaveGameButton: {
-    filter: "grayscale(100%)",
-    ":hover": {
-      filter: "unset",
-    },
-  },
-});
-
 export const GameWindow = ({ game }: GameWindowProps) => {
   const { user } = useAuth();
-  const { classes } = useStyles();
   const previousStatus = usePrevious(game.status);
   const openRoleDialog = useRoleDialog();
 
@@ -52,19 +41,12 @@ export const GameWindow = ({ game }: GameWindowProps) => {
         <Gameplay game={game} />
       )}
 
-      <Divider />
-
-      {game.status === GameStatus.waiting && playerInGame && (
-        <LeaveGameButton
-          id={game.id}
-          className={classes.LeaveGameButton}
-          startIcon={<CancelOutlined />}
-          color={"error"}
-        />
-      )}
-
       {game.status === GameStatus.waiting && !playerInGame && (
-        <JoinGameButton id={game.id} startIcon={<PersonAddOutlined />} />
+        <>
+          <Divider />
+
+          <JoinGameButton id={game.id} startIcon={<PersonAddOutlined />} />
+        </>
       )}
     </Stack>
   );
