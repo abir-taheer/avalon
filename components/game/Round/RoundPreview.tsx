@@ -39,13 +39,16 @@ export const RoundPreview = ({ game, round }: CurrentRoundProps) => {
         alignContent={"center"}
         justifyContent={"center"}
       >
-        <Typography>{round.previousFails} Fails</Typography>
+        <Typography>
+          {round.previousRejections} Team Rejection
+          {round.previousRejections > 1 ? "s" : ""}
+        </Typography>
 
         <Rating
           name={"fails"}
           readOnly
           max={3}
-          value={round.previousFails}
+          value={round.previousRejections}
           icon={<SentimentVeryDissatisfied className={classes.FailIcon} />}
           emptyIcon={<Mood />}
         />

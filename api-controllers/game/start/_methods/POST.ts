@@ -175,7 +175,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     status: RoundStatus.team_selection,
     teamPlayerIds: [],
     votedPlayerIds: [],
-    previousFails: 0,
+    previousRejections: 0,
     createdAt: new Date(),
     teamSize,
     gameId: game.id,

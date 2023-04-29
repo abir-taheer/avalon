@@ -4,16 +4,31 @@ import { GameOptions, isGameOptions } from "@/types/schema/GameOptions";
 import { RealTimeUser } from "@/types/schema/RealTimeUser";
 import { Round } from "@/types/schema/Round";
 
-export type Game = {
+export type IndependentGameProperties = {
   id: string;
-  status: GameStatus;
   ownerId: RealTimeUser["uid"];
   playerIds: Array<RealTimeUser["uid"]>;
 
-  currentRoundId?: null | Round["id"];
   createdAt: Timestamp;
   options: GameOptions;
 };
+
+export type StartedGame = {
+  status: GameStatus.started;
+  currentRoundId: Round["id"];
+} & IndependentGameProperties;
+
+export type WaitingGame = {
+  status: GameStatus.waiting;
+  currentRoundId: null;
+} & IndependentGameProperties;
+
+export type CompletedGame = {
+  status: GameStatus.completed;
+  currentRoundId: null;
+} & IndependentGameProperties;
+
+export type Game = StartedGame | WaitingGame | CompletedGame;
 
 export const isGame = (value: any): value is Game => {
   return (

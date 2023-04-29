@@ -1,7 +1,7 @@
 import { firestore } from "@/client-config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
 import { Game, Round } from "@/types/schema";
-import { collection, query } from "firebase/firestore";
+import { collection, orderBy, query } from "firebase/firestore";
 import { useMemo } from "react";
 import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 import { Query } from "@firebase/firestore";
@@ -21,7 +21,10 @@ export const useRoundsQuery = ({
 
   const ref = useMemo(
     () =>
-      query(collection(firestore, "games", game, "rounds")) as Query<Round[]>,
+      query(
+        collection(firestore, "games", game, "rounds"),
+        orderBy("createdAt")
+      ) as Query<Round[]>,
     [game]
   );
 

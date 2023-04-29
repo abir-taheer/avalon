@@ -20,10 +20,11 @@ export type Round = {
   leaderId: RealTimeUser["uid"];
   teamPlayerIds: Array<RealTimeUser["uid"]>;
   votedPlayerIds: Array<RealTimeUser["uid"]>;
-  status?: RoundStatus;
-  previousFails: number;
+  status: RoundStatus;
+  previousRejections: number;
 
   teamSize: number;
+  notes?: string;
   createdAt: Date;
 };
 
