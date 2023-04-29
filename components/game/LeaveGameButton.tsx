@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useAuth } from "@/hooks";
 import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
+import { useGameContext } from "@/context/GameContext";
 
-export type LeaveGameButtonProps = {
-  id: string;
-} & Partial<ButtonProps>;
+export type LeaveGameButtonProps = Partial<ButtonProps>;
 
 export const LeaveGameButton = (props: LeaveGameButtonProps) => {
-  const { id, ...buttonProps } = props;
+  const { ...buttonProps } = props;
+  const game = useGameContext();
   const { user } = useAuth();
   const { mutateAsync, isLoading } = useRemovePlayerFromGameMutation();
   const { enqueueSnackbar } = useSnackbar();
@@ -32,7 +32,7 @@ export const LeaveGameButton = (props: LeaveGameButtonProps) => {
     }
 
     try {
-      await mutateAsync({ game: id, user: user.uid });
+      await mutateAsync({ game: game.id, user: user.uid });
 
       await router.push("/");
 

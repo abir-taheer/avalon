@@ -1,11 +1,10 @@
 import { firestore } from "@/client-config";
-import { useSubscribeQueryWithDoc } from "@/hooks/firestore/useSubscribeQueryWithDoc";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
 import { Role } from "@/types/schema";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, DocumentReference } from "firebase/firestore";
 import { useMemo } from "react";
-import { useQuery } from "react-query";
 import { useAuth } from "@/hooks";
+import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 
 export type UseRoleProps = {
   game: string;
@@ -26,24 +25,21 @@ export const useRoleQuery = ({ query, game, skip }: UseRoleProps) => {
   );
 
   const ref = useMemo(
-    () => doc(firestore, "games", game, "roles", user.uid),
+    () =>
+      doc(
+        firestore,
+        "games",
+        game,
+        "roles",
+        user.uid
+      ) as DocumentReference<Role>,
     [game, user]
   );
 
-  useSubscribeQueryWithDoc({
+  return useSnapshotQuery({
     ref,
     queryKey,
     skip,
-  });
-
-  return useQuery<Role>({
-    queryKey,
-    queryFn: async () => {
-      const docSnap = await getDoc(ref);
-      const data = docSnap.data() as Role;
-      return data ?? null;
-    },
-    enabled: false,
-    ...query,
+    UseQueryProps: query,
   });
 };

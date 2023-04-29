@@ -25,10 +25,10 @@ import { useState } from "react";
 import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
 import { useRemovePlayerFromGameMutation } from "@/mutations/useRemovePlayerFromGameMutation";
 import { useTransferOwnershipMutation } from "@/mutations/useTransferOwnershipMutation";
+import { useGameContext } from "@/context/GameContext";
 
 export type PlayerListItemProps = {
   id: string;
-  gameId: string;
   isOwner?: boolean;
   itemProps?: ListItemProps;
   showSettings?: boolean;
@@ -67,7 +67,6 @@ const useStyles = makeStyles<UseStylesParams>()((theme, params) => ({
 export const PlayerListItem = ({
   id,
   isOwner,
-  gameId,
   itemProps,
   showSettings,
 }: PlayerListItemProps) => {
@@ -75,6 +74,7 @@ export const PlayerListItem = ({
   const { data, isLoading } = useRealtimeUserQuery({ id });
   const { mutateAsync: removePlayerFromGame } =
     useRemovePlayerFromGameMutation();
+  const game = useGameContext();
 
   const { mutateAsync: makePlayerOwner } = useTransferOwnershipMutation();
   const askForConfirmation = useSimpleConfirmDialog();
@@ -90,7 +90,7 @@ export const PlayerListItem = ({
     closeMenu();
 
     if (confirmed) {
-      await removePlayerFromGame({ game: gameId, user: id });
+      await removePlayerFromGame({ game: game.id, user: id });
     }
   };
 
@@ -103,7 +103,7 @@ export const PlayerListItem = ({
     closeMenu();
 
     if (confirmed) {
-      await makePlayerOwner({ game: gameId, user: id });
+      await makePlayerOwner({ game: game.id, user: id });
     }
   };
 

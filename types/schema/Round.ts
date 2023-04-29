@@ -6,7 +6,11 @@ import { Game } from "@/types/schema/Game";
 export enum RoundStatus {
   "team_selection" = "team_selection",
   "voting" = "voting",
-  "completed" = "completed",
+  "mission_pending" = "mission_pending",
+  "mission_failed" = "mission_failed",
+  "mission_passed" = "mission_passed",
+
+  "team_rejected" = "team_rejected",
 }
 
 export type Round = {

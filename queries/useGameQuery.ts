@@ -1,10 +1,9 @@
 import { firestore } from "@/client-config";
-import { useSubscribeQueryWithDoc } from "@/hooks/firestore/useSubscribeQueryWithDoc";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
 import { Game } from "@/types/schema";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, DocumentReference } from "firebase/firestore";
 import { useMemo } from "react";
-import { useQuery } from "react-query";
+import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 
 export type UseGameProps = {
   id: string;
@@ -14,22 +13,34 @@ export type UseGameProps = {
 
 export const useGameQuery = ({ query, id, skip }: UseGameProps) => {
   const queryKey = useMemo(() => [QUERY_KEY.GAME, id], [id]);
-  const ref = useMemo(() => doc(firestore, "games", queryKey[1]), [queryKey]);
 
-  useSubscribeQueryWithDoc({
+  const ref = useMemo(
+    () => doc(firestore, "games", id) as DocumentReference<Game>,
+    [id]
+  );
+  return useSnapshotQuery({
     ref,
-    queryKey,
     skip,
-  });
-
-  return useQuery<Game>({
     queryKey,
-    queryFn: async () => {
-      const docSnap = await getDoc(ref);
-      const data = docSnap.data() as Game;
-      return data ?? null;
-    },
-    enabled: false,
     ...query,
   });
 };
+
+/*
+Example Usage:
+
+export const useGameQuery = ({ id, skip }: UseGameQueryProps) => {
+  const queryKey = useMemo(() => [QUERY_KEY.GAME, id], [id]);
+
+  const ref = useMemo(
+    () => doc(firestore, "games", id) as DocumentReference<Game>,
+    [id]
+  );
+  return useSnapshotQuery({
+    ref,
+    skip,
+    queryKey,
+    ...query,
+  });
+};
+ */

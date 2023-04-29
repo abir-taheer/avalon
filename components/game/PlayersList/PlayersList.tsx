@@ -3,21 +3,17 @@ import { PlayerListItem } from "@/components/game/PlayersList/PlayerListItem";
 import { Player } from "@/types/schema";
 import { List, Typography } from "@mui/material";
 import { useAuth } from "@/hooks";
+import { useGameContext } from "@/context/GameContext";
 
 export type PlayersListProps = {
-  gameId: string;
-  playerIds: Player["id"][];
-  ownerId?: Player["id"];
   initialState?: boolean;
 };
 
-export const PlayersList = ({
-  gameId,
-  playerIds,
-  ownerId,
-  initialState = true,
-}: PlayersListProps) => {
+export const PlayersList = ({ initialState = true }: PlayersListProps) => {
   const { user } = useAuth();
+  const game = useGameContext();
+
+  const { playerIds, ownerId } = game;
 
   return (
     <SimpleAccordion
@@ -37,7 +33,6 @@ export const PlayersList = ({
         {playerIds.map((id) => (
           <PlayerListItem
             id={id}
-            gameId={gameId}
             key={id}
             itemProps={{ sx: { paddingLeft: 0 } }}
             isOwner={ownerId === id}

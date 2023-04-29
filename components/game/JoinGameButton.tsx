@@ -4,29 +4,28 @@ import { useSnackbar } from "notistack";
 import { useAuthRequiredDialog } from "@/components/dialog/auth/AuthRequiredDialog";
 import { useAuth } from "@/hooks";
 import { useCallback, useEffect, useState } from "react";
+import { useGameContext } from "@/context/GameContext";
 
-export type JoinGameButtonProps = {
-  id: string;
-} & Partial<ButtonProps>;
+export type JoinGameButtonProps = {} & Partial<ButtonProps>;
 
 export const JoinGameButton = (props: JoinGameButtonProps) => {
-  const { id, ...buttonProps } = props;
   const { mutateAsync, isLoading } = useJoinGameMutation();
   const { enqueueSnackbar } = useSnackbar();
   const { isSignedIn } = useAuth();
   const [queuedAttempt, setQueuedAttempt] = useState(false);
   const openAuthDialog = useAuthRequiredDialog();
+  const game = useGameContext();
 
   const join = useCallback(async () => {
     try {
-      await mutateAsync({ game: id });
+      await mutateAsync({ game: game.id });
 
       enqueueSnackbar("Joined game", { variant: "success" });
     } catch (e) {
       // TODO handle error
       console.error(e);
     }
-  }, [id, mutateAsync, enqueueSnackbar]);
+  }, [game.id, mutateAsync, enqueueSnackbar]);
 
   const handleClick = async () => {
     if (!isSignedIn) {
@@ -50,7 +49,7 @@ export const JoinGameButton = (props: JoinGameButtonProps) => {
 
   return (
     <Button
-      {...buttonProps}
+      {...props}
       disabled={props.disabled || isLoading}
       variant={"contained"}
       onClick={handleClick}

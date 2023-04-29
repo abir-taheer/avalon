@@ -1,8 +1,6 @@
-import { Game, RoundStatus } from "@/types/schema";
-import { useRoundQuery } from "@/queries/useRoundQuery";
-import { LinearProgress, Rating, Stack, Typography } from "@mui/material";
+import { Game, Round, RoundStatus } from "@/types/schema";
+import { Rating, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
-import { PlayerName } from "@/components/auth/PlayerName";
 import { Mood, SentimentVeryDissatisfied } from "@mui/icons-material";
 import { ViewOnlyTeamPreview } from "@/components/game/Round/ViewOnlyTeamPreview";
 import { useAuth } from "@/hooks";
@@ -10,6 +8,7 @@ import { TeamSelection } from "@/components/game/Round/TeamSelection";
 
 export type CurrentRoundProps = {
   game: Game;
+  round: Round;
 };
 
 const useStyles = makeStyles()((theme) => ({
@@ -24,31 +23,9 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export const CurrentRound = ({ game }: CurrentRoundProps) => {
+export const RoundPreview = ({ game, round }: CurrentRoundProps) => {
   const { classes } = useStyles();
   const { user } = useAuth();
-
-  const { data, isLoading } = useRoundQuery({
-    game: game.id,
-    round: game.currentRoundId!,
-  });
-
-  if (isLoading) {
-    return <LinearProgress />;
-  }
-
-  if (!data) {
-    return (
-      <Stack direction={"column"} gap={6} className={classes.Root}>
-        <Typography color={"error"} align={"center"}>
-          There was an error getting the information for the current round. Try
-          refreshing the page?
-        </Typography>
-      </Stack>
-    );
-  }
-
-  const round = data;
 
   return (
     <Stack direction={"column"} className={classes.Root} gap={2}>

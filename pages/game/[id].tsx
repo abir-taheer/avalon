@@ -9,6 +9,7 @@ import { CancelOutlined } from "@mui/icons-material";
 import { useMemo } from "react";
 import { useAuth } from "@/hooks";
 import { makeStyles } from "tss-react/mui";
+import { GameContext } from "@/context/GameContext";
 
 type ExpectedPathParams = {
   id: string;
@@ -48,32 +49,28 @@ export default function GamePage() {
   }
 
   return (
-    <Container maxWidth={"lg"}>
-      <Grid container spacing={2}>
-        <Grid item md={7} xs={12}>
-          <GameWindow game={game} />
-        </Grid>
+    <GameContext.Provider value={game}>
+      <Container maxWidth={"lg"}>
+        <Grid container spacing={2}>
+          <Grid item md={7} xs={12}>
+            <GameWindow />
+          </Grid>
 
-        <Grid item md={5} xs={12}>
-          <Stack gap={2}>
-            <PlayersList
-              gameId={game.id}
-              playerIds={game.playerIds}
-              ownerId={game.ownerId}
-              initialState={!isMobile}
-            />
+          <Grid item md={5} xs={12}>
+            <Stack gap={2}>
+              <PlayersList initialState={!isMobile} />
 
-            {playerInGame && (
-              <LeaveGameButton
-                id={game.id}
-                className={classes.LeaveGameButton}
-                startIcon={<CancelOutlined />}
-                color={"error"}
-              />
-            )}
-          </Stack>
+              {playerInGame && (
+                <LeaveGameButton
+                  className={classes.LeaveGameButton}
+                  startIcon={<CancelOutlined />}
+                  color={"error"}
+                />
+              )}
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </GameContext.Provider>
   );
 }
