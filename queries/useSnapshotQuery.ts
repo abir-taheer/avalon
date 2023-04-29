@@ -45,7 +45,6 @@ export const useSnapshotQuery = <Data extends DocumentData>({
 
       // If we haven't already, resolve the promise for the initial data for the queryFn
       resolveRef.current(data);
-      resolveRef.current = voidFn;
 
       queryClient.setQueryData(queryKey, data);
     },
@@ -59,7 +58,6 @@ export const useSnapshotQuery = <Data extends DocumentData>({
       // @ts-ignore
       // This is too much of a hassle to fix right now
       resolveRef.current(data as Data);
-      resolveRef.current = voidFn;
 
       queryClient.setQueryData(queryKey, data);
     },
@@ -95,7 +93,7 @@ export const useSnapshotQuery = <Data extends DocumentData>({
 
     return () => {
       unsubscribe();
-      queryClient.removeQueries(queryKey);
+      SnapshotListeners[key] = false;
     };
   }, [
     skip,

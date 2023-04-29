@@ -35,6 +35,8 @@ export const GameWindow = ({}: GameWindowProps) => {
     [game, user]
   );
 
+  console.log(game, playerInGame, rounds);
+
   return (
     <Stack spacing={2}>
       {game.status === GameStatus.waiting && <OptionsPreview game={game} />}
