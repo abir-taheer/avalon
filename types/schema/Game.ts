@@ -11,6 +11,8 @@ export type IndependentGameProperties = {
 
   createdAt: Timestamp;
   options: GameOptions;
+
+  roundResults: [];
 };
 
 export type StartedGame = {

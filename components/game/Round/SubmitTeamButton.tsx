@@ -2,6 +2,7 @@ import { Round } from "@/types/schema";
 import { Button, ButtonProps } from "@mui/material";
 import { useSubmitTeamMutation } from "@/mutations/useSubmitTeamMutation";
 import { useMemo } from "react";
+import { useGameContext } from "@/context/GameContext";
 
 export type SubmitTeamButtonProps = {
   round: Round;
@@ -12,8 +13,9 @@ export const SubmitTeamButton = ({
 }: SubmitTeamButtonProps) => {
   const { mutateAsync, isLoading } = useSubmitTeamMutation();
 
+  const game = useGameContext();
   const handleClick = async () => {
-    await mutateAsync({ game: round.gameId, round: round.id });
+    await mutateAsync({ game: game.id, round: round.id });
   };
 
   const canSubmit = useMemo(

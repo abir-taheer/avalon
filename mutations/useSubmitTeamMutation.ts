@@ -35,7 +35,7 @@ export const useSubmitTeamMutation = (props?: UseSubmitTeamMutationProps) => {
   }, []);
 
   return useMutation({
-    mutationKey: [MUTATION_KEY.UPDATE_TEAM],
+    mutationKey: [MUTATION_KEY.SUBMIT_TEAM],
     mutationFn,
     ...props?.mutation,
   });

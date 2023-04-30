@@ -54,7 +54,7 @@ export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
             created on {createdAtString}
           </Typography>
 
-          <PlayersList gameId={id} playerIds={playerIds} ownerId={ownerId} />
+          <PlayersList />
 
           <GameCardPreviewFooter id={id} />
         </Stack>

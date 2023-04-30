@@ -16,6 +16,7 @@ import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumber
 import { shuffleArray } from "@/utils/random/shuffleArray";
 import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
 import { generatePlayerContext } from "@/utils/game/generatePlayerContext";
+import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
 
 export type BodyParams = {
   game: string;
@@ -162,11 +163,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     playerIds: gameOrder,
   });
 
-  let teamSize = 2;
-
-  if (game.playerIds.length >= 8) {
-    teamSize = 3;
-  }
+  let teamSize = getTeamMembersPerRound(game.playerIds.length)[0];
 
   const roundData: Round = {
     id: "1",

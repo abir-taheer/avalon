@@ -6,6 +6,7 @@ export enum QUERY_KEY {
   ROUND = "QUERY::ROUND",
   ROUNDS = "QUERY::ROUNDS",
   ROLE = "QUERY::ROLE",
+  CURRENT_VOTE = "QUERY::CURRENT_VOTE",
   REALTIME_USER = "QUERY::REALTIME_USER",
 }
 export type UseQueryWrapperProps<DataType> = Omit<

@@ -9,6 +9,10 @@ export default withAuthenticatedApiContext(async (context) => {
     return API.Game.Vote.POST.Handler(context);
   }
 
+  if (req.method === "DELETE") {
+    return API.Game.Vote.DELETE.Handler(context);
+  }
+
   throw new ApiHandlerError({
     code: "unimplemented",
     message: "This method is not implemented",

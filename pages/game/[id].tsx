@@ -1,6 +1,12 @@
 import { usePathParams } from "@/hooks/next/usePathParams";
 import { useGameQuery } from "@/queries/useGameQuery";
-import { CircularProgress, Container, Grid, Stack } from "@mui/material";
+import {
+  CircularProgress,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { PlayersList } from "@/components/game/PlayersList";
 import { useIsMobile } from "@/hooks/ui";
 import { GameWindow } from "@/components/game/GameWindow/GameWindow";
@@ -10,6 +16,7 @@ import { useMemo } from "react";
 import { useAuth } from "@/hooks";
 import { makeStyles } from "tss-react/mui";
 import { GameContext } from "@/context/GameContext";
+import { GameHistory } from "@/components/game/GameWindow/GameHistory";
 
 type ExpectedPathParams = {
   id: string;
@@ -51,7 +58,7 @@ export default function GamePage() {
   return (
     <GameContext.Provider value={game}>
       <Container maxWidth={"lg"}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} rowGap={4}>
           <Grid item md={7} xs={12}>
             <GameWindow />
           </Grid>
@@ -68,6 +75,9 @@ export default function GamePage() {
                 />
               )}
             </Stack>
+          </Grid>
+          <Grid item md={12} xs={12}>
+            <GameHistory />
           </Grid>
         </Grid>
       </Container>

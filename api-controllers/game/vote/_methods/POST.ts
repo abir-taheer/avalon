@@ -2,9 +2,11 @@ import { FirebaseAdminHandlerWithUser } from "@/middleware";
 import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import { Game, GameStatus, Round, RoundStatus, Vote } from "@/types/schema";
+import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
 
 export type BodyParams = {
   game: string;
+  round: string;
   approval: boolean;
 };
 
@@ -17,7 +19,9 @@ export const isBodyParams = (body: any): body is BodyParams => {
     typeof body === "object" &&
     typeof body.approval === "boolean" &&
     typeof body.game === "string" &&
-    Boolean(body.game)
+    Boolean(body.game) &&
+    typeof body.round === "string" &&
+    Boolean(body.round)
   );
 };
 
@@ -55,7 +59,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
   if (game.status !== GameStatus.started) {
     throw new ApiHandlerError({
       code: "invalid-argument",
-      message: "You cannot vote for a game that has in progress",
+      message: "You cannot vote for a game that is not in progress",
       status: 400,
     });
   }
@@ -67,7 +71,19 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
 
   const roundDocRef = await gameDoc.ref
     .collection("rounds")
-    .doc(game.currentRoundId);
+    .doc(req.body.round);
+
+  const roundSnapshot = await roundDocRef.get();
+
+  const round = roundSnapshot.data() as Round;
+
+  if (round.status !== RoundStatus.voting) {
+    throw new ApiHandlerError({
+      code: "invalid-argument",
+      message: "You cannot vote for a round that is not in voting status",
+      status: 400,
+    });
+  }
 
   const votesCollection = roundDocRef.collection("votes");
 
@@ -76,7 +92,9 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
   await firestore.runTransaction(async (t) => {
     const roundSnapshot = await t.get(roundDocRef);
     const round = roundSnapshot.data() as Round;
-    const newVotedPlayerIds = [...round.votedPlayerIds, user.uid];
+    const newVotedPlayerIds = Array.from(
+      new Set([...round.votedPlayerIds, user.uid])
+    );
     await t.update(roundDocRef, { votedPlayerIds: newVotedPlayerIds });
 
     const numVotes = newVotedPlayerIds.length;
@@ -109,7 +127,15 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
             "The round was automatically failed since the team selection was rejected 5 times",
         });
 
+        const roundResults = [...game.roundResults, false];
+
+        await t.update(gameDoc.ref, {
+          roundResults,
+        });
+
         number++;
+      } else {
+        await t.update(roundDocRef, { status: RoundStatus.team_rejected });
       }
 
       const nextLeaderId =
@@ -119,11 +145,15 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
 
       const nextId = Number(round.id) + 1;
 
+      const teamSize = getTeamMembersPerRound(game.playerIds.length)[
+        number - 1
+      ];
+
       const newRoundData: Round = {
         createdAt: new Date(),
-        gameId: "",
+        gameId: game.id,
         teamPlayerIds: [],
-        teamSize: 0,
+        teamSize,
         votedPlayerIds: [],
         id: nextId.toString(),
         number,

@@ -1,3 +1,4 @@
 import * as POST from "./POST";
+import * as DELETE from "./DELETE";
 
-export { POST };
+export { POST, DELETE };
