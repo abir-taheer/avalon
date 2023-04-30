@@ -46,7 +46,6 @@ export const ActiveGameBanner = () => {
 
       {isLoading && <CircularProgress />}
 
-      {/* I hate using '!!' but typescript is being annoying and wrapping in 'Boolean()' doesn't work*/}
       {typeof data?.id === "string" ? (
         <GamePreviewCard id={data.id} />
       ) : (

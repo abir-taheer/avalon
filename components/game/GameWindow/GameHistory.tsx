@@ -3,6 +3,7 @@ import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
 import { useGameContext } from "@/context/GameContext";
 import { useRoundsQuery } from "@/queries/useRoundsQuery";
 import { useMemo } from "react";
+import { RoundVotingResults } from "@/components/game/Round/RoundVotingResults";
 
 export const GameHistory = () => {
   const game = useGameContext();
@@ -31,11 +32,7 @@ export const GameHistory = () => {
         {rounds.map((round) => (
           <SimpleAccordion
             key={round.id}
-            summary={
-              <Typography>
-                Round {round.number} - {round.status}
-              </Typography>
-            }
+            summary={<Typography>Round {round.number}</Typography>}
             // It will not load the information about the players until the user clicks on the accordion
             renderDetailsIfHidden={false}
             initialState={false}
@@ -44,7 +41,7 @@ export const GameHistory = () => {
             }}
           >
             <ListItem key={round.id}>
-              <ListItemText primary={"Round " + round.number} />
+              <ListItemText primary={<RoundVotingResults round={round} />} />
             </ListItem>
           </SimpleAccordion>
         ))}

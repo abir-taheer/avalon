@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
+import { GameContext } from "@/context/GameContext";
 
 const useStyles = makeStyles()((theme) => ({
   CreatedAt: {
@@ -45,20 +46,22 @@ export const GamePreviewCard = ({ id }: GamePreviewCardProps) => {
   }).format(created);
 
   return (
-    <Card variant={"outlined"}>
-      <CardContent>
-        <Stack spacing={2}>
-          <GameCardPreviewHeading id={id} />
+    <GameContext.Provider value={data}>
+      <Card variant={"outlined"}>
+        <CardContent>
+          <Stack spacing={2}>
+            <GameCardPreviewHeading id={id} />
 
-          <Typography variant="subtitle2" className={classes.CreatedAt}>
-            created on {createdAtString}
-          </Typography>
+            <Typography variant="subtitle2" className={classes.CreatedAt}>
+              created on {createdAtString}
+            </Typography>
 
-          <PlayersList />
+            <PlayersList />
 
-          <GameCardPreviewFooter id={id} />
-        </Stack>
-      </CardContent>
-    </Card>
+            <GameCardPreviewFooter id={id} />
+          </Stack>
+        </CardContent>
+      </Card>
+    </GameContext.Provider>
   );
 };

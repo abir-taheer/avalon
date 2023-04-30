@@ -1,4 +1,4 @@
-import { authCounterAtom, authUserAtom, userAtom } from "@/atoms";
+import { authCounterAtom, authUserAtom, idTokenAtom, userAtom } from "@/atoms";
 import { auth, realtime } from "@/client-config";
 import { RealTimeUser } from "@/types/schema";
 import { getDefaultPhotoURL } from "@/utils";
@@ -13,13 +13,27 @@ import { getIsSigningOut } from "@/utils/auth/isSigningOut";
 export const useAuthListener = () => {
   const [authUser, setAuthUser] = useAtom(authUserAtom);
   const setUser = useSetAtom(userAtom);
+  const setIdToken = useSetAtom(idTokenAtom);
   const counter = useAtomValue(authCounterAtom);
 
   useEffect(() => {
-    return auth.onAuthStateChanged(async (user) => {
+    const observer: Parameters<typeof auth.onAuthStateChanged>[0] = async (
+      user
+    ) => {
+      const idToken = (await user?.getIdToken()) ?? null;
+
+      setIdToken(idToken);
       setAuthUser(user ?? null);
-    });
-  }, [setAuthUser]);
+    };
+
+    const unsubscribeToAuthChanges = auth.onAuthStateChanged(observer);
+    const unsubscribeToIdTokenChanges = auth.onIdTokenChanged(observer);
+
+    return () => {
+      unsubscribeToAuthChanges();
+      unsubscribeToIdTokenChanges();
+    };
+  }, [setAuthUser, setIdToken]);
 
   useEffect(() => {
     if (!authUser) {

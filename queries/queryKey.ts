@@ -3,6 +3,7 @@ import { UseQueryOptions } from "react-query";
 export enum QUERY_KEY {
   USER_CURRENT_GAME_ID = "QUERY::USER_CURRENT_GAME_ID",
   GAME = "QUERY::GAME",
+  ROUND_VOTES = "QUERY::ROUND_VOTES",
   ROUND = "QUERY::ROUND",
   ROUNDS = "QUERY::ROUNDS",
   ROLE = "QUERY::ROLE",
