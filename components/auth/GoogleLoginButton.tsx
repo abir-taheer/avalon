@@ -1,3 +1,4 @@
+import { authCounterAtom } from "@/atoms";
 import { auth } from "@/client-config";
 import { GoogleIcon } from "@/icons/Google";
 import { Button, ButtonProps } from "@mui/material";
@@ -7,10 +8,9 @@ import {
   signInWithPopup,
   UserCredential,
 } from "firebase/auth";
+import { useSetAtom } from "jotai";
 import { useCallback, useState } from "react";
 import { makeStyles } from "tss-react/mui";
-import { useSetAtom } from "jotai";
-import { authCounterAtom } from "@/atoms";
 
 const useStyles = makeStyles()((theme) => ({
   GoogleButton: {

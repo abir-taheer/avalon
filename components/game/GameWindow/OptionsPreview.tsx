@@ -1,11 +1,11 @@
-import { colors, Stack, Typography } from "@mui/material";
-import { Game } from "@/types/schema";
-import { useAuth } from "@/hooks";
 import { ViewOnlyOptionsPreview } from "@/components/game/GameWindow/ViewOnlyOptionsPreview";
-import { useMemo } from "react";
-import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
-import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 import { StartGameButton } from "@/components/game/StartGameButton";
+import { useAuth } from "@/hooks";
+import { Game } from "@/types/schema";
+import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
+import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
+import { colors, Stack, Typography } from "@mui/material";
+import { useMemo } from "react";
 export type OptionsPreviewProps = {
   game: Game;
 };

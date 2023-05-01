@@ -1,10 +1,9 @@
 import {
+  EvilOptionalCharacter,
+  isEvilOptionalCharacter,
   isOptionalCharacter,
   OptionalCharacter,
   optionalCharacters,
-  EvilOptionalCharacter,
-  evilOptionalCharacters,
-  isEvilOptionalCharacter,
 } from "@/types/schema/OptionalCharacter";
 
 export type Character = "minion" | "knight" | OptionalCharacter;

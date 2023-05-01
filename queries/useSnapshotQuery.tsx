@@ -1,16 +1,16 @@
+import { useNotifyDialog } from "@/components/dialog/ui/NotifyDialog";
+import { UseQueryWrapperProps } from "@/queries/queryKey";
 import {
   DocumentData,
   DocumentReference,
-  Query,
-  onSnapshot,
-  QuerySnapshot,
   DocumentSnapshot,
   FirestoreError,
+  onSnapshot,
+  Query,
+  QuerySnapshot,
 } from "@firebase/firestore";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { QueryKey, useQuery, useQueryClient } from "react-query";
-import { UseQueryWrapperProps } from "@/queries/queryKey";
-import { useNotifyDialog } from "@/components/dialog/ui/NotifyDialog";
 
 export type UseSnapshotQueryProps<Data extends DocumentData | null> = {
   ref: DocumentReference<Data> | Query<Data>;

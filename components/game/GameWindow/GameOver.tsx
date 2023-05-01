@@ -1,17 +1,10 @@
-import { useGameContext } from "@/context/GameContext";
-import {
-  Button,
-  colors,
-  LinearProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useRoleQuery } from "@/queries/useRoleQuery";
-import { useMemo } from "react";
-import { isEvilCharacter } from "@/types/schema";
-import { useOutcomeDialog } from "@/components/dialog/game/OutcomeCardsDialog";
-import { useAuth } from "@/hooks/auth/useAuth";
 import { RoundStepper } from "@/components/game/GameWindow/RoundStepper";
+import { useGameContext } from "@/context/GameContext";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { useRoleQuery } from "@/queries/useRoleQuery";
+import { isEvilCharacter } from "@/types/schema";
+import { colors, LinearProgress, Stack, Typography } from "@mui/material";
+import { useMemo } from "react";
 
 export const GameOver = () => {
   const game = useGameContext();

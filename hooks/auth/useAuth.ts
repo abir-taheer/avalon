@@ -1,8 +1,8 @@
-import { useAtomValue } from "jotai";
 import { authUserAtom, userAtom } from "@/atoms";
-import { useMemo } from "react";
 import { RealTimeUser } from "@/types/schema";
 import { User } from "firebase/auth";
+import { useAtomValue } from "jotai";
+import { useMemo } from "react";
 
 type AuthenticatedAuthResult = {
   isSignedIn: true;

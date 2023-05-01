@@ -1,14 +1,14 @@
+import { useAuthRequiredDialog } from "@/components/dialog/auth/AuthRequiredDialog";
+import { useCharacterGuideDialog } from "@/components/dialog/game/CharacterGuideDialog";
+import { FlexCenter } from "@/components/flex/FlexCenter";
 import { NewGameForm } from "@/forms/NewGameForm/NewGameForm";
 import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
-import { useCreateGameMutation } from "@/mutations/useCreateGameMutation";
-import { Button, Card, Container, Divider, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import { makeStyles } from "tss-react/mui";
-import { FlexCenter } from "@/components/flex/FlexCenter";
-import { useCharacterGuideDialog } from "@/components/dialog/game/CharacterGuideDialog";
-import { useAuthRequiredDialog } from "@/components/dialog/auth/AuthRequiredDialog";
 import { useAuth } from "@/hooks";
+import { useCreateGameMutation } from "@/mutations/useCreateGameMutation";
+import { Button, Card, Container, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()((theme) => ({
   Card: {

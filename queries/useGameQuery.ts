@@ -1,9 +1,9 @@
 import { firestore } from "@/client-config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
+import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 import { Game } from "@/types/schema";
 import { doc, DocumentReference } from "firebase/firestore";
 import { useMemo } from "react";
-import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 
 export type UseGameProps = {
   id: string;

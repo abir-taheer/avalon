@@ -2,9 +2,9 @@ import {
   useDialog,
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
-import { Button, Container, Stack, Typography, colors } from "@mui/material";
-import { makeStyles } from "tss-react/mui";
+import { Button, colors, Container, Stack, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { makeStyles } from "tss-react/mui";
 
 export type SimpleConfirmDialogProps = {
   title: ReactNode;

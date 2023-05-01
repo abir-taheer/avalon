@@ -1,12 +1,12 @@
-import { Game, Round, RoundStatus } from "@/types/schema";
-import { Card, Rating, Stack, Typography } from "@mui/material";
-import { makeStyles } from "tss-react/mui";
-import { Mood, SentimentVeryDissatisfied } from "@mui/icons-material";
-import { ViewOnlyTeamPreview } from "@/components/game/Round/ViewOnlyTeamPreview";
-import { useAuth } from "@/hooks";
+import { PendingMission } from "@/components/game/Round/mission/PendingMission";
 import { TeamSelection } from "@/components/game/Round/team-making/TeamSelection";
 import { TeamVote } from "@/components/game/Round/team-making/TeamVote";
-import { PendingMission } from "@/components/game/Round/mission/PendingMission";
+import { ViewOnlyTeamPreview } from "@/components/game/Round/ViewOnlyTeamPreview";
+import { useAuth } from "@/hooks";
+import { Game, Round, RoundStatus } from "@/types/schema";
+import { Mood, SentimentVeryDissatisfied } from "@mui/icons-material";
+import { Rating, Stack, Typography } from "@mui/material";
+import { makeStyles } from "tss-react/mui";
 
 export type CurrentRoundProps = {
   game: Game;

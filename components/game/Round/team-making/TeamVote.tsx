@@ -1,12 +1,12 @@
-import { Round } from "@/types/schema";
-import { useGameContext } from "@/context/GameContext";
-import { Card, Stack, Typography } from "@mui/material";
 import { PlayerName } from "@/components/auth/PlayerName";
-import { useCurrentVoteQuery } from "@/queries/useCurrentVoteQuery";
-import { useMemo } from "react";
-import { useAuth } from "@/hooks";
 import { PendingVote } from "@/components/game/Round/team-making/PendingVote";
 import { PostVotingScreen } from "@/components/game/Round/team-making/PostVotingScreen";
+import { useGameContext } from "@/context/GameContext";
+import { useAuth } from "@/hooks";
+import { useCurrentVoteQuery } from "@/queries/useCurrentVoteQuery";
+import { Round } from "@/types/schema";
+import { Card, Stack, Typography } from "@mui/material";
+import { useMemo } from "react";
 
 export type TeamVoteProps = {
   round: Round;

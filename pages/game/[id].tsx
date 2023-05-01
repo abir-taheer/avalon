@@ -1,22 +1,16 @@
-import { usePathParams } from "@/hooks/next/usePathParams";
-import { useGameQuery } from "@/queries/useGameQuery";
-import {
-  CircularProgress,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { PlayersList } from "@/components/game/PlayersList";
-import { useIsMobile } from "@/hooks/ui";
+import { GameHistory } from "@/components/game/GameWindow/GameHistory";
 import { GameWindow } from "@/components/game/GameWindow/GameWindow";
 import { LeaveGameButton } from "@/components/game/LeaveGameButton";
-import { CancelOutlined } from "@mui/icons-material";
-import { useMemo } from "react";
-import { useAuth } from "@/hooks";
-import { makeStyles } from "tss-react/mui";
+import { PlayersList } from "@/components/game/PlayersList";
 import { GameContext } from "@/context/GameContext";
-import { GameHistory } from "@/components/game/GameWindow/GameHistory";
+import { useAuth } from "@/hooks";
+import { usePathParams } from "@/hooks/next/usePathParams";
+import { useIsMobile } from "@/hooks/ui";
+import { useGameQuery } from "@/queries/useGameQuery";
+import { CancelOutlined } from "@mui/icons-material";
+import { CircularProgress, Container, Grid, Stack } from "@mui/material";
+import { useMemo } from "react";
+import { makeStyles } from "tss-react/mui";
 
 type ExpectedPathParams = {
   id: string;

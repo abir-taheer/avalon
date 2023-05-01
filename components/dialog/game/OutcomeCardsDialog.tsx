@@ -3,18 +3,18 @@ import {
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
 import {
-  Container,
   Button,
-  Typography,
   Card,
-  Grid,
   colors,
-  Stack,
+  Container,
   Fade,
+  Grid,
+  Slide,
+  Stack,
+  Typography,
 } from "@mui/material";
-import { makeStyles } from "tss-react/mui";
-import { Slide } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { makeStyles } from "tss-react/mui";
 
 export type OutcomeDialogProps = {
   outcomes: boolean[];

@@ -2,15 +2,15 @@ import {
   useDialog,
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
+import { UndrawNotify } from "@/illustrations/UndrawNotify";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import {
-  DialogTitle,
-  DialogContent,
   Button,
+  DialogContent,
+  DialogTitle,
   Stack,
   Typography,
 } from "@mui/material";
-import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
-import { UndrawNotify } from "@/illustrations/UndrawNotify";
 import { makeStyles } from "tss-react/mui";
 
 export type ErrorDialogProps = {

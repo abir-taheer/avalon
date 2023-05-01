@@ -1,6 +1,4 @@
 import { FirebaseAdminHandlerWithUser } from "@/middleware";
-import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
-import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import {
   Character,
   CompactRole,
@@ -12,11 +10,13 @@ import {
   Round,
   RoundStatus,
 } from "@/types/schema";
-import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
-import { shuffleArray } from "@/utils/random/shuffleArray";
-import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
+import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
+import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 import { generatePlayerContext } from "@/utils/game/generatePlayerContext";
+import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
+import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
 import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
+import { shuffleArray } from "@/utils/random/shuffleArray";
 
 export type BodyParams = {
   game: string;

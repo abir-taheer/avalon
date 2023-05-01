@@ -1,10 +1,10 @@
+import { useAuthRequiredDialog } from "@/components/dialog/auth/AuthRequiredDialog";
+import { useGameContext } from "@/context/GameContext";
+import { useAuth } from "@/hooks";
 import { useJoinGameMutation } from "@/mutations/useJoinGameMutation";
 import { Button, ButtonProps } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useAuthRequiredDialog } from "@/components/dialog/auth/AuthRequiredDialog";
-import { useAuth } from "@/hooks";
 import { useCallback, useEffect, useState } from "react";
-import { useGameContext } from "@/context/GameContext";
 
 export type JoinGameButtonProps = {} & Partial<ButtonProps>;
 

@@ -1,6 +1,6 @@
 import {
-  OptionalCharacterOptions,
   isOptionalCharacterOptions,
+  OptionalCharacterOptions,
 } from "@/types/schema/OptionalCharacterOptions";
 
 export type GameOptions = {

@@ -1,2 +1,2 @@
-export * from "./PlayersList";
 export * from "./PlayerListItem";
+export * from "./PlayersList";

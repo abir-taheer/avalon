@@ -1,10 +1,10 @@
 import { firestore } from "@/client-config";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
+import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 import { Game, Round } from "@/types/schema";
+import { Query } from "@firebase/firestore";
 import { collection, orderBy, query } from "firebase/firestore";
 import { useMemo } from "react";
-import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
-import { Query } from "@firebase/firestore";
 
 export type UseRoundsProps = {
   game: Game["id"];

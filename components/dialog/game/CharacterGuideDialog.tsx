@@ -2,18 +2,18 @@ import {
   useDialog,
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
+import { Character, characters } from "@/types/schema/Character";
+import { CharacterGuide } from "@/utils/game/CharacterGuide";
 import {
   Button,
+  capitalize,
+  colors,
   Container,
   Stack,
   Typography,
-  colors,
-  capitalize,
 } from "@mui/material";
-import { makeStyles } from "tss-react/mui";
-import { Character, characters } from "@/types/schema/Character";
-import { CharacterGuide } from "@/utils/game/CharacterGuide";
 import classNames from "classnames";
+import { makeStyles } from "tss-react/mui";
 
 export type CharacterGuideDialogProps = void;
 

@@ -1,4 +1,8 @@
+import { CharacterAvatar } from "@/components/avatar/CharacterAvatar";
+import { useAuth } from "@/hooks";
+import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
 import { Game, optionalCharacters } from "@/types/schema";
+import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 import {
   capitalize,
   colors,
@@ -9,11 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { CharacterAvatar } from "@/components/avatar/CharacterAvatar";
 import { useMemo } from "react";
-import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
-import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
-import { useAuth } from "@/hooks";
 
 export type ViewOnlyOptionsPreviewProps = {
   game: Game;

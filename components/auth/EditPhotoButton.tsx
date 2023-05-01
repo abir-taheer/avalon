@@ -1,4 +1,5 @@
 import { storage } from "@/client-config";
+import { useAuth } from "@/hooks";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { AccountCircle } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";
@@ -8,7 +9,6 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { ChangeEventHandler, useCallback, useMemo, useState } from "react";
-import { useAuth } from "@/hooks";
 
 export const EditPhotoButton = (props: ButtonProps) => {
   const { authUser } = useAuth();

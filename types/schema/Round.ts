@@ -1,7 +1,7 @@
-import { isVote, Vote } from "@/types/schema/Vote";
-import { isPlayer, Player } from "@/types/schema/Player";
-import { RealTimeUser } from "@/types/schema/RealTimeUser";
 import { Game } from "@/types/schema/Game";
+import { isPlayer } from "@/types/schema/Player";
+import { RealTimeUser } from "@/types/schema/RealTimeUser";
+import { isVote } from "@/types/schema/Vote";
 
 export enum RoundStatus {
   "team_selection" = "team_selection",

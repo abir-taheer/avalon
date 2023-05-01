@@ -1,9 +1,9 @@
+import { useEditDisplayNameDialog } from "@/components/dialog/auth/EditDisplayNameDialog";
+import { useAuth } from "@/hooks";
 import { getDefaultPhotoURL } from "@/utils";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { Edit } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";
-import { useAuth } from "@/hooks";
-import { useEditDisplayNameDialog } from "@/components/dialog/auth/EditDisplayNameDialog";
 
 export const EditNameButton = (props: ButtonProps) => {
   const { user } = useAuth();

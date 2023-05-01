@@ -1,6 +1,6 @@
-import { Container, Divider, Stack, Typography } from "@mui/material";
 import { AnonymousLoginButton, GoogleLoginButton } from "@/components";
 import { UndrawAuthentication } from "@/illustrations/UndrawAuthentication";
+import { Container, Divider, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()({

@@ -1,10 +1,10 @@
 import { firestore } from "@/client-config";
+import { useAuth } from "@/hooks";
 import { QUERY_KEY, UseQueryWrapperProps } from "@/queries/queryKey";
+import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 import { Role } from "@/types/schema";
 import { doc, DocumentReference } from "firebase/firestore";
 import { useMemo } from "react";
-import { useAuth } from "@/hooks";
-import { useSnapshotQuery } from "@/queries/useSnapshotQuery";
 
 export type UseRoleProps = {
   game: string;

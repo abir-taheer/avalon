@@ -1,4 +1,7 @@
+import { PlayerName } from "@/components/auth/PlayerName";
 import { useGameContext } from "@/context/GameContext";
+import { useGuessMerlinMutation } from "@/mutations/useGuessMerlinMutation";
+import { RealTimeUser } from "@/types/schema";
 import {
   Button,
   FormControl,
@@ -9,9 +12,6 @@ import {
   Stack,
 } from "@mui/material";
 import { useId, useState } from "react";
-import { RealTimeUser } from "@/types/schema";
-import { PlayerName } from "@/components/auth/PlayerName";
-import { useGuessMerlinMutation } from "@/mutations/useGuessMerlinMutation";
 
 export const AssassinView = () => {
   const game = useGameContext();

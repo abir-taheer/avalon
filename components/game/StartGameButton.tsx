@@ -1,7 +1,6 @@
+import { useStartGameMutation } from "@/mutations/useStartGameMutation";
 import { AdsClick } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { useState } from "react";
-import { useStartGameMutation } from "@/mutations/useStartGameMutation";
 
 export type StartGameButtonProps = {
   id: string;

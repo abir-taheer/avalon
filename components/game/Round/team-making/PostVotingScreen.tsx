@@ -1,8 +1,8 @@
-import { RealTimeUser, Round } from "@/types/schema";
+import { PlayerName } from "@/components/auth/PlayerName";
 import { useGameContext } from "@/context/GameContext";
 import { useDeleteTeamVoteMutation } from "@/mutations/useDeleteTeamVoteMutation";
+import { RealTimeUser, Round } from "@/types/schema";
 import { Button, colors, Divider, Stack, Typography } from "@mui/material";
-import { PlayerName } from "@/components/auth/PlayerName";
 
 export type PostVotingScreenProps = {
   round: Round;

@@ -1,6 +1,6 @@
+import { PlayerName } from "@/components/auth/PlayerName";
 import { Vote } from "@/types/schema";
 import { Stack, Typography } from "@mui/material";
-import { PlayerName } from "@/components/auth/PlayerName";
 import { useMemo } from "react";
 
 export type VoteResultsTableProps = {

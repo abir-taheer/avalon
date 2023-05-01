@@ -2,13 +2,13 @@ import { authCounterAtom, authUserAtom, idTokenAtom, userAtom } from "@/atoms";
 import { auth, realtime } from "@/client-config";
 import { RealTimeUser } from "@/types/schema";
 import { getDefaultPhotoURL } from "@/utils";
+import { getIsSigningOut } from "@/utils/auth/isSigningOut";
+import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { fullName } from "faker-en";
 import { updateProfile } from "firebase/auth";
-import { onDisconnect, onValue, ref, set, update } from "firebase/database";
+import { onDisconnect, onValue, ref, set } from "firebase/database";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { updateUserProfile } from "@/utils/user/updateUserProfile";
-import { getIsSigningOut } from "@/utils/auth/isSigningOut";
 
 export const useAuthListener = () => {
   const [authUser, setAuthUser] = useAtom(authUserAtom);

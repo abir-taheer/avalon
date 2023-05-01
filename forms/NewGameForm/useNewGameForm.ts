@@ -1,4 +1,4 @@
-import { OptionalCharacter, GameOptions } from "@/types/schema";
+import { GameOptions, OptionalCharacter } from "@/types/schema";
 import { validateGameOptions } from "@/utils/game/validateGameOptions";
 import { FormikConfig, useFormik } from "formik";
 

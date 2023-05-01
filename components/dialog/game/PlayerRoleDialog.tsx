@@ -1,24 +1,24 @@
+import { PlayerName } from "@/components/auth/PlayerName";
+import { CharacterAvatar } from "@/components/avatar/CharacterAvatar";
 import {
   useDialog,
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
-import {
-  Container,
-  Stack,
-  Typography,
-  colors,
-  LinearProgress,
-  capitalize,
-  Divider,
-  Button,
-} from "@mui/material";
-import { makeStyles } from "tss-react/mui";
+import { FlexCenter } from "@/components/flex/FlexCenter";
 import { useRoleQuery } from "@/queries/useRoleQuery";
 import { Game } from "@/types/schema";
-import { CharacterAvatar } from "@/components/avatar/CharacterAvatar";
 import { CharacterGuide } from "@/utils/game/CharacterGuide";
-import { FlexCenter } from "@/components/flex/FlexCenter";
-import { PlayerName } from "@/components/auth/PlayerName";
+import {
+  Button,
+  capitalize,
+  colors,
+  Container,
+  Divider,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { makeStyles } from "tss-react/mui";
 
 export type RoleDialogProps = {
   game: Game;

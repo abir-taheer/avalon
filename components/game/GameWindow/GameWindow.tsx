@@ -1,17 +1,17 @@
-import { Divider, Stack } from "@mui/material";
-import { JoinGameButton } from "@/components/game/JoinGameButton";
-import { GameStatus } from "@/types/schema";
-import { useAuth } from "@/hooks";
-import { useEffect, useMemo } from "react";
-import { PersonAddOutlined } from "@mui/icons-material";
-import { OptionsPreview } from "@/components/game/GameWindow/OptionsPreview";
-import { usePrevious } from "@/hooks/general/usePrevious";
 import { useRoleDialog } from "@/components/dialog/game/PlayerRoleDialog";
-import { Gameplay } from "@/components/game/GameWindow/Gameplay";
-import { useRoundsQuery } from "@/queries/useRoundsQuery";
-import { useGameContext } from "@/context/GameContext";
 import { GameOver } from "@/components/game/GameWindow/GameOver";
+import { Gameplay } from "@/components/game/GameWindow/Gameplay";
+import { OptionsPreview } from "@/components/game/GameWindow/OptionsPreview";
 import { PendingAssassinPreview } from "@/components/game/GameWindow/PendingAssassinPreview";
+import { JoinGameButton } from "@/components/game/JoinGameButton";
+import { useGameContext } from "@/context/GameContext";
+import { useAuth } from "@/hooks";
+import { usePrevious } from "@/hooks/general/usePrevious";
+import { useRoundsQuery } from "@/queries/useRoundsQuery";
+import { GameStatus } from "@/types/schema";
+import { PersonAddOutlined } from "@mui/icons-material";
+import { Divider, Stack } from "@mui/material";
+import { useEffect, useMemo } from "react";
 
 export type GameWindowProps = {};
 

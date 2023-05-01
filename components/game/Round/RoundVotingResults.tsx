@@ -1,11 +1,11 @@
-import { Round } from "@/types/schema";
+import { PlayerName } from "@/components/auth/PlayerName";
+import { VoteResultsTable } from "@/components/game/Round/VoteResultsTable";
 import { useGameContext } from "@/context/GameContext";
 import { useRoundVotesQuery } from "@/queries/useRoundVotesQuery";
+import { Round } from "@/types/schema";
+import { getRoundDescriptor } from "@/utils/game/getRoundDescriptor";
 import { Divider, LinearProgress, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
-import { PlayerName } from "@/components/auth/PlayerName";
-import { getRoundDescriptor } from "@/utils/game/getRoundDescriptor";
-import { VoteResultsTable } from "@/components/game/Round/VoteResultsTable";
 
 export type RoundVotingResultsProps = {
   round: Round;

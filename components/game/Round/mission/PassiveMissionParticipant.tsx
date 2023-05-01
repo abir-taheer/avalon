@@ -1,6 +1,6 @@
-import { Round } from "@/types/schema";
-import { Divider, Stack, Typography } from "@mui/material";
 import { PlayerName } from "@/components/auth/PlayerName";
+import { Round } from "@/types/schema";
+import { Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 
 export type PassiveMissionParticipantProps = { round: Round };

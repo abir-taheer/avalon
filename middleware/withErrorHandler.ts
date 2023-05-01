@@ -1,5 +1,5 @@
-import { NextApiHandler } from "next";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
+import { NextApiHandler } from "next";
 
 export const withErrorHandler = (next: NextApiHandler) => {
   const handler: NextApiHandler = async (req, res) => {

@@ -1,15 +1,13 @@
-import { Round, RoundStatus } from "@/types/schema";
+import { useOutcomeDialog } from "@/components/dialog/game/OutcomeCardsDialog";
 import { useRoleDialog } from "@/components/dialog/game/PlayerRoleDialog";
-import { Button, colors, Stack, Step, StepLabel, Stepper } from "@mui/material";
+import { useRoundResultsDialog } from "@/components/dialog/game/RoundResultsDialog";
+import { RoundStepper } from "@/components/game/GameWindow/RoundStepper";
 import { RoundPreview } from "@/components/game/Round/RoundPreview";
-import { useEffect, useMemo, useState } from "react";
 import { useGameContext } from "@/context/GameContext";
 import { usePrevious } from "@/hooks/general/usePrevious";
-import { useRoundResultsDialog } from "@/components/dialog/game/RoundResultsDialog";
-import { useOutcomeDialog } from "@/components/dialog/game/OutcomeCardsDialog";
-import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
-import { Pending } from "@mui/icons-material";
-import { RoundStepper } from "@/components/game/GameWindow/RoundStepper";
+import { Round, RoundStatus } from "@/types/schema";
+import { Button, Stack } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 
 export type GameplayProps = {
   rounds: Round[];

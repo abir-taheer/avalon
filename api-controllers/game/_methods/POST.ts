@@ -1,9 +1,9 @@
 import { FirebaseAdminHandlerWithUser } from "@/middleware";
 import { Game, GameOptions, GameStatus, isGameOptions } from "@/types/schema";
 import { flattenObject, generateGameId, validateGameOptions } from "@/utils";
-import { Timestamp } from "@firebase/firestore";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
+import { Timestamp } from "@firebase/firestore";
 
 export type BodyParams = GameOptions & {};
 

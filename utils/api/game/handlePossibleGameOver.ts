@@ -1,5 +1,5 @@
-import { firestore } from "firebase-admin";
 import { Game, GameStatus } from "@/types/schema";
+import { firestore } from "firebase-admin";
 import Transaction = firestore.Transaction;
 
 export const handlePossibleGameOver = async (

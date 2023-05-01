@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { Auth, UserRecord } from "firebase-admin/auth";
 import { Game } from "@/types/schema";
-import * as firebaseAdmin from "firebase-admin";
-import { Firestore } from "firebase-admin/firestore";
-import { Database } from "firebase-admin/database";
 import type { app } from "firebase-admin";
+import * as firebaseAdmin from "firebase-admin";
+import { Auth, UserRecord } from "firebase-admin/auth";
+import { Database } from "firebase-admin/database";
+import { Firestore } from "firebase-admin/firestore";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export type ApiContext = {
   req: NextApiRequest;

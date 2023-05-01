@@ -1,7 +1,7 @@
-import { LinearProgress, Stack, Typography } from "@mui/material";
-import { useRoleQuery } from "@/queries/useRoleQuery";
-import { useGameContext } from "@/context/GameContext";
 import { AssassinView } from "@/components/game/GameWindow/AssassinView";
+import { useGameContext } from "@/context/GameContext";
+import { useRoleQuery } from "@/queries/useRoleQuery";
+import { LinearProgress, Stack, Typography } from "@mui/material";
 
 export type PendingAssassinPreviewProps = {};
 export const PendingAssassinPreview = ({}: PendingAssassinPreviewProps) => {

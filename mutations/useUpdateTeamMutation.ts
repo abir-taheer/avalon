@@ -1,9 +1,9 @@
+import { firestore } from "@/client-config";
 import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
-import { useCallback } from "react";
-import { MutationFunction, useMutation, useQueryClient } from "react-query";
 import { Game, RealTimeUser, Round } from "@/types/schema";
 import { doc, updateDoc } from "firebase/firestore";
-import { firestore } from "@/client-config";
+import { useCallback } from "react";
+import { MutationFunction, useMutation } from "react-query";
 
 export type UseUpdateTeamMutationData = null;
 export type UseUpdateTeamMutationVariables = {

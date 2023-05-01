@@ -1,7 +1,7 @@
-import { useMemo } from "react";
-import { useAtomValue } from "jotai";
 import { dialogQueueAtom } from "@/atoms/dialogQueueAtom";
 import { Dialog } from "@mui/material";
+import { useAtomValue } from "jotai";
+import { useMemo } from "react";
 
 export const DialogQueue = () => {
   const dialogs = useAtomValue(dialogQueueAtom);

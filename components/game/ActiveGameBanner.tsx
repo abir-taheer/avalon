@@ -1,16 +1,14 @@
-import { userAtom } from "@/atoms";
 import { LinkButton } from "@/components/button/LinkButton";
 import { GamePreviewCard } from "@/components/game/GamePreviewCard";
+import { useAuth } from "@/hooks";
 import { useCurrentUserGameIdQuery } from "@/queries/useCurrentUserGameIdQuery";
 import { Add } from "@mui/icons-material";
 import {
   CircularProgress,
-  Container,
   LinearProgress,
   Stack,
   Typography,
 } from "@mui/material";
-import { useAuth } from "@/hooks";
 
 export const ActiveGameBanner = () => {
   const { user } = useAuth();

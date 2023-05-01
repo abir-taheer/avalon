@@ -1,5 +1,6 @@
+import { optionalCharacters } from "@/types/schema";
+import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 import {
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -9,8 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useNewGameForm } from "./useNewGameForm";
-import { optionalCharacters } from "@/types/schema";
-import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 
 type FormType = ReturnType<typeof useNewGameForm>;
 

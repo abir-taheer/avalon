@@ -1,13 +1,13 @@
 import { useGameContext } from "@/context/GameContext";
-import { Step, StepLabel, Stepper } from "@mui/material";
+import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
 import {
   CheckOutlined,
   CircleOutlined,
   CloseOutlined,
   Pending,
 } from "@mui/icons-material";
+import { Step, StepLabel, Stepper } from "@mui/material";
 import { useMemo } from "react";
-import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
 
 export type RoundStepperProps = {
   roundNumber: number;

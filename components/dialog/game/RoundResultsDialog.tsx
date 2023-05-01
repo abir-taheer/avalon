@@ -2,11 +2,11 @@ import {
   useDialog,
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
-import { Container, Button, Typography } from "@mui/material";
-import { makeStyles } from "tss-react/mui";
-import { Game, Round } from "@/types/schema";
-import { GameContext } from "@/context/GameContext";
 import { RoundVotingResults } from "@/components/game/Round/RoundVotingResults";
+import { GameContext } from "@/context/GameContext";
+import { Game, Round } from "@/types/schema";
+import { Button, Container, Typography } from "@mui/material";
+import { makeStyles } from "tss-react/mui";
 
 export type RoundResultsDialogProps = {
   game: Game;

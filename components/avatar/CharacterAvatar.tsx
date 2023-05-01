@@ -1,5 +1,4 @@
 import { Character } from "@/types/schema";
-import { Avatar } from "@mui/material";
 
 // Avatar imports
 import assassin from "@/assets/avatars/assassin.png";

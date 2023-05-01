@@ -1,22 +1,15 @@
-import {
-  colors,
-  List,
-  ListItem,
-  ListItemText,
-  Stack,
-  Typography,
-} from "@mui/material";
 import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
+import { RoundVotingResults } from "@/components/game/Round/RoundVotingResults";
 import { useGameContext } from "@/context/GameContext";
 import { useRoundsQuery } from "@/queries/useRoundsQuery";
-import { useMemo } from "react";
-import { RoundVotingResults } from "@/components/game/Round/RoundVotingResults";
+import { RoundStatus } from "@/types/schema";
 import {
   CheckCircleOutline,
   CloseOutlined,
   SkipNextOutlined,
 } from "@mui/icons-material";
-import { RoundStatus } from "@/types/schema";
+import { List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { useMemo } from "react";
 
 const SuccessIcon = () => <CheckCircleOutline color={"success"} />;
 const FailIcon = () => <CloseOutlined color={"error"} />;

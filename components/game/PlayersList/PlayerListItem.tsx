@@ -1,4 +1,8 @@
 import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
+import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
+import { useGameContext } from "@/context/GameContext";
+import { useRemovePlayerFromGameMutation } from "@/mutations/useRemovePlayerFromGameMutation";
+import { useTransferOwnershipMutation } from "@/mutations/useTransferOwnershipMutation";
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
 import {
   AutoAwesome,
@@ -20,12 +24,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { makeStyles } from "tss-react/mui";
 import { useState } from "react";
-import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
-import { useRemovePlayerFromGameMutation } from "@/mutations/useRemovePlayerFromGameMutation";
-import { useTransferOwnershipMutation } from "@/mutations/useTransferOwnershipMutation";
-import { useGameContext } from "@/context/GameContext";
+import { makeStyles } from "tss-react/mui";
 
 export type PlayerListItemProps = {
   id: string;

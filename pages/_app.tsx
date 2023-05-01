@@ -1,4 +1,5 @@
 import { DialogQueue } from "@/components/dialog/queue/DialogQueue";
+import { Footer } from "@/components/navigation/Footer";
 import { Navbar } from "@/components/navigation/Navbar";
 import { useAuthListener } from "@/hooks/auth";
 import { queryClient } from "@/queries/queryClient";
@@ -9,7 +10,6 @@ import { SnackbarProvider } from "notistack";
 import { QueryClientProvider } from "react-query";
 import { makeStyles } from "tss-react/mui";
 import "../styles/globals.css";
-import { Footer } from "@/components/navigation/Footer";
 
 const useStyles = makeStyles()((theme) => ({
   ContentRoot: {

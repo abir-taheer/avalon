@@ -1,10 +1,10 @@
+import { SignOutButton } from "@/components";
 import { EditNameButton } from "@/components/auth/EditNameButton";
 import { EditPhotoButton } from "@/components/auth/EditPhotoButton";
 import { OptimizedAvatar } from "@/components/avatar/OptimizedAvatar";
+import { useAuth } from "@/hooks";
 import { useIsMobile } from "@/hooks/ui";
 import { Container, Stack, Typography } from "@mui/material";
-import { useAuth } from "@/hooks";
-import { SignOutButton } from "@/components";
 
 export const AuthenticatedBanner = () => {
   const { user } = useAuth();

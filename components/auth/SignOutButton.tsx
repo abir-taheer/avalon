@@ -1,13 +1,13 @@
-import { auth, realtime } from "@/client-config";
-import { Button } from "@mui/material";
-import { signOut } from "firebase/auth";
-import { useCallback } from "react";
-import { useSetAtom } from "jotai";
 import { authCounterAtom } from "@/atoms";
+import { auth } from "@/client-config";
 import { useAuth } from "@/hooks";
+import { setIsSigningOut } from "@/utils/auth/isSigningOut";
 import { updateUserProfile } from "@/utils/user/updateUserProfile";
 import { Logout } from "@mui/icons-material";
-import { setIsSigningOut } from "@/utils/auth/isSigningOut";
+import { Button } from "@mui/material";
+import { signOut } from "firebase/auth";
+import { useSetAtom } from "jotai";
+import { useCallback } from "react";
 
 export type SignOutButtonProps = {
   fullWidth?: boolean;

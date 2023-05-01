@@ -1,7 +1,7 @@
-import { useSetAtom } from "jotai";
 import { dialogQueueAtom } from "@/atoms/dialogQueueAtom";
-import { FunctionComponent, useCallback } from "react";
 import { DialogProps } from "@mui/material";
+import { useSetAtom } from "jotai";
+import { FunctionComponent, useCallback } from "react";
 
 export type CloseDialogFn<ReturnType> = (value: ReturnType | null) => void;
 

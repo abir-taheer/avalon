@@ -1,8 +1,8 @@
+import * as API from "@/api-controllers";
+import { useAPI } from "@/hooks";
 import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
 import { useCallback } from "react";
 import { MutationFunction, useMutation } from "react-query";
-import * as API from "@/api-controllers";
-import { useAPI } from "@/hooks";
 
 export type UseGuessMerlinMutationData = API.Game.GuessMerlin.POST.Response;
 export type UseGuessMerlinMutationVariables =

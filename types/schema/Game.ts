@@ -1,8 +1,8 @@
-import { Timestamp } from "@firebase/firestore";
-import { GameStatus, isGameStatus } from "@/types/schema/GameStatus";
 import { GameOptions, isGameOptions } from "@/types/schema/GameOptions";
+import { GameStatus, isGameStatus } from "@/types/schema/GameStatus";
 import { RealTimeUser } from "@/types/schema/RealTimeUser";
 import { Round } from "@/types/schema/Round";
+import { Timestamp } from "@firebase/firestore";
 
 export type IndependentGameProperties = {
   id: string;

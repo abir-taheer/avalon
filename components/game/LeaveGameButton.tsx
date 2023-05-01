@@ -1,10 +1,10 @@
+import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
+import { useGameContext } from "@/context/GameContext";
+import { useAuth } from "@/hooks";
 import { useRemovePlayerFromGameMutation } from "@/mutations/useRemovePlayerFromGameMutation";
 import { Button, ButtonProps } from "@mui/material";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { useAuth } from "@/hooks";
-import { useSimpleConfirmDialog } from "@/components/dialog/ui/SimpleConfirmDialog";
-import { useGameContext } from "@/context/GameContext";
 
 export type LeaveGameButtonProps = Partial<ButtonProps>;
 

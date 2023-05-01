@@ -1,9 +1,8 @@
-import { useAPI, useAuth } from "@/hooks";
-import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
-import { useCallback } from "react";
-import { MutationFunction, useMutation, useQueryClient } from "react-query";
-import { doc, updateDoc } from "firebase/firestore";
 import { firestore } from "@/client-config";
+import { MUTATION_KEY, UseMutationWrapperProps } from "@/mutations/mutationKey";
+import { doc, updateDoc } from "firebase/firestore";
+import { useCallback } from "react";
+import { MutationFunction, useMutation } from "react-query";
 
 export type UseTransferOwnershipMutationData = {
   success: true;

@@ -1,9 +1,8 @@
 import { SimpleAccordion } from "@/components/accordion/SimpleAccordion";
 import { PlayerListItem } from "@/components/game/PlayersList/PlayerListItem";
-import { Player } from "@/types/schema";
-import { List, Typography } from "@mui/material";
-import { useAuth } from "@/hooks";
 import { useGameContext } from "@/context/GameContext";
+import { useAuth } from "@/hooks";
+import { List, Typography } from "@mui/material";
 
 export type PlayersListProps = {
   initialState?: boolean;

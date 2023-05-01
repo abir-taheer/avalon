@@ -1,17 +1,11 @@
+import { AnonymousLoginButton, GoogleLoginButton } from "@/components";
 import {
   useDialog,
   UseDialogComponent,
 } from "@/components/dialog/queue/useDialog";
-import {
-  DialogTitle,
-  DialogContent,
-  Button,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { makeStyles } from "tss-react/mui";
 import { UndrawAuthentication } from "@/illustrations/UndrawAuthentication";
-import { AnonymousLoginButton, GoogleLoginButton } from "@/components";
+import { DialogContent, DialogTitle, Stack } from "@mui/material";
+import { makeStyles } from "tss-react/mui";
 
 export type AuthRequiredDialogProps = void;
 

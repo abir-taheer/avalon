@@ -1,5 +1,5 @@
-import { Typography, TypographyProps } from "@mui/material";
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
+import { Typography, TypographyProps } from "@mui/material";
 
 export type PlayerNameProps = {
   playerId: string;
