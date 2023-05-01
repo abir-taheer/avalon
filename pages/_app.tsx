@@ -9,6 +9,7 @@ import { SnackbarProvider } from "notistack";
 import { QueryClientProvider } from "react-query";
 import { makeStyles } from "tss-react/mui";
 import "../styles/globals.css";
+import { Footer } from "@/components/navigation/Footer";
 
 const useStyles = makeStyles()((theme) => ({
   ContentRoot: {
@@ -36,6 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <div className={classes.ContentRoot}>
             <Component {...pageProps} />
           </div>
+          <Footer />
         </QueryClientProvider>
       </SnackbarProvider>
     </ThemeProvider>
