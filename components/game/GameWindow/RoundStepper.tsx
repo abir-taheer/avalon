@@ -1,10 +1,7 @@
-import { Round } from "@/types/schema";
 import { useGameContext } from "@/context/GameContext";
-import { colors, Step, StepLabel, Stepper } from "@mui/material";
+import { Step, StepLabel, Stepper } from "@mui/material";
 import {
-  CheckCircleOutline,
   CheckOutlined,
-  Circle,
   CircleOutlined,
   CloseOutlined,
   Pending,
