@@ -6,35 +6,42 @@ service cloud.firestore {
 
       function isOwnerAndIsOnlyTransferringOwnership(){
         return resource.data.ownerId == request.auth.uid &&
-            request.resource.data.keys().hasOnly(["ownerId"]) &&
-            request.resource.data.ownerId is string
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(["ownerId"]) &&
+            resource.data.playerIds.hasAny([request.resource.data.ownerId])
       }
 
       allow list: if resource.data.playerIds.hasAny([request.auth.uid]);
 
       allow get: if true;
 
-      allow write: if isOwnerAndIsOnlyTransferringOwnership();
+      allow update: if isOwnerAndIsOnlyTransferringOwnership();
     }
 
     match /games/{game_id}/rounds/{round_id} {
+      function getGame(){
+        return get(/databases/$(database)/documents/games/$(game_id)).data
+      }
+
       function isLeaderAndIsOnlyUpdatingTeamIdsField(){
         return resource.data.leaderId == request.auth.uid &&
-            request.resource.data.keys().hasOnly(["teamPlayerIds"]) &&
+            resource.data.status == "team_selection" &&
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(["teamPlayerIds"]) &&
             request.resource.data.teamPlayerIds is list &&
-            request.resource.data.teamPlayerIds.size() < (request.resource.data.teamSize + 1)
+            request.resource.data.teamPlayerIds.size() < (resource.data.teamSize + 1) &&
+            request.resource.data.teamPlayerIds.hasOnly(getGame().playerIds)
       }
 
       function isLeaderAndIsOnlyUpdatingStatusField(){
         return resource.data.leaderId == request.auth.uid &&
-            request.resource.data.keys().hasOnly(["status"]) &&
-            request.resource.data.status is string &&
-            request.resource.data.status in ["voting"]
+            resource.data.status == "team_selection" &&
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(["status"]) &&
+            request.resource.data.status == "voting" &&
+            resource.data.teamPlayerIds.size() == resource.data.teamSize
       }
 
       allow list;
       allow get;
-      allow write: if isLeaderAndIsOnlyUpdatingTeamIdsField() || isLeaderAndIsOnlyUpdatingStatusField();
+      allow update: if isLeaderAndIsOnlyUpdatingTeamIdsField() || isLeaderAndIsOnlyUpdatingStatusField();
     }
 
     match /games/{game_id}/roles/{player_id} {
