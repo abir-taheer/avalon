@@ -5,10 +5,12 @@ import {
   onSnapshot,
   QuerySnapshot,
   DocumentSnapshot,
+  FirestoreError,
 } from "@firebase/firestore";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { QueryKey, useQuery, useQueryClient } from "react-query";
 import { UseQueryWrapperProps } from "@/queries/queryKey";
+import { useNotifyDialog } from "@/components/dialog/ui/NotifyDialog";
 
 export type UseSnapshotQueryProps<Data extends DocumentData | null> = {
   ref: DocumentReference<Data> | Query<Data>;
@@ -19,8 +21,6 @@ export type UseSnapshotQueryProps<Data extends DocumentData | null> = {
 };
 
 const SnapshotListeners: { [key: string]: boolean } = {};
-
-const voidFn = () => {};
 
 export const useSnapshotQuery = <Data extends DocumentData>({
   ref,
@@ -35,6 +35,18 @@ export const useSnapshotQuery = <Data extends DocumentData>({
         resolveRef.current = resolve;
       }),
     []
+  );
+
+  const openNotifyDialog = useNotifyDialog();
+
+  const handleError = useCallback(
+    async (error: FirestoreError) => {
+      await openNotifyDialog({
+        title: "Error",
+        message: <pre>{JSON.stringify({ ...error, queryKey }, null, 2)}</pre>,
+      });
+    },
+    [openNotifyDialog, queryKey]
   );
 
   const queryClient = useQueryClient();
@@ -78,15 +90,23 @@ export const useSnapshotQuery = <Data extends DocumentData>({
     let unsubscribe = () => {};
 
     if (ref instanceof DocumentReference) {
-      unsubscribe = onSnapshot(ref, (snapshot) => {
-        handleDocumentSnapshot(snapshot);
-      });
+      unsubscribe = onSnapshot(
+        ref,
+        (snapshot) => {
+          handleDocumentSnapshot(snapshot);
+        },
+        handleError
+      );
     }
     // Else we're dealing with a collection query result and need to handle an array
     else {
-      unsubscribe = onSnapshot(ref, (snapshot) => {
-        handleQuerySnapshot(snapshot);
-      });
+      unsubscribe = onSnapshot(
+        ref,
+        (snapshot) => {
+          handleQuerySnapshot(snapshot);
+        },
+        handleError
+      );
     }
 
     SnapshotListeners[key] = true;
@@ -102,6 +122,7 @@ export const useSnapshotQuery = <Data extends DocumentData>({
     queryClient,
     queryKey,
     ref,
+    handleError,
   ]);
 
   return useQuery<Data>({
