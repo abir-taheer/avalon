@@ -1,6 +1,7 @@
 export enum GameStatus {
   "waiting" = "waiting",
   "started" = "started",
+  "pending_assassin" = "pending_assassin",
   "completed" = "completed",
 }
 

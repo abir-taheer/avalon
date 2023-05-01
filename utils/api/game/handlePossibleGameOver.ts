@@ -17,11 +17,20 @@ export const handlePossibleGameOver = async (
   if (numFails >= 3) {
     newGameData.status = GameStatus.completed;
     newGameData.winner = "evil";
+    newGameData.currentRoundId = null;
   }
 
   if (numPasses >= 3) {
-    newGameData.status = GameStatus.completed;
-    newGameData.winner = "good";
+    // Check to see if there is an assassin in this game
+    newGameData.currentRoundId = null;
+
+    if (game.options.optionalCharacters.assassin) {
+      newGameData.status = GameStatus.pending_assassin;
+      newGameData.winner = null;
+    } else {
+      newGameData.status = GameStatus.completed;
+      newGameData.winner = "good";
+    }
   }
 
   if (newGameData.status) {

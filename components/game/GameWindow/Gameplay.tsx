@@ -8,7 +8,7 @@ import { usePrevious } from "@/hooks/general/usePrevious";
 import { useRoundResultsDialog } from "@/components/dialog/game/RoundResultsDialog";
 import { useOutcomeDialog } from "@/components/dialog/game/OutcomeCardsDialog";
 import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
-import { ErrorOutline, Pending } from "@mui/icons-material";
+import { Pending } from "@mui/icons-material";
 
 export type GameplayProps = {
   rounds: Round[];

@@ -82,7 +82,7 @@ export const OutcomeDialog: UseDialogComponent<OutcomeDialogProps, null> = ({
                     color: "white",
                   }}
                 >
-                  <Typography>Pass</Typography>
+                  <Typography>{outcome ? "Pass" : "Fail"}</Typography>
                 </Card>
               </Grid>
             </Slide>

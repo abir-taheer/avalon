@@ -13,6 +13,7 @@ export type IndependentGameProperties = {
   options: GameOptions;
 
   roundResults: boolean[];
+  notes?: string;
 };
 
 export type StartedGame = {
@@ -27,13 +28,23 @@ export type WaitingGame = {
   winner: null;
 } & IndependentGameProperties;
 
+export type PendingAssassinGame = {
+  status: GameStatus.pending_assassin;
+  currentRoundId: null;
+  winner: null;
+} & IndependentGameProperties;
+
 export type CompletedGame = {
   status: GameStatus.completed;
   currentRoundId: null;
   winner: "evil" | "good";
 } & IndependentGameProperties;
 
-export type Game = StartedGame | WaitingGame | CompletedGame;
+export type Game =
+  | StartedGame
+  | WaitingGame
+  | PendingAssassinGame
+  | CompletedGame;
 
 export const isGame = (value: any): value is Game => {
   return (

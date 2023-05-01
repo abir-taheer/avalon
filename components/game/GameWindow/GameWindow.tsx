@@ -11,6 +11,7 @@ import { Gameplay } from "@/components/game/GameWindow/Gameplay";
 import { useRoundsQuery } from "@/queries/useRoundsQuery";
 import { useGameContext } from "@/context/GameContext";
 import { GameOver } from "@/components/game/GameWindow/GameOver";
+import { PendingAssassinPreview } from "@/components/game/GameWindow/PendingAssassinPreview";
 
 export type GameWindowProps = {};
 
@@ -50,6 +51,10 @@ export const GameWindow = ({}: GameWindowProps) => {
 
           <JoinGameButton startIcon={<PersonAddOutlined />} />
         </>
+      )}
+
+      {game.status === GameStatus.pending_assassin && (
+        <PendingAssassinPreview />
       )}
 
       {game.status === GameStatus.completed && <GameOver />}
