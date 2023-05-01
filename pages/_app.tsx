@@ -19,6 +19,11 @@ const useStyles = makeStyles()((theme) => ({
   SuccessSnackbar: {
     backgroundColor: theme.palette.success.main,
   },
+  BodyContainerWithFooter: {
+    minHeight: "calc(100vh - 100px)",
+    paddingBottom: 100,
+    position: "relative",
+  },
 }));
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -26,13 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { classes } = useStyles();
 
   return (
-    <div
-      style={{
-        position: "relative",
-        minHeight: "calc(100vh - 100px)",
-        paddingBottom: 100,
-      }}
-    >
+    <div className={classes.BodyContainerWithFooter}>
       <ThemeProvider>
         <SnackbarProvider
           maxSnack={3}
