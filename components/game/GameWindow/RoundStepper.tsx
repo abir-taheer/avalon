@@ -1,7 +1,14 @@
 import { Round } from "@/types/schema";
 import { useGameContext } from "@/context/GameContext";
 import { colors, Step, StepLabel, Stepper } from "@mui/material";
-import { Pending } from "@mui/icons-material";
+import {
+  CheckCircleOutline,
+  CheckOutlined,
+  Circle,
+  CircleOutlined,
+  CloseOutlined,
+  Pending,
+} from "@mui/icons-material";
 import { useMemo } from "react";
 import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
 
@@ -33,24 +40,27 @@ export const RoundStepper = ({ roundNumber }: RoundStepperProps) => {
           <Step key={label}>
             <StepLabel
               error={roundFailed}
-              StepIconProps={{
-                sx: {
-                  fill: roundPassed
-                    ? colors.green[500]
-                    : roundActive
-                    ? colors.yellow[500]
-                    : undefined,
-                },
-              }}
               icon={
                 roundActive ? (
                   <Pending
-                    sx={(theme) => ({ fill: theme.palette.primary.main })}
+                    sx={(theme) => ({
+                      fill: theme.palette.primary.main,
+                      border: `2px solid ${theme.palette.primary.main}`,
+                      borderRadius: "50%",
+                    })}
                   />
-                ) : undefined
+                ) : roundFailed ? (
+                  <CloseOutlined color={"error"} />
+                ) : roundPassed ? (
+                  <CheckOutlined
+                    sx={(theme) => ({ fill: theme.palette.success.light })}
+                  />
+                ) : (
+                  <CircleOutlined sx={{ fill: "grey" }} />
+                )
               }
             >
-              {playersPerRound[index]} Players
+              {playersPerRound[index]}
             </StepLabel>
           </Step>
         );
