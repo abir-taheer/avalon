@@ -8,6 +8,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import { Fragment } from "react";
 import { makeStyles } from "tss-react/mui";
+import Head from "next/head";
 
 const useStyles = makeStyles()({
   HeroImage: {
@@ -40,6 +41,50 @@ const Home: NextPage = () => {
 
   return (
     <Container maxWidth={"lg"}>
+      <Head>
+        <meta
+          name="description"
+          content="Play the classic social deduction game Avalon online with friends! Join the epic battle between good and evil, and discover who you can trust."
+        />
+        <meta
+          name="keywords"
+          content="Avalon, online game, social deduction, board game, multiplayer"
+        />
+        <meta name="author" content="Abir Taheer" />
+
+        <title>Avalon & Friends</title>
+
+        <meta
+          property="og:title"
+          content="Avalon & Friends | Play Avalon Online"
+        />
+        <meta
+          property="og:description"
+          content="Experience the excitement of Avalon, the social deduction game that challenges your trust and deception skills. Play online with friends now!"
+        />
+        <meta
+          property="og:image"
+          content="https://avalon.fyi/hero-picture.png"
+        />
+        <meta property="og:url" content="https://avalon.fyi" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Avalon & Friends" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Avalon & Friends | Play Avalon Online"
+        />
+        <meta
+          name="twitter:description"
+          content="Embark on a thrilling journey in the world of Avalon, the classic social deduction game. Play online with friends and test your trust and deception skills."
+        />
+        <meta
+          name="twitter:image"
+          content="https://avalon.fyi/hero-picture.png"
+        />
+      </Head>
+
       <Stack spacing={4}>
         {!signedIn && <Hero />}
 
