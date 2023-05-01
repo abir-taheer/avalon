@@ -26,21 +26,29 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { classes } = useStyles();
 
   return (
-    <ThemeProvider>
-      <SnackbarProvider
-        maxSnack={3}
-        classes={{ variantSuccess: classes.SuccessSnackbar }}
-      >
-        <QueryClientProvider client={queryClient}>
-          <DialogQueue />
-          <Navbar />
-          <div className={classes.ContentRoot}>
-            <Component {...pageProps} />
-          </div>
-          <Footer />
-        </QueryClientProvider>
-      </SnackbarProvider>
-    </ThemeProvider>
+    <div
+      style={{
+        position: "relative",
+        minHeight: "calc(100vh - 100px)",
+        paddingBottom: 100,
+      }}
+    >
+      <ThemeProvider>
+        <SnackbarProvider
+          maxSnack={3}
+          classes={{ variantSuccess: classes.SuccessSnackbar }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <DialogQueue />
+            <Navbar />
+            <div className={classes.ContentRoot}>
+              <Component {...pageProps} />
+            </div>
+            <Footer />
+          </QueryClientProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </div>
   );
 }
 

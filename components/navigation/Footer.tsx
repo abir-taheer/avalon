@@ -1,5 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 import { Divider, Stack } from "@mui/material";
+import { useLayoutEffect, useState } from "react";
 
 /*
 .footer {
@@ -31,6 +32,8 @@ const useStyles = makeStyles()((theme) => ({
   Footer: {
     width: "100%",
     height: "100px",
+    position: "absolute",
+    bottom: 0,
     borderTop: "1px solid #eaeaea",
     display: "flex",
     justifyContent: "center",
@@ -50,9 +53,12 @@ const useStyles = makeStyles()((theme) => ({
 
 export const Footer = () => {
   const { classes } = useStyles();
+  const [marginTop, setMarginTop] = useState<number>(20);
+
+  useLayoutEffect(() => {});
 
   return (
-    <footer className={classes.Footer}>
+    <footer className={classes.Footer} style={{ marginTop }}>
       <a
         href="https://github.com/abir-taheer/avalon"
         target="_blank"
