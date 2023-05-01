@@ -4,13 +4,53 @@ service cloud.firestore {
 
     match /games/{game_id} {
 
+      function isOwnerAndIsOnlyTransferringOwnership(){
+        return resource.data.ownerId == request.auth.uid &&
+            request.resource.data.keys().hasOnly(["ownerId"]) &&
+            request.resource.data.ownerId is string
+      }
+
       allow list: if resource.data.playerIds.hasAny([request.auth.uid]);
 
       allow get: if true;
 
-      // Only a story's author can write to a story
+      allow write: if isOwnerAndIsOnlyTransferringOwnership();
+    }
+
+    match /games/{game_id}/rounds/{round_id} {
+      function isLeaderAndIsOnlyUpdatingTeamIdsField(){
+        return resource.data.leaderId == request.auth.uid &&
+            request.resource.data.keys().hasOnly(["teamPlayerIds"]) &&
+            request.resource.data.teamPlayerIds is list &&
+            request.resource.data.teamPlayerIds.size() < (request.resource.data.teamSize + 1)
+      }
+
+      function isLeaderAndIsOnlyUpdatingStatusField(){
+        return resource.data.leaderId == request.auth.uid &&
+            request.resource.data.keys().hasOnly(["status"]) &&
+            request.resource.data.status is string &&
+            request.resource.data.status in ["voting"]
+      }
+
+      allow list;
+      allow get;
+      allow write: if isLeaderAndIsOnlyUpdatingTeamIdsField() || isLeaderAndIsOnlyUpdatingStatusField();
+    }
+
+    match /games/{game_id}/roles/{player_id} {
+      allow list: if false;
+      allow get: if request.auth.uid == player_id;
       allow write: if false;
     }
 
+    match /games/{game_id}/rounds/{round_id}/votes/{player_id} {
+      function getRound(){
+        return get(/databases/$(database)/documents/games/$(game_id)/rounds/$(round_id)).data
+      }
+      allow list: if getRound().status != "voting";
+      allow get: if getRound().status != "voting" || request.auth.uid == player_id;
+
+      allow write: if false;
+    }
   }
 }

@@ -16,7 +16,7 @@ export const useRoleQuery = ({ query, game, skip }: UseRoleProps) => {
   const { isSignedIn, user } = useAuth();
 
   const queryKey = useMemo(
-    () => [QUERY_KEY.GAME, game, user?.uid],
+    () => [QUERY_KEY.ROLE, game, user?.uid],
     [game, user]
   );
 
