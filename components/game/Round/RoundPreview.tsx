@@ -6,6 +6,7 @@ import { ViewOnlyTeamPreview } from "@/components/game/Round/ViewOnlyTeamPreview
 import { useAuth } from "@/hooks";
 import { TeamSelection } from "@/components/game/Round/TeamSelection";
 import { TeamVote } from "@/components/game/Round/TeamVote";
+import { PendingMission } from "@/components/game/Round/PendingMission";
 
 export type CurrentRoundProps = {
   game: Game;
@@ -75,6 +76,10 @@ export const RoundPreview = ({ game, round }: CurrentRoundProps) => {
       )}
 
       {round.status === RoundStatus.voting && <TeamVote round={round} />}
+
+      {round.status === RoundStatus.mission_pending && (
+        <PendingMission round={round} />
+      )}
     </Stack>
   );
 };

@@ -10,6 +10,7 @@ import { useRoleDialog } from "@/components/dialog/game/PlayerRoleDialog";
 import { Gameplay } from "@/components/game/GameWindow/Gameplay";
 import { useRoundsQuery } from "@/queries/useRoundsQuery";
 import { useGameContext } from "@/context/GameContext";
+import { GameOver } from "@/components/game/GameWindow/GameOver";
 
 export type GameWindowProps = {};
 
@@ -50,6 +51,8 @@ export const GameWindow = ({}: GameWindowProps) => {
           <JoinGameButton startIcon={<PersonAddOutlined />} />
         </>
       )}
+
+      {game.status === GameStatus.completed && <GameOver />}
     </Stack>
   );
 };

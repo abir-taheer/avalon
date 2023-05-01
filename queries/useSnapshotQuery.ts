@@ -108,6 +108,7 @@ export const useSnapshotQuery = <Data extends DocumentData>({
     queryKey,
     queryFn: () => dataPromise,
     enabled: !skip,
+    cacheTime: Infinity,
     ...UseQueryProps,
   });
 };

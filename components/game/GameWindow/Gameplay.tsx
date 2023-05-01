@@ -1,11 +1,14 @@
 import { Round, RoundStatus } from "@/types/schema";
 import { useRoleDialog } from "@/components/dialog/game/PlayerRoleDialog";
-import { Button, Stack } from "@mui/material";
+import { Button, colors, Stack, Step, StepLabel, Stepper } from "@mui/material";
 import { RoundPreview } from "@/components/game/Round/RoundPreview";
 import { useEffect, useMemo, useState } from "react";
 import { useGameContext } from "@/context/GameContext";
 import { usePrevious } from "@/hooks/general/usePrevious";
 import { useRoundResultsDialog } from "@/components/dialog/game/RoundResultsDialog";
+import { useOutcomeDialog } from "@/components/dialog/game/OutcomeCardsDialog";
+import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
+import { ErrorOutline, Pending } from "@mui/icons-material";
 
 export type GameplayProps = {
   rounds: Round[];
@@ -25,6 +28,12 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
 
   const round = rounds[roundIndex];
   const openRoundResultsDialog = useRoundResultsDialog();
+  const openOutcomesDialog = useOutcomeDialog();
+
+  const playersPerRound = useMemo(
+    () => getTeamMembersPerRound(game.playerIds.length),
+    [rounds]
+  );
 
   // Every time a new round gets added, change the round index to the last round
   useEffect(() => {
@@ -42,8 +51,19 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
       (round) => round.id === secondMostRecentRoundId
     );
 
-    if (previousRound && previousRound.status === RoundStatus.team_rejected) {
+    if (!previousRound) {
+      return;
+    }
+
+    if (previousRound.status === RoundStatus.team_rejected) {
       openRoundResultsDialog({ game, round: previousRound });
+    }
+
+    if (
+      previousRound.status === RoundStatus.mission_passed ||
+      previousRound.status === RoundStatus.mission_failed
+    ) {
+      openOutcomesDialog({ outcomes: previousRound.outcomes });
     }
   }, [
     openRoundResultsDialog,
@@ -51,15 +71,53 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
     secondMostRecentRoundId,
     mostRecentRoundId,
     game,
+    openOutcomesDialog,
   ]);
 
   return (
-    <Stack>
+    <Stack gap={2}>
       <div>
         <Button onClick={() => openRoleDialog({ game })} variant={"outlined"}>
           Show your role
         </Button>
       </div>
+
+      <Stepper activeStep={round.number - 1} alternativeLabel>
+        {[...Array(5)].map((label, index) => {
+          const roundFailed =
+            typeof game.roundResults[index] !== "undefined" &&
+            !game.roundResults[index];
+
+          const roundPassed = game.roundResults[index];
+          const roundActive = round.number - 1 === index;
+
+          return (
+            <Step key={label}>
+              <StepLabel
+                error={roundFailed}
+                StepIconProps={{
+                  sx: {
+                    fill: roundPassed
+                      ? colors.green[500]
+                      : roundActive
+                      ? colors.yellow[500]
+                      : undefined,
+                  },
+                }}
+                icon={
+                  roundActive ? (
+                    <Pending
+                      sx={(theme) => ({ fill: theme.palette.primary.main })}
+                    />
+                  ) : undefined
+                }
+              >
+                {playersPerRound[index]} Players
+              </StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
 
       {round && <RoundPreview game={game} round={round} />}
     </Stack>

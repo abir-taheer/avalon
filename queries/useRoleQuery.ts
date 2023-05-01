@@ -13,14 +13,10 @@ export type UseRoleProps = {
 };
 
 export const useRoleQuery = ({ query, game, skip }: UseRoleProps) => {
-  const { user } = useAuth();
-
-  if (!user) {
-    throw new Error("Tried to call useRoleQuery in an unauthenticated context");
-  }
+  const { isSignedIn, user } = useAuth();
 
   const queryKey = useMemo(
-    () => [QUERY_KEY.GAME, game, user.uid],
+    () => [QUERY_KEY.GAME, game, user?.uid],
     [game, user]
   );
 
@@ -31,7 +27,7 @@ export const useRoleQuery = ({ query, game, skip }: UseRoleProps) => {
         "games",
         game,
         "roles",
-        user.uid
+        user?.uid ?? "placeholder"
       ) as DocumentReference<Role>,
     [game, user]
   );
@@ -39,7 +35,7 @@ export const useRoleQuery = ({ query, game, skip }: UseRoleProps) => {
   return useSnapshotQuery({
     ref,
     queryKey,
-    skip,
+    skip: skip || !isSignedIn,
     UseQueryProps: query,
   });
 };

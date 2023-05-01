@@ -176,6 +176,8 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     createdAt: new Date(),
     teamSize,
     gameId: game.id,
+    decidedMissionOutcomePlayerIds: [],
+    outcomes: [],
   };
 
   await firestore

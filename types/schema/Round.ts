@@ -19,6 +19,11 @@ export type Round = {
   gameId: Game["id"];
   leaderId: RealTimeUser["uid"];
   teamPlayerIds: Array<RealTimeUser["uid"]>;
+
+  outcomes: boolean[];
+
+  decidedMissionOutcomePlayerIds: Array<RealTimeUser["uid"]>;
+
   votedPlayerIds: Array<RealTimeUser["uid"]>;
   status: RoundStatus;
   previousRejections: number;

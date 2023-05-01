@@ -3,6 +3,7 @@ import { InvalidBodyParamsError } from "@/utils/api/InvalidBodyParamsError";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 import { Game, GameStatus, Round, RoundStatus, Vote } from "@/types/schema";
 import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
+import { handlePossibleGameOver } from "@/utils/api/game/handlePossibleGameOver";
 
 export type BodyParams = {
   game: string;
@@ -64,7 +65,7 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     });
   }
 
-  const voteData = {
+  const voteData: Vote = {
     playerId: user.uid,
     approval: req.body.approval,
   };
@@ -150,6 +151,8 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
       ];
 
       const newRoundData: Round = {
+        outcomes: [],
+        decidedMissionOutcomePlayerIds: [],
         createdAt: new Date(),
         gameId: game.id,
         teamPlayerIds: [],
@@ -171,6 +174,10 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
         currentRoundId: newRoundData.id,
       });
     }
+  });
+
+  await firestore.runTransaction(async (transaction) => {
+    await handlePossibleGameOver(transaction, gameDoc.ref);
   });
 
   return {

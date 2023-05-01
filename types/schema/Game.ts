@@ -12,22 +12,25 @@ export type IndependentGameProperties = {
   createdAt: Timestamp;
   options: GameOptions;
 
-  roundResults: [];
+  roundResults: boolean[];
 };
 
 export type StartedGame = {
   status: GameStatus.started;
   currentRoundId: Round["id"];
+  winner: null;
 } & IndependentGameProperties;
 
 export type WaitingGame = {
   status: GameStatus.waiting;
   currentRoundId: null;
+  winner: null;
 } & IndependentGameProperties;
 
 export type CompletedGame = {
   status: GameStatus.completed;
   currentRoundId: null;
+  winner: "evil" | "good";
 } & IndependentGameProperties;
 
 export type Game = StartedGame | WaitingGame | CompletedGame;

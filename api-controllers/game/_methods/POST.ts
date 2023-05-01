@@ -86,6 +86,7 @@ export const Handler: FirebaseAdminHandlerWithUser = async (
     currentRoundId: null,
     roundResults: [],
     id,
+    winner: null,
     status: GameStatus.waiting,
     ownerId: user.uid,
     playerIds: [user.uid],

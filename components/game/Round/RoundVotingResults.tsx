@@ -5,6 +5,7 @@ import { Divider, LinearProgress, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { PlayerName } from "@/components/auth/PlayerName";
 import { getRoundDescriptor } from "@/utils/game/getRoundDescriptor";
+import { VoteResultsTable } from "@/components/game/Round/VoteResultsTable";
 
 export type RoundVotingResultsProps = {
   round: Round;
@@ -15,16 +16,6 @@ export const RoundVotingResults = ({ round }: RoundVotingResultsProps) => {
     game: game.id,
     round: round.id,
   });
-
-  const approvers = useMemo(
-    () => data?.filter((vote) => vote.approval) || [],
-    [data]
-  );
-
-  const rejectors = useMemo(
-    () => data?.filter((vote) => !vote.approval) || [],
-    [data]
-  );
 
   const roundDescription = useMemo(
     () => getRoundDescriptor(round.status),
@@ -60,54 +51,10 @@ export const RoundVotingResults = ({ round }: RoundVotingResultsProps) => {
           </Stack>
 
           <Divider sx={{ height: 1 }} />
+
+          {data && <VoteResultsTable votes={data} />}
         </>
       )}
-
-      <Stack direction={"row"} gap={4}>
-        {/*Approvals*/}
-        <Stack alignItems={"center"} gap={2}>
-          <Typography>Approved The Team:</Typography>
-
-          {!approvers.length && (
-            <Typography variant={"caption"} color={"grey"}>
-              Nobody approved the team
-            </Typography>
-          )}
-
-          <Stack>
-            {approvers?.map((vote) => (
-              <PlayerName
-                playerId={vote.playerId}
-                key={vote.playerId}
-                color={"success"}
-                variant={"caption"}
-              />
-            ))}
-          </Stack>
-        </Stack>
-
-        {/*Rejections*/}
-        <Stack alignItems={"center"} gap={2}>
-          <Typography>Rejected The Team:</Typography>
-
-          {!rejectors.length && (
-            <Typography variant={"caption"} color={"grey"}>
-              Nobody rejected the team
-            </Typography>
-          )}
-
-          <Stack>
-            {rejectors?.map((vote) => (
-              <PlayerName
-                playerId={vote.playerId}
-                key={vote.playerId}
-                color={"error"}
-                variant={"caption"}
-              />
-            ))}
-          </Stack>
-        </Stack>
-      </Stack>
     </Stack>
   );
 };
