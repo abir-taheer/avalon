@@ -4,6 +4,7 @@ import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
 import { Game, optionalCharacters } from "@/types/schema";
 import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 import {
+  Button,
   capitalize,
   colors,
   List,
@@ -11,9 +12,12 @@ import {
   ListItemAvatar,
   ListItemText,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useMemo } from "react";
+import { LinkOutlined } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
 
 export type ViewOnlyOptionsPreviewProps = {
   game: Game;
@@ -34,6 +38,7 @@ export const ViewOnlyOptionsPreview = ({
     [game.options.optionalCharacters]
   );
   const { user } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
 
   const isOwner = user?.uid === game.ownerId;
 
@@ -49,13 +54,24 @@ export const ViewOnlyOptionsPreview = ({
     [game.options]
   );
 
+  const gameLink = `${window.location.origin}/game/${game.id}`;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(gameLink);
+      enqueueSnackbar("Copied to clipboard", { variant: "success" });
+    } catch (e) {
+      enqueueSnackbar("Failed to copy to clipboard", { variant: "error" });
+    }
+  };
+
   const hasEnoughPlayers = useMemo(
     () => game.playerIds.length >= minimumPlayersNeeded,
     [game.playerIds.length, minimumPlayersNeeded]
   );
 
   return (
-    <Stack>
+    <Stack gap={2}>
       <List dense>
         {characters.map((character) => {
           const isEnabled = game.options.optionalCharacters[character];
@@ -102,6 +118,17 @@ export const ViewOnlyOptionsPreview = ({
           </Typography>
         )}
       </Typography>
+
+      <Tooltip title={gameLink}>
+        <Button
+          startIcon={<LinkOutlined />}
+          variant={"outlined"}
+          color={"secondary"}
+          onClick={handleCopy}
+        >
+          Copy Game Link
+        </Button>
+      </Tooltip>
     </Stack>
   );
 };
