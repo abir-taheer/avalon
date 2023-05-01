@@ -10,7 +10,7 @@ import {
 import { PlayerName } from "@/components/auth/PlayerName";
 import { useUpdateTeamMutation } from "@/mutations/useUpdateTeamMutation";
 import { useMemo } from "react";
-import { SubmitTeamButton } from "@/components/game/Round/SubmitTeamButton";
+import { SubmitTeamButton } from "@/components/game/Round/team-making/SubmitTeamButton";
 
 export type TeamSelectionProps = {
   game: Game;

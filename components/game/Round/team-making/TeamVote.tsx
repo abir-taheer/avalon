@@ -5,8 +5,8 @@ import { PlayerName } from "@/components/auth/PlayerName";
 import { useCurrentVoteQuery } from "@/queries/useCurrentVoteQuery";
 import { useMemo } from "react";
 import { useAuth } from "@/hooks";
-import { PendingVote } from "@/components/game/Round/PendingVote";
-import { PostVotingScreen } from "@/components/game/Round/PostVotingScreen";
+import { PendingVote } from "@/components/game/Round/team-making/PendingVote";
+import { PostVotingScreen } from "@/components/game/Round/team-making/PostVotingScreen";
 
 export type TeamVoteProps = {
   round: Round;

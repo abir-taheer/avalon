@@ -11,6 +11,7 @@ import { useMemo } from "react";
 import { isEvilCharacter } from "@/types/schema";
 import { useOutcomeDialog } from "@/components/dialog/game/OutcomeCardsDialog";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { RoundStepper } from "@/components/game/GameWindow/RoundStepper";
 
 export const GameOver = () => {
   const game = useGameContext();
@@ -36,6 +37,8 @@ export const GameOver = () => {
 
   return (
     <Stack gap={4}>
+      <RoundStepper roundNumber={game.roundResults.length} />
+
       <Typography align={"center"} fontWeight={"bold"} variant={"h4"}>
         Game Over
       </Typography>
@@ -49,6 +52,22 @@ export const GameOver = () => {
           Tough Luck!
         </Typography>
       )}
+
+      {Boolean(game.notes) && (
+        <Typography variant={"caption"} color={"grey"} align={"center"}>
+          {game.notes}
+        </Typography>
+      )}
+
+      {game.winner === "evil" ? (
+        <Typography align={"center"}>
+          The minions of Mordrid were too cunning
+        </Typography>
+      ) : (
+        <Typography align={"center"}>The forces of good prevailed</Typography>
+      )}
+
+      <Typography></Typography>
     </Stack>
   );
 };

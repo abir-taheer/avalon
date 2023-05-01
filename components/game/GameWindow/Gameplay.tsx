@@ -9,6 +9,7 @@ import { useRoundResultsDialog } from "@/components/dialog/game/RoundResultsDial
 import { useOutcomeDialog } from "@/components/dialog/game/OutcomeCardsDialog";
 import { getTeamMembersPerRound } from "@/utils/game/getTeamMembersPerRound";
 import { Pending } from "@mui/icons-material";
+import { RoundStepper } from "@/components/game/GameWindow/RoundStepper";
 
 export type GameplayProps = {
   rounds: Round[];
@@ -29,11 +30,6 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
   const round = rounds[roundIndex];
   const openRoundResultsDialog = useRoundResultsDialog();
   const openOutcomesDialog = useOutcomeDialog();
-
-  const playersPerRound = useMemo(
-    () => getTeamMembersPerRound(game.playerIds.length),
-    [rounds]
-  );
 
   // Every time a new round gets added, change the round index to the last round
   useEffect(() => {
@@ -82,42 +78,7 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
         </Button>
       </div>
 
-      <Stepper activeStep={round.number - 1} alternativeLabel>
-        {[...Array(5)].map((label, index) => {
-          const roundFailed =
-            typeof game.roundResults[index] !== "undefined" &&
-            !game.roundResults[index];
-
-          const roundPassed = game.roundResults[index];
-          const roundActive = round.number - 1 === index;
-
-          return (
-            <Step key={label}>
-              <StepLabel
-                error={roundFailed}
-                StepIconProps={{
-                  sx: {
-                    fill: roundPassed
-                      ? colors.green[500]
-                      : roundActive
-                      ? colors.yellow[500]
-                      : undefined,
-                  },
-                }}
-                icon={
-                  roundActive ? (
-                    <Pending
-                      sx={(theme) => ({ fill: theme.palette.primary.main })}
-                    />
-                  ) : undefined
-                }
-              >
-                {playersPerRound[index]} Players
-              </StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+      <RoundStepper roundNumber={round.number} />
 
       {round && <RoundPreview game={game} round={round} />}
     </Stack>

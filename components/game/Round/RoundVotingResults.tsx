@@ -9,8 +9,12 @@ import { VoteResultsTable } from "@/components/game/Round/VoteResultsTable";
 
 export type RoundVotingResultsProps = {
   round: Round;
+  showDescriptor?: boolean;
 };
-export const RoundVotingResults = ({ round }: RoundVotingResultsProps) => {
+export const RoundVotingResults = ({
+  round,
+  showDescriptor = true,
+}: RoundVotingResultsProps) => {
   const game = useGameContext();
   const { data, isLoading } = useRoundVotesQuery({
     game: game.id,
@@ -18,8 +22,8 @@ export const RoundVotingResults = ({ round }: RoundVotingResultsProps) => {
   });
 
   const roundDescription = useMemo(
-    () => getRoundDescriptor(round.status),
-    [round]
+    () => (showDescriptor ? getRoundDescriptor(round.status) : ""),
+    [round, showDescriptor]
   );
 
   if (isLoading) {

@@ -4,9 +4,9 @@ import { makeStyles } from "tss-react/mui";
 import { Mood, SentimentVeryDissatisfied } from "@mui/icons-material";
 import { ViewOnlyTeamPreview } from "@/components/game/Round/ViewOnlyTeamPreview";
 import { useAuth } from "@/hooks";
-import { TeamSelection } from "@/components/game/Round/TeamSelection";
-import { TeamVote } from "@/components/game/Round/TeamVote";
-import { PendingMission } from "@/components/game/Round/PendingMission";
+import { TeamSelection } from "@/components/game/Round/team-making/TeamSelection";
+import { TeamVote } from "@/components/game/Round/team-making/TeamVote";
+import { PendingMission } from "@/components/game/Round/mission/PendingMission";
 
 export type CurrentRoundProps = {
   game: Game;

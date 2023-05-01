@@ -3,8 +3,8 @@ import { useGameContext } from "@/context/GameContext";
 import { Card, Divider, Stack } from "@mui/material";
 import { useAuth } from "@/hooks";
 import { useMemo } from "react";
-import { ActiveMissionParticipantView } from "@/components/game/Round/ActiveMissionParticipantView";
-import { PassiveMissionParticipant } from "@/components/game/Round/PassiveMissionParticipant";
+import { ActiveMissionParticipantView } from "@/components/game/Round/mission/ActiveMissionParticipantView";
+import { PassiveMissionParticipant } from "@/components/game/Round/mission/PassiveMissionParticipant";
 import { VoteResultsTable } from "@/components/game/Round/VoteResultsTable";
 import { useRoundVotesQuery } from "@/queries/useRoundVotesQuery";
 

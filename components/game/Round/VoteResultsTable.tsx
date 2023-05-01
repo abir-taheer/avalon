@@ -35,7 +35,7 @@ export const VoteResultsTable = ({ votes }: VoteResultsTableProps) => {
             <PlayerName
               playerId={vote.playerId}
               key={vote.playerId}
-              color={"success"}
+              color={"secondary"}
               variant={"caption"}
             />
           ))}
@@ -57,7 +57,7 @@ export const VoteResultsTable = ({ votes }: VoteResultsTableProps) => {
             <PlayerName
               playerId={vote.playerId}
               key={vote.playerId}
-              color={"error"}
+              color={"secondary"}
               variant={"caption"}
             />
           ))}
