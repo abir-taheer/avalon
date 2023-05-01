@@ -1,6 +1,5 @@
 import { makeStyles } from "tss-react/mui";
-import { Divider, Stack } from "@mui/material";
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 
 /*
 .footer {
@@ -54,8 +53,6 @@ const useStyles = makeStyles()((theme) => ({
 export const Footer = () => {
   const { classes } = useStyles();
   const [marginTop, setMarginTop] = useState<number>(20);
-
-  useLayoutEffect(() => {});
 
   return (
     <footer className={classes.Footer} style={{ marginTop }}>
