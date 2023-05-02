@@ -71,7 +71,9 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
   ]);
 
   return (
-    <Stack gap={4}>
+    <Stack gap={2}>
+      <RoundStepper roundNumber={round.number} />
+
       <Stack direction={"row"} gap={4} justifyContent={"center"}>
         <Button onClick={() => openRoleDialog({ game })} variant={"outlined"}>
           Show your role
@@ -85,8 +87,6 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
           Show Game Options
         </Button>
       </Stack>
-
-      <RoundStepper roundNumber={round.number} />
 
       {round && <RoundPreview game={game} round={round} />}
     </Stack>

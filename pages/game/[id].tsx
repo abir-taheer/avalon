@@ -11,6 +11,7 @@ import { CancelOutlined } from "@mui/icons-material";
 import { CircularProgress, Container, Grid, Stack } from "@mui/material";
 import { useMemo } from "react";
 import { makeStyles } from "tss-react/mui";
+import { ResetGameButton } from "@/components/game/ResetGameButton";
 
 type ExpectedPathParams = {
   id: string;
@@ -68,6 +69,8 @@ export default function GamePage() {
                   color={"error"}
                 />
               )}
+
+              {game.ownerId === user?.uid && <ResetGameButton id={game.id} />}
             </Stack>
           </Grid>
           <Grid item md={12} xs={12}>

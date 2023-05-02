@@ -3,12 +3,10 @@ import { withAuthenticatedApiContext } from "@/middleware";
 import { ApiHandlerError } from "@/utils/api/ApiHandlerError";
 
 export default withAuthenticatedApiContext(async (context) => {
-  if (context.req.method === "POST") {
-    return API.Game.POST.Handler(context);
-  }
+  const { req } = context;
 
-  if (context.req.method === "PATCH") {
-    return API.Game.PATCH.Handler(context);
+  if (req.method === "POST") {
+    return API.Game.Reset.POST.Handler(context);
   }
 
   throw new ApiHandlerError({

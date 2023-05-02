@@ -18,7 +18,7 @@ export const ViewOnlyTeamPreview = ({ round, game }: ViewOnlyTeamProps) => {
   const selectedPlayers = useMemo(() => new Set(round.teamPlayerIds), [round]);
 
   return (
-    <Stack>
+    <Stack gap={4}>
       <Typography align={"center"}>
         <PlayerName playerId={round.leaderId} color={"secondary"} /> is making
         the team

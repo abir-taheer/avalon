@@ -5,10 +5,12 @@ import { useRoleQuery } from "@/queries/useRoleQuery";
 import { isEvilCharacter } from "@/types/schema";
 import { colors, LinearProgress, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
+import { ResetGameButton } from "@/components/game/ResetGameButton";
+import { PlayerName } from "@/components/auth/PlayerName";
 
 export const GameOver = () => {
   const game = useGameContext();
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, user } = useAuth();
 
   const { data: role, isLoading } = useRoleQuery({
     game: game.id,
@@ -60,7 +62,13 @@ export const GameOver = () => {
         <Typography align={"center"}>The forces of good prevailed</Typography>
       )}
 
-      <Typography></Typography>
+      {game.ownerId === user?.uid ? (
+        <ResetGameButton id={game.id} />
+      ) : (
+        <Typography align={"center"} color={"secondary"}>
+          Waiting for <PlayerName playerId={game.ownerId} /> to reset the game
+        </Typography>
+      )}
     </Stack>
   );
 };

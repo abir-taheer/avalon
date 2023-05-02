@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import { LinkOutlined } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
 import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
+import { useEditGameOptionsDialog } from "@/components/dialog/game/EditGameOptionsDialog";
 export type OptionsPreviewProps = {
   game: Game;
 };
@@ -24,6 +25,7 @@ export const OptionsPreview = ({ game }: OptionsPreviewProps) => {
   );
 
   const { enqueueSnackbar } = useSnackbar();
+  const openEditDialog = useEditGameOptionsDialog();
 
   const { data: owner } = useRealtimeUserQuery({
     id: game.ownerId,
@@ -60,6 +62,16 @@ export const OptionsPreview = ({ game }: OptionsPreviewProps) => {
 
   return (
     <Stack spacing={2}>
+      {isOwner && (
+        <Button
+          variant={"outlined"}
+          color={"secondary"}
+          onClick={() => openEditDialog({ game })}
+        >
+          Update Game Settings
+        </Button>
+      )}
+
       <Typography variant={"h4"} align={"center"}>
         <Typography variant={"inherit"} component={"span"} color={"primary"}>
           {numGoodPlayers} Good
