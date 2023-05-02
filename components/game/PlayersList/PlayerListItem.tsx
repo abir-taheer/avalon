@@ -32,6 +32,7 @@ export type PlayerListItemProps = {
   isOwner?: boolean;
   itemProps?: ListItemProps;
   showSettings?: boolean;
+  isLeader?: boolean;
 };
 
 type UseStylesParams = {
@@ -69,6 +70,7 @@ export const PlayerListItem = ({
   isOwner,
   itemProps,
   showSettings,
+  isLeader,
 }: PlayerListItemProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { data, isLoading } = useRealtimeUserQuery({ id });
@@ -123,7 +125,19 @@ export const PlayerListItem = ({
   }
 
   return (
-    <ListItem {...itemProps}>
+    <ListItem
+      {...itemProps}
+      sx={(theme) =>
+        isLeader
+          ? {
+              border: "1px solid " + theme.palette.primary.main,
+              marginTop: 1,
+              marginBottom: 2,
+              borderRadius: 4,
+            }
+          : {}
+      }
+    >
       <ListItemAvatar>
         <OptimizedAvatar src={data.photoURL} width={48} height={48} />
       </ListItemAvatar>

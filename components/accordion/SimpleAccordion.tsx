@@ -5,7 +5,7 @@ import {
   AccordionProps,
   AccordionSummary,
 } from "@mui/material";
-import { ReactNode, useId, useState } from "react";
+import { ReactNode, useEffect, useId, useState } from "react";
 
 export type SimpleAccordionProps = {
   summary: ReactNode;
@@ -13,6 +13,8 @@ export type SimpleAccordionProps = {
   renderDetailsIfHidden?: boolean;
   initialState?: boolean;
   accordionProps?: Partial<AccordionProps>;
+  onOpen?: () => void;
+  onClose?: () => void;
 };
 
 export const SimpleAccordion = ({
@@ -21,16 +23,29 @@ export const SimpleAccordion = ({
   renderDetailsIfHidden,
   initialState,
   accordionProps,
+  onOpen,
+  onClose,
 }: SimpleAccordionProps) => {
   const [open, setOpen] = useState(initialState ?? false);
   const id = useId();
+
+  const toggle = () => {
+    const nextState = !open;
+    setOpen(nextState);
+
+    if (nextState) {
+      onOpen?.();
+    } else {
+      onClose?.();
+    }
+  };
 
   const shouldRenderDetails = Boolean(open || renderDetailsIfHidden);
 
   return (
     <Accordion
       expanded={open}
-      onChange={() => setOpen(!open)}
+      onChange={toggle}
       elevation={0}
       {...accordionProps}
     >

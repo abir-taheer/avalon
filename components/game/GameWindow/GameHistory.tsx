@@ -9,7 +9,7 @@ import {
   SkipNextOutlined,
 } from "@mui/icons-material";
 import { List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 const SuccessIcon = () => <CheckCircleOutline color={"success"} />;
 const FailIcon = () => <CloseOutlined color={"error"} />;
@@ -18,23 +18,27 @@ const SkipIcon = () => <SkipNextOutlined color={"warning"} />;
 
 export const GameHistory = () => {
   const game = useGameContext();
-  const { data } = useRoundsQuery({ game: game.id });
+  const [open, setOpen] = useState(false);
+
+  const { data } = useRoundsQuery({ game: game.id, skip: !open });
 
   const rounds = useMemo(
-    () => data?.filter((round) => round.id !== game.currentRoundId),
+    () => data?.filter((round) => round.id !== game.currentRoundId) || [],
     [data, game]
   );
 
-  if (!rounds?.length) {
+  if (game.roundResults.length === 0) {
     return null;
   }
 
   return (
     <SimpleAccordion
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
       summary={"Game History"}
       // It will not load the information about the players until the user clicks on the accordion
       renderDetailsIfHidden={false}
-      initialState={false}
+      initialState={open}
       accordionProps={{
         sx: (theme) => ({
           border:
