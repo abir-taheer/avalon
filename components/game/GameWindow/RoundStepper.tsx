@@ -6,7 +6,7 @@ import {
   CloseOutlined,
   Pending,
 } from "@mui/icons-material";
-import { Step, StepLabel, Stepper } from "@mui/material";
+import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { useMemo } from "react";
 
 export type RoundStepperProps = {
@@ -57,7 +57,11 @@ export const RoundStepper = ({ roundNumber }: RoundStepperProps) => {
                 )
               }
             >
-              {playersPerRound[index]}
+              <Typography>{playersPerRound[index]}</Typography>
+
+              {index === 3 && game.playerIds.length >= 7 && (
+                <Typography variant={"caption"}>2 Fails Needed</Typography>
+              )}
             </StepLabel>
           </Step>
         );

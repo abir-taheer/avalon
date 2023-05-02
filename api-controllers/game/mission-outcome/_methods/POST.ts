@@ -158,7 +158,10 @@ export const Handler: FirebaseAdminHandlerWithUser<Response> = async ({
     );
 
     // Round passed if all players voted true
-    const passed = outcomes.every(Boolean);
+    const numFails = outcomes.filter((o) => !o).length;
+    const needsTwoFails = round.number === 4 && game.playerIds.length >= 7;
+
+    const passed = needsTwoFails ? numFails <= 1 : numFails === 0;
 
     const status = passed
       ? RoundStatus.mission_passed

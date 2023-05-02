@@ -31,6 +31,18 @@ export const RoundPreview = ({ game, round }: CurrentRoundProps) => {
 
   return (
     <Stack direction={"column"} className={classes.Root} gap={4}>
+      {round.number === 4 && game.playerIds.length >= 7 && (
+        <Typography
+          variant={"caption"}
+          sx={{ fontSize: 16 }}
+          color={"grey"}
+          align={"center"}
+          fontWeight={"bold"}
+        >
+          This Round Requires 2 Fails To Not Pass The Mission
+        </Typography>
+      )}
+
       <Stack gap={2}>
         <Typography align={"center"} variant={"h3"} fontWeight={"bold"}>
           Round {round.number}
