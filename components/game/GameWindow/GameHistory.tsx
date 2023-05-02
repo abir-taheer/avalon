@@ -36,7 +36,12 @@ export const GameHistory = () => {
       renderDetailsIfHidden={false}
       initialState={false}
       accordionProps={{
-        sx: { border: "1px solid rgba(0, 0, 0, 0.12)" },
+        sx: (theme) => ({
+          border:
+            theme.palette.mode === "dark"
+              ? "1px solid rgba(255, 255, 255, 0.1)"
+              : "1px solid rgba(0, 0, 0, 0.1)",
+        }),
       }}
     >
       <List>

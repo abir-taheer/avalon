@@ -26,7 +26,7 @@ export const Navbar = () => {
   const toggle = () => setDarkMode((prev) => !prev);
 
   return (
-    <AppBar position={"sticky"}>
+    <AppBar position={"sticky"} color={"secondary"}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Link href={"/"} passHref className={classes.ToolbarLogo}>
