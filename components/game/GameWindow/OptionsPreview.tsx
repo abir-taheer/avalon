@@ -4,8 +4,11 @@ import { useAuth } from "@/hooks";
 import { Game } from "@/types/schema";
 import { getMinimumNumberOfPlayersRequired } from "@/utils/game/getMinimumNumberOfPlayersRequired";
 import { getNumEvilPlayers } from "@/utils/game/getNumEvilPlayers";
-import { colors, Stack, Typography } from "@mui/material";
+import { Button, colors, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
+import { LinkOutlined } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
+import { useRealtimeUserQuery } from "@/queries/useRealtimeUserQuery";
 export type OptionsPreviewProps = {
   game: Game;
 };
@@ -19,6 +22,15 @@ export const OptionsPreview = ({ game }: OptionsPreviewProps) => {
     () => getMinimumNumberOfPlayersRequired(game.options),
     [game.options]
   );
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { data: owner } = useRealtimeUserQuery({
+    id: game.ownerId,
+    query: {
+      enabled: !isOwner,
+    },
+  });
 
   const numEvilPlayers = useMemo(
     () => getNumEvilPlayers(game.options),
@@ -34,6 +46,17 @@ export const OptionsPreview = ({ game }: OptionsPreviewProps) => {
     () => game.playerIds.length >= minimumPlayersNeeded,
     [game.playerIds.length, minimumPlayersNeeded]
   );
+
+  const gameLink = `${window.location.origin}/game/${game.id}`;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(gameLink);
+      enqueueSnackbar("Copied to clipboard", { variant: "success" });
+    } catch (e) {
+      enqueueSnackbar("Failed to copy to clipboard", { variant: "error" });
+    }
+  };
 
   return (
     <Stack spacing={2}>
@@ -52,6 +75,37 @@ export const OptionsPreview = ({ game }: OptionsPreviewProps) => {
       </Typography>
 
       <ViewOnlyOptionsPreview game={game} />
+
+      <Typography variant={"subtitle2"} align={"center"}>
+        {hasEnoughPlayers ? (
+          `Waiting for ${
+            isOwner ? "you" : owner?.displayName ?? "..."
+          } to start the game`
+        ) : (
+          <Typography variant={"inherit"} component={"span"}>
+            Need{" "}
+            <Typography
+              variant={"inherit"}
+              component={"span"}
+              color={"primary"}
+            >
+              {minimumPlayersNeeded}
+            </Typography>{" "}
+            players to start. Waiting for more players to join...
+          </Typography>
+        )}
+      </Typography>
+
+      <Tooltip title={gameLink}>
+        <Button
+          startIcon={<LinkOutlined />}
+          variant={"outlined"}
+          color={"secondary"}
+          onClick={handleCopy}
+        >
+          Copy Game Link
+        </Button>
+      </Tooltip>
 
       {isOwner && hasEnoughPlayers && <StartGameButton id={game.id} />}
     </Stack>

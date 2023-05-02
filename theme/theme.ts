@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { colors, createTheme } from "@mui/material";
 
 export const theme = (dark: boolean) =>
   createTheme({
@@ -18,6 +18,11 @@ export const theme = (dark: boolean) =>
       },
       secondary: {
         main: "#5758BB",
+      },
+      error: {
+        light: colors.red[300],
+        main: colors.red[500],
+        dark: colors.red[700],
       },
     },
     typography: {

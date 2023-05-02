@@ -8,6 +8,7 @@ import { usePrevious } from "@/hooks/general/usePrevious";
 import { Round, RoundStatus } from "@/types/schema";
 import { Button, Stack } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { useGameOptionsPreviewDialog } from "@/components/dialog/game/GameOptionsPreviewDialog";
 
 export type GameplayProps = {
   rounds: Round[];
@@ -28,6 +29,7 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
   const round = rounds[roundIndex];
   const openRoundResultsDialog = useRoundResultsDialog();
   const openOutcomesDialog = useOutcomeDialog();
+  const openGameOptionsDialog = useGameOptionsPreviewDialog();
 
   // Every time a new round gets added, change the round index to the last round
   useEffect(() => {
@@ -69,12 +71,20 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
   ]);
 
   return (
-    <Stack gap={2}>
-      <div>
+    <Stack gap={4}>
+      <Stack direction={"row"} gap={4} justifyContent={"center"}>
         <Button onClick={() => openRoleDialog({ game })} variant={"outlined"}>
           Show your role
         </Button>
-      </div>
+
+        <Button
+          variant={"outlined"}
+          color={"secondary"}
+          onClick={() => openGameOptionsDialog({ game })}
+        >
+          Show Game Options
+        </Button>
+      </Stack>
 
       <RoundStepper roundNumber={round.number} />
 

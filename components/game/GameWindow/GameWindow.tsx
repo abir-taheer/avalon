@@ -9,9 +9,10 @@ import { useAuth } from "@/hooks";
 import { usePrevious } from "@/hooks/general/usePrevious";
 import { useRoundsQuery } from "@/queries/useRoundsQuery";
 import { GameStatus } from "@/types/schema";
-import { PersonAddOutlined } from "@mui/icons-material";
-import { Divider, Stack } from "@mui/material";
+import { LinkOutlined, PersonAddOutlined } from "@mui/icons-material";
+import { Button, Divider, Stack, Tooltip } from "@mui/material";
 import { useEffect, useMemo } from "react";
+import { useSnackbar } from "notistack";
 
 export type GameWindowProps = {};
 
