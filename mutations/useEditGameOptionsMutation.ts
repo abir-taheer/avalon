@@ -14,7 +14,7 @@ export type UseEditGameOptionsMutationProps = {
   >;
 };
 
-export const UseEditGameOptionsMutation = (
+export const useEditGameOptionsMutation = (
   props?: UseEditGameOptionsMutationProps
 ) => {
   const api = useAPI();

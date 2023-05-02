@@ -6,8 +6,8 @@ import { Button, Container, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import { Game, GameOptions } from "@/types/schema";
 import { useNewGameForm } from "@/forms/NewGameForm/useNewGameForm";
-import { useEditGameOptionsVoteMutation } from "@/mutations/useEditGameOptionsMutation";
 import { NewGameForm } from "@/forms/NewGameForm/NewGameForm";
+import { useEditGameOptionsMutation } from "@/mutations/useEditGameOptionsMutation";
 
 export type EditGameOptionsDialogProps = {
   game: Game;
@@ -26,7 +26,7 @@ export const EditGameOptionsDialog: UseDialogComponent<
   null
 > = ({ closeDialog, game }) => {
   const { classes } = useStyles();
-  const { mutateAsync, isLoading } = useEditGameOptionsVoteMutation();
+  const { mutateAsync, isLoading } = useEditGameOptionsMutation();
 
   const handleSubmit = async (values: GameOptions) => {
     await mutateAsync({
