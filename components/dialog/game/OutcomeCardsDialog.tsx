@@ -40,7 +40,7 @@ export const OutcomeDialog: UseDialogComponent<OutcomeDialogProps, null> = ({
 
   useEffect(() => {
     if (render.length === 0 || render.length < outcomes.length) {
-      const delay = render.length === 0 ? 0 : 1000;
+      const delay = render.length === 0 ? 0 : 1500;
 
       const timeout = setTimeout(() => {
         const newVal = [...render];
@@ -108,14 +108,20 @@ export const OutcomeDialog: UseDialogComponent<OutcomeDialogProps, null> = ({
         </Fade>
       </Stack>
 
-      <Button
-        className={classes.CloseButton}
+      <Fade
+        timeout={{ appear: 3000, enter: 1500, exit: 1500 }}
+        in={render.length === outcomes.length}
         onClick={() => closeDialog(null)}
-        fullWidth
-        variant={"outlined"}
       >
-        Close
-      </Button>
+        <Button
+          className={classes.CloseButton}
+          onClick={() => closeDialog(null)}
+          fullWidth
+          variant={"outlined"}
+        >
+          Close
+        </Button>
+      </Fade>
     </Container>
   );
 };

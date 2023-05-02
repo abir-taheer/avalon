@@ -7,12 +7,10 @@ import { JoinGameButton } from "@/components/game/JoinGameButton";
 import { useGameContext } from "@/context/GameContext";
 import { useAuth } from "@/hooks";
 import { usePrevious } from "@/hooks/general/usePrevious";
-import { useRoundsQuery } from "@/queries/useRoundsQuery";
 import { GameStatus } from "@/types/schema";
-import { LinkOutlined, PersonAddOutlined } from "@mui/icons-material";
-import { Button, Divider, Stack, Tooltip } from "@mui/material";
+import { PersonAddOutlined } from "@mui/icons-material";
+import { Divider, Stack } from "@mui/material";
 import { useEffect, useMemo } from "react";
-import { useSnackbar } from "notistack";
 import { useSetAtom } from "jotai";
 import { roundLeaderIdAtom } from "@/atoms/roundLeaderIdAtom";
 
@@ -24,8 +22,6 @@ export const GameWindow = ({}: GameWindowProps) => {
   const previousStatus = usePrevious(game.status);
   const openRoleDialog = useRoleDialog();
   const setRoundLeaderAtom = useSetAtom(roundLeaderIdAtom);
-
-  const { data: rounds } = useRoundsQuery({ game: game.id });
 
   useEffect(() => {
     if (game.status !== GameStatus.started) {
@@ -51,9 +47,7 @@ export const GameWindow = ({}: GameWindowProps) => {
     <Stack spacing={2}>
       {game.status === GameStatus.waiting && <OptionsPreview game={game} />}
 
-      {game.status === GameStatus.started && playerInGame && rounds && (
-        <Gameplay rounds={rounds} />
-      )}
+      {game.status === GameStatus.started && playerInGame && <Gameplay />}
 
       {game.status === GameStatus.waiting && !playerInGame && (
         <>

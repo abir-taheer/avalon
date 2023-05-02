@@ -2,7 +2,7 @@ import { PlayerName } from "@/components/auth/PlayerName";
 import { VoteResultsTable } from "@/components/game/Round/VoteResultsTable";
 import { useGameContext } from "@/context/GameContext";
 import { useRoundVotesQuery } from "@/queries/useRoundVotesQuery";
-import { Round } from "@/types/schema";
+import { Round, RoundStatus } from "@/types/schema";
 import { getRoundDescriptor } from "@/utils/game/getRoundDescriptor";
 import { Divider, LinearProgress, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
@@ -32,7 +32,11 @@ export const RoundVotingResults = ({
 
   return (
     <Stack gap={2} alignItems={"center"}>
-      <Typography variant={"caption"} color={"grey"} align={"center"}>
+      <Typography
+        variant={"caption"}
+        color={round.status === RoundStatus.team_rejected ? "error" : "grey"}
+        align={"center"}
+      >
         {round.notes ?? roundDescription}
       </Typography>
 
