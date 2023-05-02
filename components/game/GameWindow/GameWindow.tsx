@@ -13,6 +13,8 @@ import { LinkOutlined, PersonAddOutlined } from "@mui/icons-material";
 import { Button, Divider, Stack, Tooltip } from "@mui/material";
 import { useEffect, useMemo } from "react";
 import { useSnackbar } from "notistack";
+import { useSetAtom } from "jotai";
+import { roundLeaderIdAtom } from "@/atoms/roundLeaderIdAtom";
 
 export type GameWindowProps = {};
 
@@ -21,8 +23,15 @@ export const GameWindow = ({}: GameWindowProps) => {
   const game = useGameContext();
   const previousStatus = usePrevious(game.status);
   const openRoleDialog = useRoleDialog();
+  const setRoundLeaderAtom = useSetAtom(roundLeaderIdAtom);
 
   const { data: rounds } = useRoundsQuery({ game: game.id });
+
+  useEffect(() => {
+    if (game.status !== GameStatus.started) {
+      setRoundLeaderAtom(null);
+    }
+  }, [game.status, setRoundLeaderAtom]);
 
   useEffect(() => {
     if (

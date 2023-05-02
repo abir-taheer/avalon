@@ -3,7 +3,8 @@ import { PlayerListItem } from "@/components/game/PlayersList/PlayerListItem";
 import { useGameContext } from "@/context/GameContext";
 import { useAuth } from "@/hooks";
 import { List, Typography } from "@mui/material";
-import { useRoundQuery } from "@/queries/useRoundQuery";
+import { useAtomValue } from "jotai";
+import { roundLeaderIdAtom } from "@/atoms/roundLeaderIdAtom";
 
 export type PlayersListProps = {
   initialState?: boolean;
@@ -12,11 +13,7 @@ export type PlayersListProps = {
 export const PlayersList = ({ initialState = true }: PlayersListProps) => {
   const { user } = useAuth();
   const game = useGameContext();
-  const { data: round } = useRoundQuery({
-    game: game.id,
-    round: game.currentRoundId || "null",
-    skip: !game.currentRoundId,
-  });
+  const leaderId = useAtomValue(roundLeaderIdAtom);
 
   const { playerIds, ownerId } = game;
 
@@ -47,7 +44,7 @@ export const PlayersList = ({ initialState = true }: PlayersListProps) => {
             itemProps={{ sx: { paddingLeft: 0 } }}
             isOwner={ownerId === id}
             showSettings={user?.uid === ownerId && user?.uid !== id}
-            isLeader={round?.leaderId === id}
+            isLeader={leaderId === id}
           />
         ))}
       </List>

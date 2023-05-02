@@ -9,6 +9,8 @@ import { Round, RoundStatus } from "@/types/schema";
 import { Button, Stack } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useGameOptionsPreviewDialog } from "@/components/dialog/game/GameOptionsPreviewDialog";
+import { useSetAtom } from "jotai";
+import { roundLeaderIdAtom } from "@/atoms/roundLeaderIdAtom";
 
 export type GameplayProps = {
   rounds: Round[];
@@ -30,11 +32,16 @@ export const Gameplay = ({ rounds }: GameplayProps) => {
   const openRoundResultsDialog = useRoundResultsDialog();
   const openOutcomesDialog = useOutcomeDialog();
   const openGameOptionsDialog = useGameOptionsPreviewDialog();
+  const setRoundLeaderId = useSetAtom(roundLeaderIdAtom);
 
   // Every time a new round gets added, change the round index to the last round
   useEffect(() => {
     setRoundIndex(numRounds - 1);
   }, [numRounds]);
+
+  useEffect(() => {
+    setRoundLeaderId(round.leaderId ?? null);
+  }, [setRoundLeaderId, round.leaderId]);
 
   useEffect(() => {
     // Not the kind of change we care about
