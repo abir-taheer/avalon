@@ -10,6 +10,7 @@ import { SnackbarProvider } from "notistack";
 import { QueryClientProvider } from "react-query";
 import { makeStyles } from "tss-react/mui";
 import "../styles/globals.css";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const useStyles = makeStyles()((theme) => ({
   ContentRoot: {
@@ -31,8 +32,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { classes } = useStyles();
 
   return (
-    <div className={classes.BodyContainerWithFooter}>
-      <ThemeProvider>
+    <ThemeProvider>
+      <div className={classes.BodyContainerWithFooter}>
+        <CssBaseline />
         <SnackbarProvider
           maxSnack={3}
           classes={{ variantSuccess: classes.SuccessSnackbar }}
@@ -46,8 +48,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Footer />
           </QueryClientProvider>
         </SnackbarProvider>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

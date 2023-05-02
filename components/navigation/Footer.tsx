@@ -47,6 +47,8 @@ const useStyles = makeStyles()((theme) => ({
     height: "1em",
     marginRight: "0.3em",
     marginLeft: "0.5rem",
+    filter:
+      theme.palette.mode === "dark" ? `brightness(0) invert(1)` : undefined,
   },
 }));
 

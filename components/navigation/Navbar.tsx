@@ -1,12 +1,18 @@
 import { useAuth } from "@/hooks";
-import { AppBar, Container, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Container,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import { makeStyles } from "tss-react/mui";
+import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import { useAtom } from "jotai";
+import { darkModeAtom } from "@/atoms/darkModeAtom";
 
 const useStyles = makeStyles()({
-  AppBar: {
-    background: "white",
-  },
   ToolbarLogo: {
     flexGrow: 1,
   },
@@ -14,14 +20,13 @@ const useStyles = makeStyles()({
 
 export const Navbar = () => {
   const { classes } = useStyles();
+  const [darkMode, setDarkMode] = useAtom(darkModeAtom);
   const { user } = useAuth();
 
+  const toggle = () => setDarkMode((prev) => !prev);
+
   return (
-    <AppBar
-      className={classes.AppBar}
-      color={"transparent"}
-      position={"sticky"}
-    >
+    <AppBar position={"sticky"}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Link href={"/"} passHref className={classes.ToolbarLogo}>
@@ -31,6 +36,14 @@ export const Navbar = () => {
           </Link>
 
           {user && <Typography>Hi, {user.displayName}!</Typography>}
+
+          <IconButton sx={{ marginLeft: 2 }} onClick={toggle}>
+            {darkMode ? (
+              <LightModeOutlined fill={"white"} />
+            ) : (
+              <DarkModeOutlined fill={"white"} sx={{ fill: "white" }} />
+            )}
+          </IconButton>
         </Toolbar>
       </Container>
     </AppBar>
