@@ -37,6 +37,8 @@ export const useSnapshotQuery = <Data extends DocumentData>({
     []
   );
 
+  console.log("rendered useSnapshotQuery", queryKey);
+
   const openNotifyDialog = useNotifyDialog();
 
   const handleError = useCallback(
