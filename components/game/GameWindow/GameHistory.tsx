@@ -27,7 +27,7 @@ const SkipIcon = () => <SkipNextOutlined color={"warning"} />;
 
 export const GameHistory = () => {
   const game = useGameContext();
-  const [reverse, setReverse] = useState(false);
+  const [reverse, setReverse] = useState(true);
   const [open, setOpen] = useState(true);
   const { data } = useRoundsQuery({ game: game.id, skip: !open });
   const [openAccordionIds, setOpenAccordionIds] = useState<string[]>([]);
